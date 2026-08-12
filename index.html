@@ -278,9 +278,9 @@
   let gravity = 0.8;
   let isSevered = false;
   
-  // Ribbon Mesh Settings: Perfectly proportioned ~75px ceremonial satin ribbon
-  const spacing = 15;
-  const rows = 6;
+  // Ribbon Mesh Settings: Extremely rigid, zero-elasticity ceremonial ribbon
+  const spacing = 22;
+  const rows = 5;
   let cols;
   
   // Mouse state
@@ -488,20 +488,13 @@
         playSnipSound();
         triggerCelebration();
       }
-    } else {
-      for (let p of points) {
-        let dist = Math.hypot(p.x - mouse.x, p.y - mouse.y);
-        if (dist < 45 && p.pin_x === null) {
-          p.x += (p.x - mouse.x) * 0.03;
-          p.y += (p.y - mouse.y) * 0.03;
-        }
       }
     }
     
     // Physics integration
     for (let p of points) p.update();
-    // 40 iterations to guarantee ZERO elasticity (completely stiff fabric)
-    for (let i = 0; i < 40; i++) {
+    // 100 iterations to guarantee ABSOLUTE ZERO elasticity (completely rigid fabric)
+    for (let i = 0; i < 100; i++) {
       for (let c of constraints) c.resolve();
     }
 
