@@ -473,15 +473,15 @@
     if (mouse.x > 0 && mouse.y > 0 && points.length > 0) {
       let severedCols = new Set();
 
-      // 1. Precise Per-Column Dynamic Height Touch Hit Detection
+      // 1. Precise Touch/Hover Hit Detection (Cuts ONLY when cursor moves directly over red ribbon body)
       for (let x = 0; x < cols - 1; x++) {
         let pTop = points[x];
         let pBottom = points[(rows - 1) * cols + x];
         if (pTop && pBottom) {
           let colX = (pTop.x + pBottom.x) / 2;
-          if (Math.abs(mouse.x - colX) <= spacing * 1.5) {
-            let minY = Math.min(pTop.y, pBottom.y) - 60;
-            let maxY = Math.max(pTop.y, pBottom.y) + 60;
+          if (Math.abs(mouse.x - colX) <= spacing * 0.8) {
+            let minY = Math.min(pTop.y, pBottom.y) - 6;
+            let maxY = Math.max(pTop.y, pBottom.y) + 6;
             if (mouse.y >= minY && mouse.y <= maxY) {
               severedCols.add(x);
             }
