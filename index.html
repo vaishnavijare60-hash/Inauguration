@@ -468,22 +468,28 @@
       if (trail[i].age <= 0) trail.splice(i, 1);
     }
 
-    // Razor-sharp touch & drag column slicing (Instant cut on tap or swipe, no slipping!)
+    // 100% Guaranteed Touch & Drag Ribbon Slicing (Instant cut on tap or swipe anywhere on the ribbon)
     let cutOccurred = false;
     if (mouse.down && points.length > 0) {
       let severedCols = new Set();
-      const ribbonTopY = points[0].y - 35;
-      const ribbonBottomY = points[points.length - 1].y + 35;
 
-      // 1. Direct Touch/Tap Hit Detection (Instant cut on tap anywhere on ribbon)
-      if (mouse.y >= ribbonTopY && mouse.y <= ribbonBottomY) {
-        let touchCol = Math.floor((mouse.x / width) * (cols - 1));
-        if (touchCol >= 0 && touchCol < cols - 1) {
-          severedCols.add(touchCol);
+      // 1. Precise Per-Column Dynamic Height Touch Hit Detection
+      for (let x = 0; x < cols - 1; x++) {
+        let pTop = points[x];
+        let pBottom = points[(rows - 1) * cols + x];
+        if (pTop && pBottom) {
+          let colX = (pTop.x + pBottom.x) / 2;
+          if (Math.abs(mouse.x - colX) <= spacing * 1.5) {
+            let minY = Math.min(pTop.y, pBottom.y) - 60;
+            let maxY = Math.max(pTop.y, pBottom.y) + 60;
+            if (mouse.y >= minY && mouse.y <= maxY) {
+              severedCols.add(x);
+            }
+          }
         }
       }
 
-      // 2. Drag Swipe Hit Detection
+      // 2. Drag Swipe Line Intersection
       for (let c of constraints) {
         if (c.p1.col !== c.p2.col) {
           if (lineIntersect(lastMouse.x, lastMouse.y, mouse.x, mouse.y, c.p1.x, c.p1.y, c.p2.x, c.p2.y)) {
