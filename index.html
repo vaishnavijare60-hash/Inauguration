@@ -468,33 +468,28 @@
       if (trail[i].age <= 0) trail.splice(i, 1);
     }
 
-    // 100% Guaranteed Touch & Hover Ribbon Slicing (Instant cut whenever cursor/finger touches the ribbon)
+    // Flawless Vertical Column Line Intersection Slicing (100% Guaranteed cut on hover/move across ribbon)
     let cutOccurred = false;
     if (mouse.x > 0 && mouse.y > 0 && points.length > 0) {
       let severedCols = new Set();
 
-      // 1. Precise Touch/Hover Hit Detection (Cuts ONLY when cursor moves directly over red ribbon body)
       for (let x = 0; x < cols - 1; x++) {
         let pTop = points[x];
         let pBottom = points[(rows - 1) * cols + x];
-        if (pTop && pBottom) {
-          let colX = (pTop.x + pBottom.x) / 2;
-          if (Math.abs(mouse.x - colX) <= spacing * 0.8) {
-            let minY = Math.min(pTop.y, pBottom.y) - 6;
-            let maxY = Math.max(pTop.y, pBottom.y) + 6;
-            if (mouse.y >= minY && mouse.y <= maxY) {
-              severedCols.add(x);
-            }
-          }
-        }
-      }
+        if (!pTop || !pBottom) continue;
 
-      // 2. Drag Swipe Line Intersection
-      for (let c of constraints) {
-        if (c.p1.col !== c.p2.col) {
-          if (lineIntersect(lastMouse.x, lastMouse.y, mouse.x, mouse.y, c.p1.x, c.p1.y, c.p2.x, c.p2.y)) {
-            severedCols.add(Math.min(c.p1.col, c.p2.col));
-          }
+        let colX = (pTop.x + pBottom.x) / 2;
+        let minY = Math.min(pTop.y, pBottom.y) - 12;
+        let maxY = Math.max(pTop.y, pBottom.y) + 12;
+
+        // A. Direct Hover / Touch Position Check
+        if (Math.abs(mouse.x - colX) <= spacing * 1.0 && mouse.y >= minY && mouse.y <= maxY) {
+          severedCols.add(x);
+        }
+
+        // B. Swipe Line Intersection with Vertical Column Segment (Mathematically catches any horizontal/diagonal swipe!)
+        if (lineIntersect(lastMouse.x, lastMouse.y, mouse.x, mouse.y, pTop.x, pTop.y, pBottom.x, pBottom.y)) {
+          severedCols.add(x);
         }
       }
 
