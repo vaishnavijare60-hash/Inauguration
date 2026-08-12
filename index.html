@@ -273,6 +273,7 @@
   let trail = [];
   let confetti = [];
   let sparks = [];
+  let activeHoriz = null; // Uint8Array for zero-alloc O(1) quad rendering
   
   const friction = 0.99;
   let gravity = 0.8;
@@ -368,6 +369,9 @@
     document.getElementById('hint').style.opacity = '1';
     
     cols = Math.floor(width / spacing);
+    activeHoriz = new Uint8Array(rows * cols);
+    activeHoriz.fill(1);
+
     const startY = height / 2;
     
     for (let y = 0; y < rows; y++) {
@@ -403,24 +407,10 @@
     }
   }
 
-  function lineIntersect(p0_x, p0_y, p1_x, p1_y, p2_x, p2_y, p3_x, p3_y) {
-    let s1_x = p1_x - p0_x;
-    let s1_y = p1_y - p0_y;
-    let s2_x = p3_x - p2_x;
-    let s2_y = p3_y - p2_y;
-
-    let denom = -s2_x * s1_y + s1_x * s2_y;
-    if (denom === 0) return false;
-
-    let s = (-s1_y * (p0_x - p2_x) + s1_x * (p0_y - p2_y)) / denom;
-    let t = ( s2_x * (p0_y - p2_y) - s2_y * (p0_x - p2_x)) / denom;
-
-    return (s >= 0 && s <= 1 && t >= 0 && t <= 1);
-  }
-
   // Spawn spark particles along the cut line
   function spawnSparks(x, y) {
-    for (let i = 0; i < 6; i++) {
+    if (sparks.length > 25) return;
+    for (let i = 0; i < 5; i++) {
       sparks.push({
         x: x,
         y: y,
@@ -442,15 +432,15 @@
     document.getElementById('hint').style.opacity = '0';
     playFanfareSound();
 
-    // Spawn 250 metallic confetti pieces
+    // Spawn metallic confetti pieces
     const colors = ['#ffd700', '#ba0d0d', '#ffffff', '#e6b800', '#ff4d4d', '#c0c0c0'];
-    for (let i = 0; i < 260; i++) {
+    for (let i = 0; i < 150; i++) {
       confetti.push({
         x: Math.random() * width,
         y: Math.random() * (height * 0.4),
         vx: (Math.random() - 0.5) * 12,
         vy: Math.random() * -6 - 2,
-        size: Math.random() * 10 + 6,
+        size: Math.random() * 9 + 5,
         color: colors[Math.floor(Math.random() * colors.length)],
         rotation: Math.random() * Math.PI * 2,
         vRot: (Math.random() - 0.5) * 0.2,
@@ -465,11 +455,11 @@
       trail.push({ x: mouse.x, y: mouse.y, age: 1.0 });
     }
     for (let i = trail.length - 1; i >= 0; i--) {
-      trail[i].age -= 0.08;
+      trail[i].age -= 0.1;
       if (trail[i].age <= 0) trail.splice(i, 1);
     }
 
-    // Flawless Vertical Column Line Intersection Slicing (100% Guaranteed cut on hover/move across ribbon)
+    // 100% Precise Slicing (Cuts ONLY when cursor moves directly over red ribbon body)
     let cutOccurred = false;
     if (mouse.x > 0 && mouse.y > 0 && points.length > 0) {
       let severedCols = new Set();
@@ -480,17 +470,20 @@
         if (!pTop || !pBottom) continue;
 
         let colX = (pTop.x + pBottom.x) / 2;
-        let minY = Math.min(pTop.y, pBottom.y) - 12;
-        let maxY = Math.max(pTop.y, pBottom.y) + 12;
+        let minY = Math.min(pTop.y, pBottom.y) - 30;
+        let maxY = Math.max(pTop.y, pBottom.y) + 30;
 
-        // A. Direct Hover / Touch Position Check
-        if (Math.abs(mouse.x - colX) <= spacing * 1.0 && mouse.y >= minY && mouse.y <= maxY) {
-          severedCols.add(x);
-        }
+        // Cut ONLY if mouse Y is within ribbon vertical band
+        if (mouse.y >= minY && mouse.y <= maxY) {
+          // A. Direct Hover / Touch Position Check
+          if (Math.abs(mouse.x - colX) <= spacing * 0.9) {
+            severedCols.add(x);
+          }
 
-        // B. Swipe Line Intersection with Vertical Column Segment (Mathematically catches any horizontal/diagonal swipe!)
-        if (lineIntersect(lastMouse.x, lastMouse.y, mouse.x, mouse.y, pTop.x, pTop.y, pBottom.x, pBottom.y)) {
-          severedCols.add(x);
+          // B. Trajectory Swipe crossing column X horizontally or diagonally
+          if (lastMouse.x > 0 && ((lastMouse.x <= colX && mouse.x >= colX) || (lastMouse.x >= colX && mouse.x <= colX))) {
+            severedCols.add(x);
+          }
         }
       }
 
@@ -498,6 +491,10 @@
         for (let colIdx of severedCols) {
           let midPointX = (colIdx / (cols - 1)) * width;
           spawnSparks(midPointX, height / 2);
+
+          for (let y = 0; y < rows; y++) {
+            activeHoriz[y * cols + colIdx] = 0;
+          }
           
           for (let i = constraints.length - 1; i >= 0; i--) {
             let c = constraints[i];
@@ -527,8 +524,8 @@
     
     // Physics integration
     for (let p of points) p.update();
-    // 15 iterations with 34px spacing = hyper-fast 144+ FPS & zero elasticity
-    for (let i = 0; i < 15; i++) {
+    // 10 iterations = hyper-fast 144+ FPS & zero elasticity
+    for (let i = 0; i < 10; i++) {
       for (let c of constraints) c.resolve();
     }
 
@@ -538,14 +535,14 @@
       s.x += s.vx;
       s.y += s.vy;
       s.vy += 0.2;
-      s.life -= 0.04;
+      s.life -= 0.05;
       if (s.life <= 0) sparks.splice(i, 1);
     }
 
     // Update Confetti
     for (let c of confetti) {
       c.x += c.vx + Math.sin(c.osc) * 1.5;
-      c.y += c.vy + 3.0; // Gravity
+      c.y += c.vy + 3.0;
       c.vy = Math.min(c.vy + 0.1, 4.0);
       c.rotation += c.vRot;
       c.osc += 0.05;
@@ -564,31 +561,38 @@
 
   function draw() {
     ctx.clearRect(0, 0, width, height);
-    
-    // 1. Draw Sleek Cloth Ribbon Quads with Hardware-Accelerated Drop Shadow
-    ctx.save();
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
-    ctx.shadowBlur = 4;
-    ctx.shadowOffsetX = 6;
-    ctx.shadowOffsetY = 10;
 
-    // Helper map of active horizontal constraints for 100% glitch-free quad rendering
-    let activeHoriz = new Set();
-    for (let c of constraints) {
-      if (c.isHorizontal) {
-        let minC = Math.min(c.p1.col, c.p2.col);
-        activeHoriz.add(c.p1.row + '_' + minC);
+    if (!activeHoriz) return;
+    
+    // 1. Render Drop Shadow (Fast path offset, zero blur GPU overhead for 144+ FPS)
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+    for (let y = 0; y < rows - 1; y++) {
+      for (let x = 0; x < cols - 1; x++) {
+        if (activeHoriz[y * cols + x] === 1) {
+          let p1 = points[y * cols + x];
+          let p2 = points[y * cols + x + 1];
+          let p3 = points[(y + 1) * cols + x + 1];
+          let p4 = points[(y + 1) * cols + x];
+
+          ctx.beginPath();
+          ctx.moveTo(p1.x + 6, p1.y + 10);
+          ctx.lineTo(p2.x + 6, p2.y + 10);
+          ctx.lineTo(p3.x + 6, p3.y + 10);
+          ctx.lineTo(p4.x + 6, p4.y + 10);
+          ctx.closePath();
+          ctx.fill();
+        }
       }
     }
 
+    // 2. Render Main Red Silk Ribbon Quads
     for (let y = 0; y < rows - 1; y++) {
       ctx.fillStyle = quadColors[y] || quadColors[0];
       ctx.strokeStyle = quadColors[y] || quadColors[0]; 
-      ctx.lineWidth = 1.5; 
+      ctx.lineWidth = 1.0; 
       
       for (let x = 0; x < cols - 1; x++) {
-        // Quad is rendered only if top horizontal link is active!
-        if (activeHoriz.has(y + '_' + x)) {
+        if (activeHoriz[y * cols + x] === 1) {
           let p1 = points[y * cols + x];
           let p2 = points[y * cols + x + 1];
           let p3 = points[(y + 1) * cols + x + 1];
@@ -605,7 +609,6 @@
         }
       }
     }
-    ctx.restore();
 
     // 3. Draw Sparks
     for (let s of sparks) {
@@ -626,10 +629,7 @@
       }
       ctx.strokeStyle = '#d4af37';
       ctx.lineWidth = 3;
-      ctx.shadowColor = '#d4af37';
-      ctx.shadowBlur = 10;
       ctx.stroke();
-      ctx.shadowBlur = 0;
     }
 
     // 5. Draw Confetti
@@ -648,8 +648,6 @@
       ctx.translate(mouse.x + 12, mouse.y - 12);
       ctx.font = '22px sans-serif';
       ctx.fillStyle = '#d4af37';
-      ctx.shadowColor = 'rgba(0,0,0,0.3)';
-      ctx.shadowBlur = 6;
       ctx.fillText('✂️', 0, 0);
       ctx.restore();
     }
