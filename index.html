@@ -363,6 +363,7 @@
     confetti = [];
     sparks = [];
     isSevered = false;
+    gravity = 0.8;
     document.getElementById('ceremony-status').classList.remove('visible');
     document.getElementById('hint').style.opacity = '1';
     
@@ -506,7 +507,15 @@
               constraints.splice(i, 1);
             }
           }
+
+          // Apply immediate downward physics impulse to severed ends
+          for (let p of points) {
+            if (Math.abs(p.col - colIdx) <= 3 && p.pin_x === null) {
+              p.vy += 14;
+            }
+          }
         }
+        gravity = 3.0; // Boost gravity so severed halves drop rapidly
         cutOccurred = true;
       }
 
@@ -665,6 +674,10 @@
   window.addEventListener('mouseup', () => { mouse.down = false; });
 
   window.addEventListener('mousemove', (e) => {
+    if (lastMouse.x < 0) {
+      lastMouse.x = e.clientX;
+      lastMouse.y = e.clientY;
+    }
     mouse.x = e.clientX;
     mouse.y = e.clientY;
   });
