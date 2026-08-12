@@ -278,9 +278,9 @@
   let gravity = 0.8;
   let isSevered = false;
   
-  // Ribbon Mesh Settings
-  const spacing = 18;
-  const rows = 8;
+  // Ribbon Mesh Settings: Thinner, sleek 40px ceremonial satin ribbon
+  const spacing = 10;
+  const rows = 5;
   let cols;
   
   // Mouse state
@@ -528,15 +528,12 @@
     lastMouse.y = mouse.y;
   }
 
-  // Royal Satin Red Palette with Double Gold Embroidered Borders
+  // Sleek 4-band Satin Palette with Gold Edges
   const quadColors = [
-    '#d4af37', // Gold top outer rim
-    '#ffd700', // Gold embroidered accent
-    '#5a0000', // Deep burgundy shade
-    '#b80d0d', // Rich satin red
-    '#ff3333', // Silk gloss highlight
-    '#b80d0d', // Rich satin red
-    '#5a0000'  // Deep burgundy shade
+    '#d4af37', // Gold top border
+    '#8a0000', // Deep crimson body
+    '#ff2a2a', // High-gloss center sheen
+    '#d4af37'  // Gold bottom border
   ];
 
   function draw() {
@@ -544,10 +541,10 @@
     
     // 0. Draw Ribbon Drop Shadow onto Stage/Logo
     ctx.save();
-    ctx.translate(10, 16);
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
-    ctx.strokeStyle = 'rgba(0, 0, 0, 0.08)';
-    ctx.lineWidth = 2;
+    ctx.translate(8, 12);
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.07)';
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.07)';
+    ctx.lineWidth = 1.5;
     for (let y = 0; y < rows - 1; y++) {
       for (let x = 0; x < cols - 1; x++) {
         let p1 = points[y * cols + x];
@@ -569,7 +566,7 @@
     }
     ctx.restore();
 
-    // 1. Draw Cloth Ribbon Quads with Gold Embroidered Stitch Lines
+    // 1. Draw Sleek Cloth Ribbon Quads
     for (let y = 0; y < rows - 1; y++) {
       ctx.fillStyle = quadColors[y];
       ctx.strokeStyle = quadColors[y]; 
@@ -595,24 +592,11 @@
           ctx.closePath();
           ctx.fill();
           ctx.stroke();
-
-          // Gold Thread Embroidery Detail on Top & Bottom Gold Bands
-          if (y === 0 || y === rows - 2) {
-            ctx.save();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
-            ctx.lineWidth = 1;
-            ctx.setLineDash([3, 3]);
-            ctx.beginPath();
-            ctx.moveTo((p1.x + p4.x)/2, (p1.y + p4.y)/2);
-            ctx.lineTo((p2.x + p3.x)/2, (p2.y + p3.y)/2);
-            ctx.stroke();
-            ctx.restore();
-          }
         }
       }
     }
 
-    // 2. Draw Golden Wall Rosettes / Anchors at Pinned Ends
+    // 2. Draw Golden Wall Anchors (Scaled for thin ribbon)
     const midRow = Math.floor(rows / 2);
     let pLeft = points[midRow * cols];
     let pRight = points[midRow * cols + (cols - 1)];
@@ -620,17 +604,17 @@
     if (pLeft && pLeft.pin_x !== null) {
       ctx.save();
       ctx.beginPath();
-      ctx.arc(pLeft.x, pLeft.y, 22, 0, Math.PI * 2);
-      ctx.fillStyle = '#d4af37';
-      ctx.shadowColor = 'rgba(0,0,0,0.2)';
-      ctx.shadowBlur = 10;
-      ctx.fill();
-      ctx.beginPath();
       ctx.arc(pLeft.x, pLeft.y, 14, 0, Math.PI * 2);
-      ctx.fillStyle = '#b8860b';
+      ctx.fillStyle = '#d4af37';
+      ctx.shadowColor = 'rgba(0,0,0,0.15)';
+      ctx.shadowBlur = 6;
       ctx.fill();
       ctx.beginPath();
-      ctx.arc(pLeft.x, pLeft.y, 6, 0, Math.PI * 2);
+      ctx.arc(pLeft.x, pLeft.y, 8, 0, Math.PI * 2);
+      ctx.fillStyle = '#8a0000';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(pLeft.x, pLeft.y, 3, 0, Math.PI * 2);
       ctx.fillStyle = '#ffffff';
       ctx.fill();
       ctx.restore();
@@ -639,17 +623,17 @@
     if (pRight && pRight.pin_x !== null) {
       ctx.save();
       ctx.beginPath();
-      ctx.arc(pRight.x, pRight.y, 22, 0, Math.PI * 2);
-      ctx.fillStyle = '#d4af37';
-      ctx.shadowColor = 'rgba(0,0,0,0.2)';
-      ctx.shadowBlur = 10;
-      ctx.fill();
-      ctx.beginPath();
       ctx.arc(pRight.x, pRight.y, 14, 0, Math.PI * 2);
-      ctx.fillStyle = '#b8860b';
+      ctx.fillStyle = '#d4af37';
+      ctx.shadowColor = 'rgba(0,0,0,0.15)';
+      ctx.shadowBlur = 6;
       ctx.fill();
       ctx.beginPath();
-      ctx.arc(pRight.x, pRight.y, 6, 0, Math.PI * 2);
+      ctx.arc(pRight.x, pRight.y, 8, 0, Math.PI * 2);
+      ctx.fillStyle = '#8a0000';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(pRight.x, pRight.y, 3, 0, Math.PI * 2);
       ctx.fillStyle = '#ffffff';
       ctx.fill();
       ctx.restore();
