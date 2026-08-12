@@ -468,21 +468,26 @@
       if (trail[i].age <= 0) trail.splice(i, 1);
     }
 
-    // Clean razor-sharp column slicing
+    // Razor-sharp touch & drag column slicing (Instant cut on tap or swipe, no slipping!)
     let cutOccurred = false;
-    if (mouse.down) {
+    if (mouse.down && points.length > 0) {
       let severedCols = new Set();
+      const ribbonTopY = points[0].y - 35;
+      const ribbonBottomY = points[points.length - 1].y + 35;
 
+      // 1. Direct Touch/Tap Hit Detection (Instant cut on tap anywhere on ribbon)
+      if (mouse.y >= ribbonTopY && mouse.y <= ribbonBottomY) {
+        let touchCol = Math.floor((mouse.x / width) * (cols - 1));
+        if (touchCol >= 0 && touchCol < cols - 1) {
+          severedCols.add(touchCol);
+        }
+      }
+
+      // 2. Drag Swipe Hit Detection
       for (let c of constraints) {
         if (c.p1.col !== c.p2.col) {
           if (lineIntersect(lastMouse.x, lastMouse.y, mouse.x, mouse.y, c.p1.x, c.p1.y, c.p2.x, c.p2.y)) {
             severedCols.add(Math.min(c.p1.col, c.p2.col));
-          } else {
-            let cx = (c.p1.x + c.p2.x) / 2;
-            let cy = (c.p1.y + c.p2.y) / 2;
-            if (Math.hypot(cx - mouse.x, cy - mouse.y) < 18) {
-              severedCols.add(Math.min(c.p1.col, c.p2.col));
-            }
           }
         }
       }
