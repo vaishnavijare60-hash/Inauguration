@@ -468,9 +468,9 @@
       if (trail[i].age <= 0) trail.splice(i, 1);
     }
 
-    // 100% Guaranteed Touch & Drag Ribbon Slicing (Instant cut on tap or swipe anywhere on the ribbon)
+    // 100% Guaranteed Touch & Hover Ribbon Slicing (Instant cut whenever cursor/finger touches the ribbon)
     let cutOccurred = false;
-    if (mouse.down && points.length > 0) {
+    if (mouse.x > 0 && mouse.y > 0 && points.length > 0) {
       let severedCols = new Set();
 
       // 1. Precise Per-Column Dynamic Height Touch Hit Detection
