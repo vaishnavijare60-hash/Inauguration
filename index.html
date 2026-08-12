@@ -276,7 +276,7 @@
   let activeHoriz = null; // Uint8Array for zero-alloc O(1) quad rendering
   
   const friction = 0.99;
-  let gravity = 0.8;
+  let gravity = 0.3;
   let isSevered = false;
   
   // Ribbon Mesh Settings: Ultra-optimized, hyper-fast rigid ribbon
@@ -364,7 +364,7 @@
     confetti = [];
     sparks = [];
     isSevered = false;
-    gravity = 0.8;
+    gravity = 0.3;
     document.getElementById('ceremony-status').classList.remove('visible');
     document.getElementById('hint').style.opacity = '1';
     
@@ -512,7 +512,7 @@
             }
           }
         }
-        gravity = 3.0; // Boost gravity so severed halves drop rapidly
+        gravity = 1.0; // Gentle boost so severed halves fall gracefully
         cutOccurred = true;
       }
 
