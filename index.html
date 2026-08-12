@@ -3,20 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inauguration Ribbon</title>
+<title>DPCOE Computer Department - Inauguration Ceremony</title>
 <style>
+  * {
+    box-sizing: border-box;
+    user-select: none;
+  }
+
   body, html {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-    background: #000000;
+    background: #08080c;
     overflow: hidden;
-    font-family: sans-serif;
-    /* Crosshair hints that you can slice it! */
+    font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
     cursor: crosshair; 
   }
 
+  /* Stage Background Spotlight */
+  .spotlight {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    height: 90vh;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(186, 13, 13, 0.04) 40%, rgba(0, 0, 0, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: pulseSpotlight 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulseSpotlight {
+    0% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.95); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+  }
+
+  /* Central Ceremony Branding */
   #ceremony-container {
     position: absolute;
     top: 50%;
@@ -26,34 +50,66 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     opacity: 0;
-    animation: fadeIn 2s ease-out 0.2s forwards;
+    animation: fadeIn 2s ease-out 0.3s forwards;
+    pointer-events: none;
+    width: 90%;
+    max-width: 800px;
+  }
+
+  #college-title {
+    color: #d4af37;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
   }
 
   #ceremony-logo {
-    max-width: 500px;
-    width: 80vw;
-    /* Soft white glow to make the logo pop against the black background */
-    filter: drop-shadow(0 0 20px rgba(255,255,255,0.15)); 
+    max-width: 420px;
+    width: 75vw;
+    height: auto;
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.2)); 
+    transition: transform 0.5s ease;
   }
-  
+
   #ceremony-title {
     color: #ffffff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 300;
-    letter-spacing: 6px;
+    letter-spacing: 8px;
     text-transform: uppercase;
-    margin-top: 30px;
-    text-align: center;
-    font-size: 1.5rem;
-    opacity: 0.9;
+    margin-top: 25px;
+    font-size: 1.8rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  }
+
+  #ceremony-status {
+    margin-top: 15px;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: #ffd700;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 1s ease;
+    font-weight: 600;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+  }
+
+  #ceremony-status.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   @keyframes fadeIn {
-    0% { opacity: 0; transform: translate(-50%, -45%); }
+    0% { opacity: 0; transform: translate(-50%, -46%); }
     100% { opacity: 1; transform: translate(-50%, -50%); }
   }
 
+  /* Canvas Layer */
   canvas {
     display: block;
     position: absolute;
@@ -64,38 +120,170 @@
     z-index: 10;
   }
 
+  /* HUD Control Bar */
+  .hud-bar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    gap: 12px;
+  }
 
+  .hud-btn {
+    background: rgba(20, 20, 30, 0.7);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #d4af37;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    letter-spacing: 1px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hud-btn:hover {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: #ffd700;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+  }
+
+  /* Slicing Blade Cursor Effect */
+  .cursor-hint {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
 </style>
 </head>
 <body>
 
+<div class="spotlight"></div>
+
 <div id="ceremony-container">
-  <img id="ceremony-logo" src="../dpes_new_logo (1).svg" alt="Dhole Patil College of Engineering">
-  <h1 id="ceremony-title">Computer Department</h1>
+  <div id="college-title">Dhole Patil College of Engineering, Pune</div>
+  <img id="ceremony-logo" src="../dpes_new_logo (1).svg" alt="DPES Logo">
+  <h1 id="ceremony-title">Department of Computer Engineering</h1>
+  <div id="ceremony-status">✦ Official Inauguration Completed ✦</div>
 </div>
+
+<div class="hud-bar">
+  <button class="hud-btn" id="btn-sound">🔊 Sound: ON</button>
+  <button class="hud-btn" id="btn-reset">🔄 Reset Ribbon</button>
+  <button class="hud-btn" id="btn-fullscreen">⛶ Fullscreen</button>
+</div>
+
+<div class="cursor-hint" id="hint">✂ Swipe / Drag across the ribbon to cut</div>
 
 <canvas id="c"></canvas>
 
-
 <script>
-  // Pure JS Verlet Integration Engine for True Tearable Cloth Physics
+  // --- WEB AUDIO SYNTHESIZER ---
+  let soundEnabled = true;
+  let audioCtx = null;
+
+  function initAudio() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+  }
+
+  // Snip sound effect (synthesized noise)
+  function playSnipSound() {
+    if (!soundEnabled) return;
+    try {
+      initAudio();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      
+      let bufferSize = audioCtx.sampleRate * 0.08;
+      let buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      let data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+
+      let noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+
+      let filter = audioCtx.createBiquadFilter();
+      filter.type = 'highpass';
+      filter.frequency.value = 1200;
+
+      let gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      noise.start();
+    } catch (e) {}
+  }
+
+  // Celebration Fanfare sound effect
+  function playFanfareSound() {
+    if (!soundEnabled) return;
+    try {
+      initAudio();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5, E5, G5, C6, E6
+      notes.forEach((freq, idx) => {
+        let osc = audioCtx.createOscillator();
+        let gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.value = freq;
+
+        let startTime = audioCtx.currentTime + idx * 0.08;
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(0.2, startTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 1.2);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(startTime);
+        osc.stop(startTime + 1.2);
+      });
+    } catch(e) {}
+  }
+
+  // --- PHYSICS ENGINE ---
   const canvas = document.getElementById('c');
   const ctx = canvas.getContext('2d');
   
   let width, height;
   let points = [];
   let constraints = [];
+  let trail = [];
+  let confetti = [];
+  let sparks = [];
   
-  const friction = 0.99; // Real-world air resistance
-  let gravity = 0.8; // Accurate, heavy gravity!
-  let isCut = false;
+  const friction = 0.99;
+  let gravity = 0.8;
+  let isSevered = false;
   
   // Ribbon Mesh Settings
-  const spacing = 16; // Increased spacing for better performance (fewer particles)
+  const spacing = 16;
   const rows = 6;
   let cols;
   
-  // Mouse state for "Fruit Ninja" slicing
+  // Mouse state
   let mouse = { down: false, x: -1000, y: -1000 };
   let lastMouse = { x: -1000, y: -1000 };
 
@@ -133,7 +321,6 @@
     constructor(p1, p2, isShear = false) {
       this.p1 = p1;
       this.p2 = p2;
-      // Shear constraints are diagonal, so they are spacing * sqrt(2) long
       this.length = isShear ? spacing * Math.SQRT2 : spacing;
       this.stiffness = 1.0; 
     }
@@ -144,7 +331,6 @@
       let dist = Math.hypot(dx, dy);
       if (dist === 0) return;
       
-      // Apply stiffness multiplier for elastic effect
       let diff = ((this.length - dist) / dist) * this.stiffness;
       
       if (this.p1.pin_x === null && this.p2.pin_x === null) {
@@ -170,24 +356,21 @@
     
     points = [];
     constraints = [];
-    isCut = false;
+    confetti = [];
+    sparks = [];
+    isSevered = false;
+    document.getElementById('ceremony-status').classList.remove('visible');
+    document.getElementById('hint').style.opacity = '1';
     
-    // No slack. The ribbon is pulled tight across the screen!
     cols = Math.floor(width / spacing);
+    const startY = height / 2;
     
-    const startY = height / 2; // Straight across the middle to elegantly cover the logo!
-    
-    // Create the cloth particles
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
-        // Distribute points evenly across the screen horizontally, 
-        // they are compressed so gravity will pull them down into a curve!
         let pX = (x / (cols - 1)) * width;
         let pY = startY + y * spacing;
-        
         let p = new Point(pX, pY);
         
-        // Pin the left and right walls firmly
         if (x === 0 || x === cols - 1) {
           p.pin_x = p.x;
           p.pin_y = p.y;
@@ -196,20 +379,15 @@
       }
     }
     
-    // Connect particles to form the mesh
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
         let p = points[y * cols + x];
-        
-        // Structural constraints (horizontal/vertical)
         if (x > 0) {
           constraints.push(new Constraint(p, points[y * cols + (x - 1)], false));
         }
         if (y > 0) {
           constraints.push(new Constraint(p, points[(y - 1) * cols + x], false));
         }
-        
-        // Shear constraints (diagonal) for realistic, stable fabric physics!
         if (x > 0 && y > 0) {
           constraints.push(new Constraint(p, points[(y - 1) * cols + (x - 1)], true));
         }
@@ -220,7 +398,6 @@
     }
   }
 
-  // Math helper for slicing line segments
   function lineIntersect(p0_x, p0_y, p1_x, p1_y, p2_x, p2_y, p3_x, p3_y) {
     let s1_x = p1_x - p0_x;
     let s1_y = p1_y - p0_y;
@@ -236,33 +413,86 @@
     return (s >= 0 && s <= 1 && t >= 0 && t <= 1);
   }
 
+  // Spawn spark particles along the cut line
+  function spawnSparks(x, y) {
+    for (let i = 0; i < 6; i++) {
+      sparks.push({
+        x: x,
+        y: y,
+        vx: (Math.random() - 0.5) * 8,
+        vy: (Math.random() - 0.5) * 8 - 2,
+        size: Math.random() * 3 + 2,
+        color: Math.random() > 0.3 ? '#ffd700' : '#ffffff',
+        life: 1.0
+      });
+    }
+  }
+
+  // Grand celebration confetti burst
+  function triggerCelebration() {
+    if (isSevered) return;
+    isSevered = true;
+    
+    document.getElementById('ceremony-status').classList.add('visible');
+    document.getElementById('hint').style.opacity = '0';
+    playFanfareSound();
+
+    // Spawn 250 metallic confetti pieces
+    const colors = ['#ffd700', '#ba0d0d', '#ffffff', '#e6b800', '#ff4d4d', '#c0c0c0'];
+    for (let i = 0; i < 260; i++) {
+      confetti.push({
+        x: Math.random() * width,
+        y: Math.random() * (height * 0.4),
+        vx: (Math.random() - 0.5) * 12,
+        vy: Math.random() * -6 - 2,
+        size: Math.random() * 10 + 6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * Math.PI * 2,
+        vRot: (Math.random() - 0.5) * 0.2,
+        osc: Math.random() * 10
+      });
+    }
+  }
+
   function update() {
-    // Handling user mouse interaction
+    // Blade Trail update
+    if (mouse.x > 0 && mouse.y > 0) {
+      trail.push({ x: mouse.x, y: mouse.y, age: 1.0 });
+    }
+    for (let i = trail.length - 1; i >= 0; i--) {
+      trail[i].age -= 0.08;
+      if (trail[i].age <= 0) trail.splice(i, 1);
+    }
+
+    // Slicing logic
+    let cutOccurred = false;
     if (mouse.down) {
-      isCut = true;
-      
-      // Slicing logic (Iterate backwards to safely remove from array)
       for (let i = constraints.length - 1; i >= 0; i--) {
         let c = constraints[i];
-        
-        // Check if mouse swept across the thread
         if (lineIntersect(lastMouse.x, lastMouse.y, mouse.x, mouse.y, c.p1.x, c.p1.y, c.p2.x, c.p2.y)) {
+          spawnSparks((c.p1.x + c.p2.x)/2, (c.p1.y + c.p2.y)/2);
           constraints.splice(i, 1);
+          cutOccurred = true;
         } else {
-          // Check if mouse is just generally clicking very close to it
           let cx = (c.p1.x + c.p2.x) / 2;
           let cy = (c.p1.y + c.p2.y) / 2;
-          if (Math.hypot(cx - mouse.x, cy - mouse.y) < 15) {
+          if (Math.hypot(cx - mouse.x, cy - mouse.y) < 14) {
+            spawnSparks(cx, cy);
             constraints.splice(i, 1);
+            cutOccurred = true;
           }
         }
       }
+
+      if (cutOccurred) {
+        playSnipSound();
+        triggerCelebration();
+      }
     } else {
-      // Hover repel logic: gives the ribbon a real physical presence
       for (let p of points) {
         let dist = Math.hypot(p.x - mouse.x, p.y - mouse.y);
-        if (dist < 40 && p.pin_x === null) {
-          p.x += (p.x - mouse.x) * 0.03; // Gently push cloth away
+        if (dist < 45 && p.pin_x === null) {
+          p.x += (p.x - mouse.x) * 0.03;
           p.y += (p.y - mouse.y) * 0.03;
         }
       }
@@ -270,33 +500,50 @@
     
     // Physics integration
     for (let p of points) p.update();
-    
-    // Optimal iterations: Shear constraints stabilize the mesh, so we can use far fewer iterations for massive performance gains!
     for (let i = 0; i < 15; i++) {
       for (let c of constraints) c.resolve();
+    }
+
+    // Update Sparks
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      let s = sparks[i];
+      s.x += s.vx;
+      s.y += s.vy;
+      s.vy += 0.2;
+      s.life -= 0.04;
+      if (s.life <= 0) sparks.splice(i, 1);
+    }
+
+    // Update Confetti
+    for (let c of confetti) {
+      c.x += c.vx + Math.sin(c.osc) * 1.5;
+      c.y += c.vy + 3.0; // Gravity
+      c.vy = Math.min(c.vy + 0.1, 4.0);
+      c.rotation += c.vRot;
+      c.osc += 0.05;
     }
     
     lastMouse.x = mouse.x;
     lastMouse.y = mouse.y;
   }
 
-  // Premium Satin Red color scheme! 
+  // Red Satin Ribbon Palette with Metallic Gold Trim
   const quadColors = [
-    '#4a0000', // Dark edge
-    '#ba0d0d', // Classic red
-    '#ff1a1a', // Shiny bright center
-    '#ba0d0d', // Classic red
-    '#4a0000'  // Dark edge
+    '#d4af37', // Gold top border
+    '#660000', // Deep red shade
+    '#ba0d0d', // Satin red
+    '#ff2a2a', // Sheen highlight
+    '#660000', // Deep red shade
+    '#d4af37'  // Gold bottom border
   ];
 
   function draw() {
     ctx.clearRect(0, 0, width, height);
     
-    // Draw solid cloth using quad grid
+    // 1. Draw Cloth Ribbon Quads
     for (let y = 0; y < rows - 1; y++) {
       ctx.fillStyle = quadColors[y];
       ctx.strokeStyle = quadColors[y]; 
-      // Slight overlap stroke to prevent any visual seams
       ctx.lineWidth = 1.5; 
       
       for (let x = 0; x < cols - 1; x++) {
@@ -305,13 +552,11 @@
         let p3 = points[(y + 1) * cols + x + 1];
         let p4 = points[(y + 1) * cols + x];
 
-        // Measure distance to see if cloth is torn in this cell
         let d1 = Math.hypot(p1.x - p2.x, p1.y - p2.y);
         let d2 = Math.hypot(p2.x - p3.x, p2.y - p3.y);
         let d3 = Math.hypot(p3.x - p4.x, p3.y - p4.y);
         let d4 = Math.hypot(p4.x - p1.x, p4.y - p1.y);
 
-        // Safe tear limit
         if (d1 < spacing * 3 && d2 < spacing * 3 && d3 < spacing * 3 && d4 < spacing * 3) {
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
@@ -324,7 +569,41 @@
         }
       }
     }
-    
+
+    // 2. Draw Sparks
+    for (let s of sparks) {
+      ctx.fillStyle = s.color;
+      ctx.globalAlpha = s.life;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1.0;
+
+    // 3. Draw Blade Trail (Scissor slice trail effect)
+    if (trail.length > 1) {
+      ctx.beginPath();
+      ctx.moveTo(trail[0].x, trail[0].y);
+      for (let i = 1; i < trail.length; i++) {
+        ctx.lineTo(trail[i].x, trail[i].y);
+      }
+      ctx.strokeStyle = '#ffd700';
+      ctx.lineWidth = 3;
+      ctx.shadowColor = '#ffd700';
+      ctx.shadowBlur = 12;
+      ctx.stroke();
+      ctx.shadowBlur = 0; // Reset shadow
+    }
+
+    // 4. Draw Confetti
+    for (let c of confetti) {
+      ctx.save();
+      ctx.translate(c.x, c.y);
+      ctx.rotate(c.rotation);
+      ctx.fillStyle = c.color;
+      ctx.fillRect(-c.size / 2, -c.size / 4, c.size, c.size / 2);
+      ctx.restore();
+    }
   }
 
   function loop() {
@@ -333,13 +612,14 @@
     requestAnimationFrame(loop);
   }
 
-  // Event Listeners for slicing
+  // --- EVENT LISTENERS ---
   window.addEventListener('mousedown', (e) => {
     mouse.down = true;
     mouse.x = e.clientX;
     mouse.y = e.clientY;
     lastMouse.x = mouse.x;
     lastMouse.y = mouse.y;
+    initAudio();
   });
 
   window.addEventListener('mouseup', () => { mouse.down = false; });
@@ -349,14 +629,14 @@
     mouse.y = e.clientY;
   });
   
-  // Touch support for mobile Fruit Ninja action!
   window.addEventListener('touchstart', (e) => {
     mouse.down = true;
     mouse.x = e.touches[0].clientX;
     mouse.y = e.touches[0].clientY;
     lastMouse.x = mouse.x;
     lastMouse.y = mouse.y;
-  }, { passive: false }); // Optional passive false if preventing scroll, but default is fine here
+    initAudio();
+  }, { passive: true });
   
   window.addEventListener('touchend', () => { mouse.down = false; });
   
@@ -366,6 +646,22 @@
   });
 
   window.addEventListener('resize', initCloth);
+
+  // HUD Buttons
+  document.getElementById('btn-reset').addEventListener('click', initCloth);
+
+  document.getElementById('btn-sound').addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    document.getElementById('btn-sound').innerText = soundEnabled ? '🔊 Sound: ON' : '🔇 Sound: OFF';
+  });
+
+  document.getElementById('btn-fullscreen').addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  });
 
   // Initialize
   initCloth();
