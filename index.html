@@ -528,13 +528,13 @@
     lastMouse.y = mouse.y;
   }
 
-  // 5-band Satin Palette with Gold Trim
+  // Pure Classic Ribbon Red (Uniform Color)
   const quadColors = [
-    '#d4af37', // Gold top border
-    '#7a0000', // Deep crimson body
-    '#ff2a2a', // High-gloss center sheen
-    '#7a0000', // Deep crimson body
-    '#d4af37'  // Gold bottom border
+    '#ba0d0d', // Classic inauguration red
+    '#ba0d0d',
+    '#cc1111', // Subtle silky shine
+    '#ba0d0d',
+    '#ba0d0d'
   ];
 
   function draw() {
@@ -595,49 +595,6 @@
           ctx.stroke();
         }
       }
-    }
-
-    // 2. Draw Golden Wall Anchors (Scaled for 75px ribbon)
-    const midRow = Math.floor(rows / 2);
-    let pLeft = points[midRow * cols];
-    let pRight = points[midRow * cols + (cols - 1)];
-
-    if (pLeft && pLeft.pin_x !== null) {
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(pLeft.x, pLeft.y, 18, 0, Math.PI * 2);
-      ctx.fillStyle = '#d4af37';
-      ctx.shadowColor = 'rgba(0,0,0,0.18)';
-      ctx.shadowBlur = 8;
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(pLeft.x, pLeft.y, 11, 0, Math.PI * 2);
-      ctx.fillStyle = '#7a0000';
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(pLeft.x, pLeft.y, 4, 0, Math.PI * 2);
-      ctx.fillStyle = '#ffffff';
-      ctx.fill();
-      ctx.restore();
-    }
-
-    if (pRight && pRight.pin_x !== null) {
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(pRight.x, pRight.y, 18, 0, Math.PI * 2);
-      ctx.fillStyle = '#d4af37';
-      ctx.shadowColor = 'rgba(0,0,0,0.18)';
-      ctx.shadowBlur = 8;
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(pRight.x, pRight.y, 11, 0, Math.PI * 2);
-      ctx.fillStyle = '#7a0000';
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(pRight.x, pRight.y, 4, 0, Math.PI * 2);
-      ctx.fillStyle = '#ffffff';
-      ctx.fill();
-      ctx.restore();
     }
 
     // 3. Draw Sparks
