@@ -278,9 +278,9 @@
   let gravity = 0.8;
   let isSevered = false;
   
-  // Ribbon Mesh Settings: Thinner, sleek 40px ceremonial satin ribbon
-  const spacing = 10;
-  const rows = 5;
+  // Ribbon Mesh Settings: Perfectly proportioned ~75px ceremonial satin ribbon
+  const spacing = 15;
+  const rows = 6;
   let cols;
   
   // Mouse state
@@ -528,11 +528,12 @@
     lastMouse.y = mouse.y;
   }
 
-  // Sleek 4-band Satin Palette with Gold Edges
+  // 5-band Satin Palette with Gold Trim
   const quadColors = [
     '#d4af37', // Gold top border
-    '#8a0000', // Deep crimson body
+    '#7a0000', // Deep crimson body
     '#ff2a2a', // High-gloss center sheen
+    '#7a0000', // Deep crimson body
     '#d4af37'  // Gold bottom border
   ];
 
@@ -541,10 +542,10 @@
     
     // 0. Draw Ribbon Drop Shadow onto Stage/Logo
     ctx.save();
-    ctx.translate(8, 12);
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.07)';
-    ctx.strokeStyle = 'rgba(0, 0, 0, 0.07)';
-    ctx.lineWidth = 1.5;
+    ctx.translate(10, 14);
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.08)';
+    ctx.lineWidth = 1.8;
     for (let y = 0; y < rows - 1; y++) {
       for (let x = 0; x < cols - 1; x++) {
         let p1 = points[y * cols + x];
@@ -596,7 +597,7 @@
       }
     }
 
-    // 2. Draw Golden Wall Anchors (Scaled for thin ribbon)
+    // 2. Draw Golden Wall Anchors (Scaled for 75px ribbon)
     const midRow = Math.floor(rows / 2);
     let pLeft = points[midRow * cols];
     let pRight = points[midRow * cols + (cols - 1)];
@@ -604,17 +605,17 @@
     if (pLeft && pLeft.pin_x !== null) {
       ctx.save();
       ctx.beginPath();
-      ctx.arc(pLeft.x, pLeft.y, 14, 0, Math.PI * 2);
+      ctx.arc(pLeft.x, pLeft.y, 18, 0, Math.PI * 2);
       ctx.fillStyle = '#d4af37';
-      ctx.shadowColor = 'rgba(0,0,0,0.15)';
-      ctx.shadowBlur = 6;
+      ctx.shadowColor = 'rgba(0,0,0,0.18)';
+      ctx.shadowBlur = 8;
       ctx.fill();
       ctx.beginPath();
-      ctx.arc(pLeft.x, pLeft.y, 8, 0, Math.PI * 2);
-      ctx.fillStyle = '#8a0000';
+      ctx.arc(pLeft.x, pLeft.y, 11, 0, Math.PI * 2);
+      ctx.fillStyle = '#7a0000';
       ctx.fill();
       ctx.beginPath();
-      ctx.arc(pLeft.x, pLeft.y, 3, 0, Math.PI * 2);
+      ctx.arc(pLeft.x, pLeft.y, 4, 0, Math.PI * 2);
       ctx.fillStyle = '#ffffff';
       ctx.fill();
       ctx.restore();
@@ -623,17 +624,17 @@
     if (pRight && pRight.pin_x !== null) {
       ctx.save();
       ctx.beginPath();
-      ctx.arc(pRight.x, pRight.y, 14, 0, Math.PI * 2);
+      ctx.arc(pRight.x, pRight.y, 18, 0, Math.PI * 2);
       ctx.fillStyle = '#d4af37';
-      ctx.shadowColor = 'rgba(0,0,0,0.15)';
-      ctx.shadowBlur = 6;
+      ctx.shadowColor = 'rgba(0,0,0,0.18)';
+      ctx.shadowBlur = 8;
       ctx.fill();
       ctx.beginPath();
-      ctx.arc(pRight.x, pRight.y, 8, 0, Math.PI * 2);
-      ctx.fillStyle = '#8a0000';
+      ctx.arc(pRight.x, pRight.y, 11, 0, Math.PI * 2);
+      ctx.fillStyle = '#7a0000';
       ctx.fill();
       ctx.beginPath();
-      ctx.arc(pRight.x, pRight.y, 3, 0, Math.PI * 2);
+      ctx.arc(pRight.x, pRight.y, 4, 0, Math.PI * 2);
       ctx.fillStyle = '#ffffff';
       ctx.fill();
       ctx.restore();
