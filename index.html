@@ -24,7 +24,7 @@
   /* Stage Background Spotlight */
   .spotlight {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90vw;
@@ -43,7 +43,7 @@
   /* Central Ceremony Branding */
   #ceremony-container {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
@@ -288,7 +288,7 @@
   let lastMouse = { x: -1000, y: -1000 };
 
   class Point {
-    constructor(x, y) {
+    constructor(x, y, col, row) {
       this.x = x;
       this.y = y;
       this.px = x;
@@ -297,6 +297,8 @@
       this.vy = 0;
       this.pin_x = null;
       this.pin_y = null;
+      this.col = col;
+      this.row = row;
     }
     
     update() {
@@ -318,11 +320,12 @@
   }
 
   class Constraint {
-    constructor(p1, p2, isShear = false) {
+    constructor(p1, p2, isShear = false, isHorizontal = false) {
       this.p1 = p1;
       this.p2 = p2;
       this.length = isShear ? spacing * Math.SQRT2 : spacing;
       this.stiffness = 1.0; 
+      this.isHorizontal = isHorizontal;
     }
     
     resolve() {
@@ -370,7 +373,7 @@
       for (let x = 0; x < cols; x++) {
         let pX = (x / (cols - 1)) * width;
         let pY = startY + y * spacing;
-        let p = new Point(pX, pY);
+        let p = new Point(pX, pY, x, y);
         
         if (x === 0 || x === cols - 1) {
           p.pin_x = p.x;
@@ -384,16 +387,16 @@
       for (let x = 0; x < cols; x++) {
         let p = points[y * cols + x];
         if (x > 0) {
-          constraints.push(new Constraint(p, points[y * cols + (x - 1)], false));
+          constraints.push(new Constraint(p, points[y * cols + (x - 1)], false, true));
         }
         if (y > 0) {
-          constraints.push(new Constraint(p, points[(y - 1) * cols + x], false));
+          constraints.push(new Constraint(p, points[(y - 1) * cols + x], false, false));
         }
         if (x > 0 && y > 0) {
-          constraints.push(new Constraint(p, points[(y - 1) * cols + (x - 1)], true));
+          constraints.push(new Constraint(p, points[(y - 1) * cols + (x - 1)], true, false));
         }
         if (x < cols - 1 && y > 0) {
-          constraints.push(new Constraint(p, points[(y - 1) * cols + (x + 1)], true));
+          constraints.push(new Constraint(p, points[(y - 1) * cols + (x + 1)], true, false));
         }
       }
     }
@@ -465,24 +468,40 @@
       if (trail[i].age <= 0) trail.splice(i, 1);
     }
 
-    // Slicing logic
+    // Clean razor-sharp column slicing
     let cutOccurred = false;
     if (mouse.down) {
-      for (let i = constraints.length - 1; i >= 0; i--) {
-        let c = constraints[i];
-        if (lineIntersect(lastMouse.x, lastMouse.y, mouse.x, mouse.y, c.p1.x, c.p1.y, c.p2.x, c.p2.y)) {
-          spawnSparks((c.p1.x + c.p2.x)/2, (c.p1.y + c.p2.y)/2);
-          constraints.splice(i, 1);
-          cutOccurred = true;
-        } else {
-          let cx = (c.p1.x + c.p2.x) / 2;
-          let cy = (c.p1.y + c.p2.y) / 2;
-          if (Math.hypot(cx - mouse.x, cy - mouse.y) < 14) {
-            spawnSparks(cx, cy);
-            constraints.splice(i, 1);
-            cutOccurred = true;
+      let severedCols = new Set();
+
+      for (let c of constraints) {
+        if (c.p1.col !== c.p2.col) {
+          if (lineIntersect(lastMouse.x, lastMouse.y, mouse.x, mouse.y, c.p1.x, c.p1.y, c.p2.x, c.p2.y)) {
+            severedCols.add(Math.min(c.p1.col, c.p2.col));
+          } else {
+            let cx = (c.p1.x + c.p2.x) / 2;
+            let cy = (c.p1.y + c.p2.y) / 2;
+            if (Math.hypot(cx - mouse.x, cy - mouse.y) < 18) {
+              severedCols.add(Math.min(c.p1.col, c.p2.col));
+            }
           }
         }
+      }
+
+      if (severedCols.size > 0) {
+        for (let colIdx of severedCols) {
+          let midPointX = (colIdx / (cols - 1)) * width;
+          spawnSparks(midPointX, height / 2);
+          
+          for (let i = constraints.length - 1; i >= 0; i--) {
+            let c = constraints[i];
+            let minC = Math.min(c.p1.col, c.p2.col);
+            let maxC = Math.max(c.p1.col, c.p2.col);
+            if (minC === colIdx && maxC === colIdx + 1) {
+              constraints.splice(i, 1);
+            }
+          }
+        }
+        cutOccurred = true;
       }
 
       if (cutOccurred) {
@@ -538,23 +557,28 @@
     ctx.shadowOffsetX = 6;
     ctx.shadowOffsetY = 10;
 
-    const maxDistSq = (spacing * 2.8) * (spacing * 2.8);
+    // Helper map of active horizontal constraints for 100% glitch-free quad rendering
+    let activeHoriz = new Set();
+    for (let c of constraints) {
+      if (c.isHorizontal) {
+        let minC = Math.min(c.p1.col, c.p2.col);
+        activeHoriz.add(c.p1.row + '_' + minC);
+      }
+    }
 
     for (let y = 0; y < rows - 1; y++) {
-      ctx.fillStyle = quadColors[y];
-      ctx.strokeStyle = quadColors[y]; 
+      ctx.fillStyle = quadColors[y] || quadColors[0];
+      ctx.strokeStyle = quadColors[y] || quadColors[0]; 
       ctx.lineWidth = 1.5; 
       
       for (let x = 0; x < cols - 1; x++) {
-        let p1 = points[y * cols + x];
-        let p2 = points[y * cols + x + 1];
-        let p3 = points[(y + 1) * cols + x + 1];
-        let p4 = points[(y + 1) * cols + x];
+        // Quad is rendered only if top horizontal link is active!
+        if (activeHoriz.has(y + '_' + x)) {
+          let p1 = points[y * cols + x];
+          let p2 = points[y * cols + x + 1];
+          let p3 = points[(y + 1) * cols + x + 1];
+          let p4 = points[(y + 1) * cols + x];
 
-        let dx1 = p1.x - p2.x, dy1 = p1.y - p2.y;
-        let d1Sq = dx1 * dx1 + dy1 * dy1;
-
-        if (d1Sq < maxDistSq) {
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
           ctx.lineTo(p2.x, p2.y);
