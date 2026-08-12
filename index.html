@@ -279,8 +279,8 @@
   let isSevered = false;
   
   // Ribbon Mesh Settings
-  const spacing = 20; // Larger spacing + 40 iterations = ZERO elasticity!
-  const rows = 6;
+  const spacing = 18;
+  const rows = 8;
   let cols;
   
   // Mouse state
@@ -528,13 +528,15 @@
     lastMouse.y = mouse.y;
   }
 
-  // Red Satin Ribbon Palette with Metallic Gold Trim
+  // Royal Satin Red Palette with Double Gold Embroidered Borders
   const quadColors = [
-    '#d4af37', // Gold top border
-    '#7a0000', // Deep red
-    '#ff2a2a', // Sheen highlight
-    '#7a0000', // Deep red
-    '#d4af37'  // Gold bottom border
+    '#d4af37', // Gold top outer rim
+    '#ffd700', // Gold embroidered accent
+    '#5a0000', // Deep burgundy shade
+    '#b80d0d', // Rich satin red
+    '#ff3333', // Silk gloss highlight
+    '#b80d0d', // Rich satin red
+    '#5a0000'  // Deep burgundy shade
   ];
 
   function draw() {
@@ -567,7 +569,7 @@
     }
     ctx.restore();
 
-    // 1. Draw Cloth Ribbon Quads
+    // 1. Draw Cloth Ribbon Quads with Gold Embroidered Stitch Lines
     for (let y = 0; y < rows - 1; y++) {
       ctx.fillStyle = quadColors[y];
       ctx.strokeStyle = quadColors[y]; 
@@ -593,6 +595,19 @@
           ctx.closePath();
           ctx.fill();
           ctx.stroke();
+
+          // Gold Thread Embroidery Detail on Top & Bottom Gold Bands
+          if (y === 0 || y === rows - 2) {
+            ctx.save();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo((p1.x + p4.x)/2, (p1.y + p4.y)/2);
+            ctx.lineTo((p2.x + p3.x)/2, (p2.y + p3.y)/2);
+            ctx.stroke();
+            ctx.restore();
+          }
         }
       }
     }
