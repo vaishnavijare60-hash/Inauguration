@@ -540,6 +540,33 @@
   function draw() {
     ctx.clearRect(0, 0, width, height);
     
+    // 0. Draw Ribbon Drop Shadow onto Stage/Logo
+    ctx.save();
+    ctx.translate(10, 16);
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.08)';
+    ctx.lineWidth = 2;
+    for (let y = 0; y < rows - 1; y++) {
+      for (let x = 0; x < cols - 1; x++) {
+        let p1 = points[y * cols + x];
+        let p2 = points[y * cols + x + 1];
+        let p3 = points[(y + 1) * cols + x + 1];
+        let p4 = points[(y + 1) * cols + x];
+
+        let d1 = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+        if (d1 < spacing * 3) {
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.lineTo(p3.x, p3.y);
+          ctx.lineTo(p4.x, p4.y);
+          ctx.closePath();
+          ctx.fill();
+        }
+      }
+    }
+    ctx.restore();
+
     // 1. Draw Cloth Ribbon Quads
     for (let y = 0; y < rows - 1; y++) {
       ctx.fillStyle = quadColors[y];
@@ -570,7 +597,50 @@
       }
     }
 
-    // 2. Draw Sparks
+    // 2. Draw Golden Wall Rosettes / Anchors at Pinned Ends
+    const midRow = Math.floor(rows / 2);
+    let pLeft = points[midRow * cols];
+    let pRight = points[midRow * cols + (cols - 1)];
+
+    if (pLeft && pLeft.pin_x !== null) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(pLeft.x, pLeft.y, 22, 0, Math.PI * 2);
+      ctx.fillStyle = '#d4af37';
+      ctx.shadowColor = 'rgba(0,0,0,0.2)';
+      ctx.shadowBlur = 10;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(pLeft.x, pLeft.y, 14, 0, Math.PI * 2);
+      ctx.fillStyle = '#b8860b';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(pLeft.x, pLeft.y, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.restore();
+    }
+
+    if (pRight && pRight.pin_x !== null) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(pRight.x, pRight.y, 22, 0, Math.PI * 2);
+      ctx.fillStyle = '#d4af37';
+      ctx.shadowColor = 'rgba(0,0,0,0.2)';
+      ctx.shadowBlur = 10;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(pRight.x, pRight.y, 14, 0, Math.PI * 2);
+      ctx.fillStyle = '#b8860b';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(pRight.x, pRight.y, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // 3. Draw Sparks
     for (let s of sparks) {
       ctx.fillStyle = s.color;
       ctx.globalAlpha = s.life;
@@ -580,28 +650,40 @@
     }
     ctx.globalAlpha = 1.0;
 
-    // 3. Draw Blade Trail (Scissor slice trail effect)
+    // 4. Draw Blade Trail (Scissor slice trail effect)
     if (trail.length > 1) {
       ctx.beginPath();
       ctx.moveTo(trail[0].x, trail[0].y);
       for (let i = 1; i < trail.length; i++) {
         ctx.lineTo(trail[i].x, trail[i].y);
       }
-      ctx.strokeStyle = '#ffd700';
+      ctx.strokeStyle = '#d4af37';
       ctx.lineWidth = 3;
-      ctx.shadowColor = '#ffd700';
-      ctx.shadowBlur = 12;
+      ctx.shadowColor = '#d4af37';
+      ctx.shadowBlur = 10;
       ctx.stroke();
-      ctx.shadowBlur = 0; // Reset shadow
+      ctx.shadowBlur = 0;
     }
 
-    // 4. Draw Confetti
+    // 5. Draw Confetti
     for (let c of confetti) {
       ctx.save();
       ctx.translate(c.x, c.y);
       ctx.rotate(c.rotation);
       ctx.fillStyle = c.color;
       ctx.fillRect(-c.size / 2, -c.size / 4, c.size, c.size / 2);
+      ctx.restore();
+    }
+
+    // 6. Draw Golden Scissor Cursor Indicator
+    if (mouse.x > 0 && mouse.y > 0) {
+      ctx.save();
+      ctx.translate(mouse.x + 12, mouse.y - 12);
+      ctx.font = '22px sans-serif';
+      ctx.fillStyle = '#d4af37';
+      ctx.shadowColor = 'rgba(0,0,0,0.3)';
+      ctx.shadowBlur = 6;
+      ctx.fillText('✂️', 0, 0);
       ctx.restore();
     }
   }
