@@ -533,34 +533,13 @@
   function draw() {
     ctx.clearRect(0, 0, width, height);
     
-    // 0. Draw Ribbon Drop Shadow onto Stage/Logo
+    // 1. Draw Sleek Cloth Ribbon Quads with Dynamic Cut-Synced Drop Shadow
     ctx.save();
-    ctx.translate(10, 14);
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
-    ctx.strokeStyle = 'rgba(0, 0, 0, 0.08)';
-    ctx.lineWidth = 1.8;
-    for (let y = 0; y < rows - 1; y++) {
-      for (let x = 0; x < cols - 1; x++) {
-        let p1 = points[y * cols + x];
-        let p2 = points[y * cols + x + 1];
-        let p3 = points[(y + 1) * cols + x + 1];
-        let p4 = points[(y + 1) * cols + x];
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.12)';
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetX = 6;
+    ctx.shadowOffsetY = 12;
 
-        let d1 = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-        if (d1 < spacing * 3) {
-          ctx.beginPath();
-          ctx.moveTo(p1.x, p1.y);
-          ctx.lineTo(p2.x, p2.y);
-          ctx.lineTo(p3.x, p3.y);
-          ctx.lineTo(p4.x, p4.y);
-          ctx.closePath();
-          ctx.fill();
-        }
-      }
-    }
-    ctx.restore();
-
-    // 1. Draw Sleek Cloth Ribbon Quads
     for (let y = 0; y < rows - 1; y++) {
       ctx.fillStyle = quadColors[y];
       ctx.strokeStyle = quadColors[y]; 
@@ -589,6 +568,7 @@
         }
       }
     }
+    ctx.restore();
 
     // 3. Draw Sparks
     for (let s of sparks) {
