@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inauguration Ribbon</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    overflow: hidden;
+    font-family: sans-serif;
+    /* Crosshair hints that you can slice it! */
+    cursor: crosshair; 
+  }
+
+  #ceremony-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 2s ease-out 0.2s forwards;
+  }
+
+  #ceremony-logo {
+    max-width: 500px;
+    width: 80vw;
+    /* Soft white glow to make the logo pop against the black background */
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.15)); 
+  }
+  
+  #ceremony-title {
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 300;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 1.5rem;
+    opacity: 0.9;
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translate(-50%, -45%); }
+    100% { opacity: 1; transform: translate(-50%, -50%); }
+  }
+
+  canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+
+
+</style>
+</head>
+<body>
+
+<div id="ceremony-container">
+  <img id="ceremony-logo" src="../dpes_new_logo (1).svg" alt="Dhole Patil College of Engineering">
+  <h1 id="ceremony-title">Computer Department</h1>
+</div>
+
+<canvas id="c"></canvas>
+
+
+<script>
+  // Pure JS Verlet Integration Engine for True Tearable Cloth Physics
+  const canvas = document.getElementById('c');
+  const ctx = canvas.getContext('2d');
+  
+  let width, height;
+  let points = [];
+  let constraints = [];
+  
+  const friction = 0.99; // Real-world air resistance
+  let gravity = 0.8; // Accurate, heavy gravity!
+  let isCut = false;
+  
+  // Ribbon Mesh Settings
+  const spacing = 16; // Increased spacing for better performance (fewer particles)
+  const rows = 6;
+  let cols;
+  
+  // Mouse state for "Fruit Ninja" slicing
+  let mouse = { down: false, x: -1000, y: -1000 };
+  let lastMouse = { x: -1000, y: -1000 };
+
+  class Point {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+      this.px = x;
+      this.py = y;
+      this.vx = 0;
+      this.vy = 0;
+      this.pin_x = null;
+      this.pin_y = null;
+    }
+    
+    update() {
+      if (this.pin_x !== null) {
+        this.x = this.pin_x;
+        this.y = this.pin_y;
+        return;
+      }
+      
+      this.vx = (this.x - this.px) * friction;
+      this.vy = (this.y - this.py) * friction;
+      
+      this.px = this.x;
+      this.py = this.y;
+      
+      this.x += this.vx;
+      this.y += this.vy + gravity;
+    }
+  }
+
+  class Constraint {
+    constructor(p1, p2, isShear = false) {
+      this.p1 = p1;
+      this.p2 = p2;
+      // Shear constraints are diagonal, so they are spacing * sqrt(2) long
+      this.length = isShear ? spacing * Math.SQRT2 : spacing;
+      this.stiffness = 1.0; 
+    }
+    
+    resolve() {
+      let dx = this.p1.x - this.p2.x;
+      let dy = this.p1.y - this.p2.y;
+      let dist = Math.hypot(dx, dy);
+      if (dist === 0) return;
+      
+      // Apply stiffness multiplier for elastic effect
+      let diff = ((this.length - dist) / dist) * this.stiffness;
+      
+      if (this.p1.pin_x === null && this.p2.pin_x === null) {
+        let px = dx * diff * 0.5;
+        let py = dy * diff * 0.5;
+        this.p1.x += px;
+        this.p1.y += py;
+        this.p2.x -= px;
+        this.p2.y -= py;
+      } else if (this.p1.pin_x !== null && this.p2.pin_x === null) {
+        this.p2.x -= dx * diff;
+        this.p2.y -= dy * diff;
+      } else if (this.p1.pin_x === null && this.p2.pin_x !== null) {
+        this.p1.x += dx * diff;
+        this.p1.y += dy * diff;
+      }
+    }
+  }
+
+  function initCloth() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    
+    points = [];
+    constraints = [];
+    isCut = false;
+    
+    // No slack. The ribbon is pulled tight across the screen!
+    cols = Math.floor(width / spacing);
+    
+    const startY = height / 2; // Straight across the middle to elegantly cover the logo!
+    
+    // Create the cloth particles
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++) {
+        // Distribute points evenly across the screen horizontally, 
+        // they are compressed so gravity will pull them down into a curve!
+        let pX = (x / (cols - 1)) * width;
+        let pY = startY + y * spacing;
+        
+        let p = new Point(pX, pY);
+        
+        // Pin the left and right walls firmly
+        if (x === 0 || x === cols - 1) {
+          p.pin_x = p.x;
+          p.pin_y = p.y;
+        }
+        points.push(p);
+      }
+    }
+    
+    // Connect particles to form the mesh
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++) {
+        let p = points[y * cols + x];
+        
+        // Structural constraints (horizontal/vertical)
+        if (x > 0) {
+          constraints.push(new Constraint(p, points[y * cols + (x - 1)], false));
+        }
+        if (y > 0) {
+          constraints.push(new Constraint(p, points[(y - 1) * cols + x], false));
+        }
+        
+        // Shear constraints (diagonal) for realistic, stable fabric physics!
+        if (x > 0 && y > 0) {
+          constraints.push(new Constraint(p, points[(y - 1) * cols + (x - 1)], true));
+        }
+        if (x < cols - 1 && y > 0) {
+          constraints.push(new Constraint(p, points[(y - 1) * cols + (x + 1)], true));
+        }
+      }
+    }
+  }
+
+  // Math helper for slicing line segments
+  function lineIntersect(p0_x, p0_y, p1_x, p1_y, p2_x, p2_y, p3_x, p3_y) {
+    let s1_x = p1_x - p0_x;
+    let s1_y = p1_y - p0_y;
+    let s2_x = p3_x - p2_x;
+    let s2_y = p3_y - p2_y;
+
+    let denom = -s2_x * s1_y + s1_x * s2_y;
+    if (denom === 0) return false;
+
+    let s = (-s1_y * (p0_x - p2_x) + s1_x * (p0_y - p2_y)) / denom;
+    let t = ( s2_x * (p0_y - p2_y) - s2_y * (p0_x - p2_x)) / denom;
+
+    return (s >= 0 && s <= 1 && t >= 0 && t <= 1);
+  }
+
+  function update() {
+    // Handling user mouse interaction
+    if (mouse.down) {
+      isCut = true;
+      
+      // Slicing logic (Iterate backwards to safely remove from array)
+      for (let i = constraints.length - 1; i >= 0; i--) {
+        let c = constraints[i];
+        
+        // Check if mouse swept across the thread
+        if (lineIntersect(lastMouse.x, lastMouse.y, mouse.x, mouse.y, c.p1.x, c.p1.y, c.p2.x, c.p2.y)) {
+          constraints.splice(i, 1);
+        } else {
+          // Check if mouse is just generally clicking very close to it
+          let cx = (c.p1.x + c.p2.x) / 2;
+          let cy = (c.p1.y + c.p2.y) / 2;
+          if (Math.hypot(cx - mouse.x, cy - mouse.y) < 15) {
+            constraints.splice(i, 1);
+          }
+        }
+      }
+    } else {
+      // Hover repel logic: gives the ribbon a real physical presence
+      for (let p of points) {
+        let dist = Math.hypot(p.x - mouse.x, p.y - mouse.y);
+        if (dist < 40 && p.pin_x === null) {
+          p.x += (p.x - mouse.x) * 0.03; // Gently push cloth away
+          p.y += (p.y - mouse.y) * 0.03;
+        }
+      }
+    }
+    
+    // Physics integration
+    for (let p of points) p.update();
+    
+    // Optimal iterations: Shear constraints stabilize the mesh, so we can use far fewer iterations for massive performance gains!
+    for (let i = 0; i < 15; i++) {
+      for (let c of constraints) c.resolve();
+    }
+    
+    lastMouse.x = mouse.x;
+    lastMouse.y = mouse.y;
+  }
+
+  // Premium Satin Red color scheme! 
+  const quadColors = [
+    '#4a0000', // Dark edge
+    '#ba0d0d', // Classic red
+    '#ff1a1a', // Shiny bright center
+    '#ba0d0d', // Classic red
+    '#4a0000'  // Dark edge
+  ];
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+    
+    // Draw solid cloth using quad grid
+    for (let y = 0; y < rows - 1; y++) {
+      ctx.fillStyle = quadColors[y];
+      ctx.strokeStyle = quadColors[y]; 
+      // Slight overlap stroke to prevent any visual seams
+      ctx.lineWidth = 1.5; 
+      
+      for (let x = 0; x < cols - 1; x++) {
+        let p1 = points[y * cols + x];
+        let p2 = points[y * cols + x + 1];
+        let p3 = points[(y + 1) * cols + x + 1];
+        let p4 = points[(y + 1) * cols + x];
+
+        // Measure distance to see if cloth is torn in this cell
+        let d1 = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+        let d2 = Math.hypot(p2.x - p3.x, p2.y - p3.y);
+        let d3 = Math.hypot(p3.x - p4.x, p3.y - p4.y);
+        let d4 = Math.hypot(p4.x - p1.x, p4.y - p1.y);
+
+        // Safe tear limit
+        if (d1 < spacing * 3 && d2 < spacing * 3 && d3 < spacing * 3 && d4 < spacing * 3) {
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.lineTo(p3.x, p3.y);
+          ctx.lineTo(p4.x, p4.y);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+        }
+      }
+    }
+    
+  }
+
+  function loop() {
+    update();
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  // Event Listeners for slicing
+  window.addEventListener('mousedown', (e) => {
+    mouse.down = true;
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    lastMouse.x = mouse.x;
+    lastMouse.y = mouse.y;
+  });
+
+  window.addEventListener('mouseup', () => { mouse.down = false; });
+
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  
+  // Touch support for mobile Fruit Ninja action!
+  window.addEventListener('touchstart', (e) => {
+    mouse.down = true;
+    mouse.x = e.touches[0].clientX;
+    mouse.y = e.touches[0].clientY;
+    lastMouse.x = mouse.x;
+    lastMouse.y = mouse.y;
+  }, { passive: false }); // Optional passive false if preventing scroll, but default is fine here
+  
+  window.addEventListener('touchend', () => { mouse.down = false; });
+  
+  window.addEventListener('touchmove', (e) => {
+    mouse.x = e.touches[0].clientX;
+    mouse.y = e.touches[0].clientY;
+  });
+
+  window.addEventListener('resize', initCloth);
+
+  // Initialize
+  initCloth();
+  loop();
+</script>
+
+</body>
+</html>
