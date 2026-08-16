@@ -21,15 +21,17 @@ export function initScanScreen(onCeremonyStart) {
     soundEngine.startScan();
 
     handArea.classList.add('scanning');
-    scanStatus.innerHTML = '<span class="status-symbol">❖</span> AUTHENTICATING AUTHORIZED GUEST...';
+    if (scanStatus) {
+      scanStatus.innerHTML = '<span class="pulse-indicator"></span> AUTHENTICATING...';
+    }
 
     let pct = 0;
     const interval = setInterval(() => {
       pct += Math.floor(Math.random() * 8) + 4;
       if (pct > 100) pct = 100;
 
-      scanProgress.style.width = pct + '%';
-      scanPercent.textContent = 'AUTHORIZATION MATCH: ' + pct + '%';
+      if (scanProgress) scanProgress.style.width = pct + '%';
+      if (scanPercent) scanPercent.textContent = pct + '%';
 
       if (pct >= 100) {
         clearInterval(interval);
@@ -38,8 +40,10 @@ export function initScanScreen(onCeremonyStart) {
 
         handArea.classList.remove('scanning');
         handArea.classList.add('granted');
-        scanStatus.innerHTML = '<span class="status-symbol">✓</span> AUTHORIZATION CONFIRMED • WELCOME';
-        scanStatus.classList.add('granted');
+        if (scanStatus) {
+          scanStatus.innerHTML = '✦ INAUGURATION AUTHORIZED ✦';
+          scanStatus.classList.add('granted');
+        }
 
         setTimeout(startLockPhase, 700);
       }

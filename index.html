@@ -21,54 +21,18 @@
 
   <div id="ceremony-bg"></div>
 
-  <!-- PHASE 1: Professional Executive Authorization Screen -->
+  <!-- PHASE 1: Executive Inauguration Authorization Screen -->
   <div id="scan-screen">
-    <!-- Floating Ambient Particles Canvas & Grid -->
+    <!-- Soft Ambient Canvas -->
     <canvas id="bg-cyber-canvas"></canvas>
-    <div class="cyber-bg-grid"></div>
 
-    <div class="hud-frame">
-      <div class="hud-corner top-left"></div>
-      <div class="hud-corner top-right"></div>
-      <div class="hud-corner bottom-left"></div>
-      <div class="hud-corner bottom-right"></div>
-
-      <!-- Professional Header Title -->
-      <div id="scan-title">
-        <span class="symbol-accent">❖</span> DEPARTMENT OF COMPUTER ENGINEERING // INAUGURATION AUTHORIZATION <span class="symbol-accent">❖</span>
-      </div>
-
-      <!-- Left Telemetry Panel (Official Institution Details) -->
-      <div class="side-hud-panel left-panel">
-        <div class="hud-box">
-          <div class="hud-box-title">INSTITUTION</div>
-          <div class="stat-row"><span>COLLEGE:</span><span class="stat-val">DPCOE PUNE</span></div>
-          <div class="stat-row"><span>DEPARTMENT:</span><span class="stat-val">COMPUTER ENG.</span></div>
-          <div class="stat-row"><span>ACADEMIC YEAR:</span><span class="stat-val">2026-2027</span></div>
-        </div>
-
-        <div class="hud-box">
-          <div class="hud-box-title">EVENT PROTOCOL</div>
-          <div class="stat-row"><span>CEREMONY:</span><span class="stat-val">OFFICIAL</span></div>
-          <div class="stat-row"><span>STAGE:</span><span class="stat-val">INAUGURATION</span></div>
-          <div class="stat-row"><span>SYSTEM:</span><span class="stat-val">ONLINE</span></div>
-        </div>
-      </div>
-
-      <!-- Right Telemetry Panel (System Status) -->
-      <div class="side-hud-panel right-panel">
-        <div class="hud-box">
-          <div class="hud-box-title">AUTHORIZATION STATUS</div>
-          <div class="stat-row"><span>SECURITY:</span><span class="stat-val">VERIFIED</span></div>
-          <div class="stat-row"><span>CLEARANCE:</span><span class="stat-val">GUEST AUTHORIZED</span></div>
-          <div class="stat-row"><span>RIBBON STAGE:</span><span class="stat-val">READY</span></div>
-        </div>
-
-        <div class="hud-box">
-          <div class="hud-box-title">LOCATION</div>
-          <div class="stat-row"><span>VENUE:</span><span class="stat-val">MAIN AUDITORIUM</span></div>
-          <div class="stat-row"><span>CITY:</span><span class="stat-val">PUNE, INDIA</span></div>
-        </div>
+    <div class="executive-frame">
+      <!-- Regal Executive Header -->
+      <div id="scan-header">
+        <img id="scan-header-logo" src="logo.svg" alt="DPCOE Logo">
+        <div class="college-title-sub">Dhole Patil College of Engineering, Pune</div>
+        <h1 class="dept-title-main">Department of Computer Engineering</h1>
+        <div class="ceremony-badge">✦ OFFICIAL INAUGURATION CEREMONY ✦</div>
       </div>
 
       <!-- Central Scanner Wrapper -->
@@ -77,7 +41,7 @@
         <div class="hud-ring-outer"></div>
         <div class="hud-ring-inner"></div>
 
-        <!-- Hand Scanner Touch Area with High-Res Image Asset -->
+        <!-- Hand Scanner Touch Area -->
         <div id="hand-area">
           <img src="hand_scan_print.png" alt="Biometric Hand Print Graphic" class="hand-image">
           <!-- Laser Scan Beam -->
@@ -85,15 +49,14 @@
         </div>
       </div>
 
-      <!-- Scan Status & Progress Bar -->
+      <!-- Clean Touch Prompt & Progress Bar -->
       <div id="scan-status-container">
         <div id="scan-status">
-          <span class="status-symbol">❖</span> PLACE HAND ON SCANNER TO INITIALIZE CEREMONY
+          <span class="pulse-indicator"></span> TOUCH SENSOR TO INAUGURATE
         </div>
         <div class="progress-bar-track">
           <div id="scan-progress"></div>
         </div>
-        <div id="scan-percent">AUTHORIZATION MATCH: 0%</div>
       </div>
     </div>
   </div>
