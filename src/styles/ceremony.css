@@ -1,11 +1,11 @@
-/* Blurred college building background for ribbon cutting page */
+/* College building background for ribbon cutting page */
 #ceremony-bg {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: url('/college_building.jpg') center center / cover no-repeat;
-  filter: blur(4px);
-  transform: scale(1.05); /* prevent blur edge artifacts */
+  background: url('/background.jpg') center center / cover no-repeat;
+  filter: blur(2px);
+  transform: scale(1.04); /* prevent blur edge artifacts */
 }
 
 #ceremony-bg::after {
