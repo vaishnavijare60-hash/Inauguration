@@ -45,7 +45,7 @@ export function initScanScreen(onCeremonyStart) {
           scanStatus.classList.add('granted');
         }
 
-        setTimeout(startLockPhase, 700);
+        setTimeout(startCurtainPhase, 600);
       }
     }, 70);
   }
@@ -56,21 +56,10 @@ export function initScanScreen(onCeremonyStart) {
     startScan();
   });
 
-  function startLockPhase() {
-    document.getElementById('scan-screen').classList.add('hidden');
-    const lockOverlay = document.getElementById('lock-overlay');
-    lockOverlay.classList.add('visible');
-
-    setTimeout(() => {
-      soundEngine.playUnlock();
-      document.getElementById('lock-shackle').classList.add('unlocked-shackle');
-
-      setTimeout(startCurtainPhase, 700);
-    }, 800);
-  }
-
   function startCurtainPhase() {
-    document.getElementById('lock-overlay').classList.add('hidden');
+    const scanScreen = document.getElementById('scan-screen');
+    if (scanScreen) scanScreen.classList.add('hidden');
+    
     soundEngine.playCurtain();
 
     setTimeout(() => {
@@ -85,6 +74,6 @@ export function initScanScreen(onCeremonyStart) {
           onCeremonyStart();
         }
       }, 600);
-    }, 300);
+    }, 200);
   }
 }

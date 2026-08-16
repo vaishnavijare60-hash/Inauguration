@@ -1,5 +1,6 @@
 /**
- * Web Audio Synthesizer Sound Engine for ceremony audio feedback.
+ * Web Audio Synthesizer Executive Sound Engine for ceremony audio feedback.
+ * Custom crafted harmonic acoustics for inauguration authorization.
  */
 export class SoundEngine {
   constructor() {
@@ -31,43 +32,49 @@ export class SoundEngine {
   playHover() {
     this.ensureContext();
     if (!this.ctx) return;
+    const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
+    
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(880, this.ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(1200, this.ctx.currentTime + 0.08);
-    gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
+    osc.frequency.setValueAtTime(1046.50, now); // High C6 crystal note
+    osc.frequency.exponentialRampToValueAtTime(1318.51, now + 0.1); // E6
+    
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+    
     osc.connect(gain);
     gain.connect(this.ctx.destination);
-    osc.start();
-    osc.stop(this.ctx.currentTime + 0.08);
+    osc.start(now);
+    osc.stop(now + 0.1);
   }
 
   startScan() {
     this.ensureContext();
     if (!this.ctx || this.scanOsc) return;
 
+    const now = this.ctx.currentTime;
     this.scanOsc = this.ctx.createOscillator();
     const lfo = this.ctx.createOscillator();
     const lfoGain = this.ctx.createGain();
     this.scanGain = this.ctx.createGain();
 
+    // Warm executive resonance hum
     this.scanOsc.type = 'sine';
-    this.scanOsc.frequency.setValueAtTime(440, this.ctx.currentTime);
+    this.scanOsc.frequency.setValueAtTime(523.25, now); // C5
 
     lfo.type = 'sine';
-    lfo.frequency.setValueAtTime(6, this.ctx.currentTime);
-    lfoGain.gain.setValueAtTime(80, this.ctx.currentTime);
+    lfo.frequency.setValueAtTime(4, now); // Gentle 4Hz swell
+    lfoGain.gain.setValueAtTime(30, now);
 
     lfo.connect(this.scanOsc.frequency);
 
     const filter = this.ctx.createBiquadFilter();
     filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(1000, this.ctx.currentTime);
+    filter.frequency.setValueAtTime(1200, now);
 
-    this.scanGain.gain.setValueAtTime(0.01, this.ctx.currentTime);
-    this.scanGain.gain.linearRampToValueAtTime(0.12, this.ctx.currentTime + 0.2);
+    this.scanGain.gain.setValueAtTime(0.001, now);
+    this.scanGain.gain.linearRampToValueAtTime(0.12, now + 0.3);
 
     this.scanOsc.connect(filter);
     filter.connect(this.scanGain);
@@ -80,7 +87,8 @@ export class SoundEngine {
 
   stopScan() {
     if (this.scanGain && this.ctx) {
-      this.scanGain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + 0.2);
+      const now = this.ctx.currentTime;
+      this.scanGain.gain.linearRampToValueAtTime(0.001, now + 0.15);
       setTimeout(() => {
         if (this.scanOsc) {
           try { this.scanOsc.stop(); this.scanOsc.disconnect(); } catch (e) { }
@@ -90,7 +98,7 @@ export class SoundEngine {
           try { this.lfo.stop(); this.lfo.disconnect(); } catch (e) { }
           this.lfo = null;
         }
-      }, 200);
+      }, 150);
     }
   }
 
@@ -99,62 +107,35 @@ export class SoundEngine {
     if (!this.ctx) return;
     const now = this.ctx.currentTime;
 
-    const notes = [523.25, 659.25, 783.99, 1046.50];
-    notes.forEach((freq, idx) => {
+    // Majestic Executive Arpeggio Chime (C-Major Executive Fanfare: C5, E5, G5, C6)
+    const chord = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+    chord.forEach((freq, idx) => {
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now + idx * 0.08);
-      gain.gain.setValueAtTime(0.001, now + idx * 0.08);
-      gain.gain.linearRampToValueAtTime(0.18, now + idx * 0.08 + 0.04);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.6);
+      osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+      
+      gain.gain.setValueAtTime(0.001, now + idx * 0.07);
+      gain.gain.linearRampToValueAtTime(0.2, now + idx * 0.07 + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.9);
+      
       osc.connect(gain);
       gain.connect(this.ctx.destination);
-      osc.start(now + idx * 0.08);
-      osc.stop(now + idx * 0.08 + 0.6);
+      osc.start(now + idx * 0.07);
+      osc.stop(now + idx * 0.07 + 0.9);
     });
 
-    const subOsc = this.ctx.createOscillator();
-    const subGain = this.ctx.createGain();
-    subOsc.type = 'sine';
-    subOsc.frequency.setValueAtTime(150, now);
-    subOsc.frequency.exponentialRampToValueAtTime(40, now + 0.8);
-    subGain.gain.setValueAtTime(0.3, now);
-    subGain.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
-    subOsc.connect(subGain);
-    subGain.connect(this.ctx.destination);
-    subOsc.start(now);
-    subOsc.stop(now + 0.8);
-  }
-
-  playUnlock() {
-    this.ensureContext();
-    if (!this.ctx) return;
-    const now = this.ctx.currentTime;
-
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(1200, now);
-    osc.frequency.exponentialRampToValueAtTime(180, now + 0.15);
-    gain.gain.setValueAtTime(0.25, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-    osc.start(now);
-    osc.stop(now + 0.15);
-
-    const energyOsc = this.ctx.createOscillator();
-    const energyGain = this.ctx.createGain();
-    energyOsc.type = 'sine';
-    energyOsc.frequency.setValueAtTime(1800, now + 0.1);
-    energyOsc.frequency.exponentialRampToValueAtTime(2400, now + 0.4);
-    energyGain.gain.setValueAtTime(0.15, now + 0.1);
-    energyGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-    energyOsc.connect(energyGain);
-    energyGain.connect(this.ctx.destination);
-    energyOsc.start(now + 0.1);
-    energyOsc.stop(now + 0.4);
+    // Deep luxury gold bass anchor
+    const bassOsc = this.ctx.createOscillator();
+    const bassGain = this.ctx.createGain();
+    bassOsc.type = 'sine';
+    bassOsc.frequency.setValueAtTime(130.81, now); // Low C3
+    bassGain.gain.setValueAtTime(0.25, now);
+    bassGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+    bassOsc.connect(bassGain);
+    bassGain.connect(this.ctx.destination);
+    bassOsc.start(now);
+    bassOsc.stop(now + 1.2);
   }
 
   playCurtain() {
@@ -162,7 +143,8 @@ export class SoundEngine {
     if (!this.ctx) return;
     const now = this.ctx.currentTime;
 
-    const bufferSize = Math.floor(this.ctx.sampleRate * 1.2);
+    // Soft silk curtain ambient air sweep
+    const bufferSize = Math.floor(this.ctx.sampleRate * 1.4);
     const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
     const output = buffer.getChannelData(0);
     for (let i = 0; i < bufferSize; i++) {
@@ -174,21 +156,21 @@ export class SoundEngine {
 
     const filter = this.ctx.createBiquadFilter();
     filter.type = 'bandpass';
-    filter.frequency.setValueAtTime(150, now);
-    filter.frequency.exponentialRampToValueAtTime(600, now + 0.6);
-    filter.frequency.exponentialRampToValueAtTime(100, now + 1.2);
-    filter.Q.setValueAtTime(2, now);
+    filter.frequency.setValueAtTime(200, now);
+    filter.frequency.exponentialRampToValueAtTime(800, now + 0.7);
+    filter.frequency.exponentialRampToValueAtTime(150, now + 1.4);
+    filter.Q.setValueAtTime(1.5, now);
 
     const gain = this.ctx.createGain();
-    gain.gain.setValueAtTime(0.01, now);
-    gain.gain.linearRampToValueAtTime(0.18, now + 0.5);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.12, now + 0.6);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.4);
 
     whiteNoise.connect(filter);
     filter.connect(gain);
     gain.connect(this.ctx.destination);
     whiteNoise.start(now);
-    whiteNoise.stop(now + 1.2);
+    whiteNoise.stop(now + 1.4);
   }
 
   playCut() {
@@ -196,47 +178,34 @@ export class SoundEngine {
     if (!this.ctx) return;
     const now = this.ctx.currentTime;
 
+    // Sparkling Executive Ribbon Cutting Celebration Fanfare
     const sliceOsc = this.ctx.createOscillator();
     const sliceGain = this.ctx.createGain();
-    sliceOsc.type = 'sawtooth';
-    sliceOsc.frequency.setValueAtTime(2800, now);
-    sliceOsc.frequency.exponentialRampToValueAtTime(300, now + 0.12);
-    sliceGain.gain.setValueAtTime(0.3, now);
-    sliceGain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+    sliceOsc.type = 'sine';
+    sliceOsc.frequency.setValueAtTime(1800, now);
+    sliceOsc.frequency.exponentialRampToValueAtTime(400, now + 0.15);
+    sliceGain.gain.setValueAtTime(0.25, now);
+    sliceGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
     sliceOsc.connect(sliceGain);
     sliceGain.connect(this.ctx.destination);
     sliceOsc.start(now);
-    sliceOsc.stop(now + 0.12);
+    sliceOsc.stop(now + 0.15);
 
-    const chord = [293.66, 369.99, 440.00, 587.33, 739.99, 880.00];
+    // Warm golden acoustic chord resonance
+    const chord = [392.00, 493.88, 587.33, 783.99, 987.77, 1174.66];
     chord.forEach((freq, i) => {
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(freq, now + 0.05 + i * 0.04);
-      gain.gain.setValueAtTime(0.001, now + 0.05 + i * 0.04);
-      gain.gain.linearRampToValueAtTime(0.15, now + 0.08 + i * 0.04);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 1.8);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + 0.04 + i * 0.03);
+      gain.gain.setValueAtTime(0.001, now + 0.04 + i * 0.03);
+      gain.gain.linearRampToValueAtTime(0.16, now + 0.08 + i * 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 2.0);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
-      osc.start(now + 0.05 + i * 0.04);
-      osc.stop(now + 1.8);
+      osc.start(now + 0.04 + i * 0.03);
+      osc.stop(now + 2.0);
     });
-
-    for (let i = 0; i < 6; i++) {
-      const chimeOsc = this.ctx.createOscillator();
-      const chimeGain = this.ctx.createGain();
-      chimeOsc.type = 'sine';
-      const chimeFreq = 1200 + Math.random() * 2000;
-      const startTime = now + 0.3 + i * 0.15;
-      chimeOsc.frequency.setValueAtTime(chimeFreq, startTime);
-      chimeGain.gain.setValueAtTime(0.08, startTime);
-      chimeGain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.4);
-      chimeOsc.connect(chimeGain);
-      chimeGain.connect(this.ctx.destination);
-      chimeOsc.start(startTime);
-      chimeOsc.stop(startTime + 0.4);
-    }
   }
 }
 

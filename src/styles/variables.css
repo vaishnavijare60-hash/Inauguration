@@ -1,17 +1,20 @@
 :root {
-  /* Brand Theme Colors */
-  --bg-cream: #fef6e8;
-  --bg-warm-gradient: radial-gradient(circle at center, #fffdf8 0%, #fef6e8 50%, #fdf0d5 100%);
+  /* Executive Theme Palette (Gold & Navy) */
+  --bg-cream: #fbf9f4;
+  --bg-warm-gradient: radial-gradient(circle at center, #ffffff 0%, #f7f3eb 60%, #efe6d8 100%);
   --gold-primary: #b8860b;
   --gold-light: #d4af37;
   --gold-dim: rgba(184, 134, 11, 0.35);
   --gold-bg-dim: rgba(184, 134, 11, 0.08);
-  --crimson-primary: #9c1111;
-  --crimson-light: #ff4444;
-  --crimson-dim: rgba(156, 17, 17, 0.2);
-  --success-green: #27ae60;
-  --ink-dark: #1a1a2e;
-  --ink-subtle: #555555;
+  --navy-primary: #0f2b48;
+  --navy-light: #1e3a8a;
+  --navy-dim: rgba(15, 43, 72, 0.2);
+  --crimson-primary: #0f2b48; /* mapped to executive navy */
+  --crimson-light: #1e3a8a;
+  --crimson-dim: rgba(15, 43, 72, 0.2);
+  --success-green: #10b981;
+  --ink-dark: #0f172a;
+  --ink-subtle: #475569;
   --ink-muted: #334155;
 
   /* Typography */

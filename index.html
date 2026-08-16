@@ -53,46 +53,7 @@
     </div>
   </div>
 
-  <!-- PHASE 2: Lock Overlay -->
-  <div id="lock-overlay">
-    <div id="lock-wrapper">
-      <svg viewBox="0 0 200 200" class="lock-svg">
-        <defs>
-          <filter id="lock-glow-filter">
-            <feGaussianBlur stdDeviation="4" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-
-        <!-- Outer Rotating Ring -->
-        <circle cx="100" cy="100" r="85" fill="none" stroke="#b8860b" stroke-width="1.5" stroke-dasharray="10 5"
-          class="hud-rotate" />
-        <circle cx="100" cy="100" r="72" fill="none" stroke="rgba(184, 134, 11, 0.4)" stroke-width="1"
-          stroke-dasharray="3 6" class="hud-rotate-reverse" />
-
-        <!-- Shield Base -->
-        <path d="M 100 45 L 140 60 V 105 C 140 135 100 155 100 155 C 100 155 60 135 60 105 V 60 Z"
-          fill="rgba(156, 17, 17, 0.85)" stroke="#b8860b" stroke-width="2.5" filter="url(#lock-glow-filter)" />
-
-        <!-- Lock Shackle -->
-        <path id="lock-shackle" d="M 85 85 V 70 C 85 60 115 60 115 70 V 85" fill="none" stroke="#9c1111"
-          stroke-width="4" stroke-linecap="round" />
-
-        <!-- Lock Body -->
-        <rect x="80" y="85" width="40" height="32" rx="4" fill="#9c1111" opacity="0.95" />
-
-        <!-- Keyhole Core -->
-        <circle cx="100" cy="98" r="3.5" fill="#fef6e8" />
-        <polygon points="98,98 102,98 103,109 97,109" fill="#fef6e8" />
-      </svg>
-      <div id="lock-status-text">OFFICIAL CEREMONY LATCH RELEASED</div>
-    </div>
-  </div>
-
-  <!-- PHASE 3: Curtains -->
+  <!-- PHASE 2: Curtains -->
   <div class="curtain curtain-left"></div>
   <div class="curtain curtain-right"></div>
 
