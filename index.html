@@ -24,7 +24,7 @@
       cursor: crosshair;
     }
 
-    /* Central Ceremony Branding */
+    /* Central Ceremony Branding (Original Intact) */
     #ceremony-container {
       position: absolute;
       top: 40%;
@@ -145,7 +145,7 @@
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* ====== PHASE 1: Blue Biometric Scan Screen ====== */
+    /* ====== PHASE 1: Ultra Futuristic Blue Biometric Scan Screen ====== */
     #scan-screen {
       position: fixed;
       inset: 0;
@@ -166,7 +166,15 @@
       pointer-events: none;
     }
 
-    /* Cyber Background Grid & HUD Elements */
+    /* Background Cyber Canvas & Grid */
+    #bg-cyber-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
     .cyber-bg-grid {
       position: absolute;
       inset: 0;
@@ -177,14 +185,25 @@
       background-size: 40px 40px;
     }
 
+    .hud-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
     .hud-corner {
       position: absolute;
-      width: 32px;
-      height: 32px;
+      width: 40px;
+      height: 40px;
       border-color: #00f0ff;
       border-style: solid;
-      opacity: 0.6;
+      opacity: 0.7;
       pointer-events: none;
+      filter: drop-shadow(0 0 8px #00f0ff);
     }
     .hud-corner.top-left { top: 24px; left: 24px; border-width: 2px 0 0 2px; }
     .hud-corner.top-right { top: 24px; right: 24px; border-width: 2px 2px 0 0; }
@@ -193,49 +212,174 @@
 
     #scan-title {
       color: #7dd3fc;
-      font-size: 0.85rem;
-      letter-spacing: 5px;
+      font-size: 0.9rem;
+      letter-spacing: 6px;
       text-transform: uppercase;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       z-index: 2;
-      text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+      text-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      font-weight: 600;
     }
     .symbol-accent { color: #00f0ff; }
 
+    /* Side Telemetry Panels (Left & Right Sci-Fi HUD Widgets) */
+    .side-hud-panel {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .left-panel { left: 40px; }
+    .right-panel { right: 40px; }
+
+    @media (max-width: 1024px) {
+      .side-hud-panel { display: none; }
+    }
+
+    .hud-box {
+      background: rgba(4, 18, 44, 0.6);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: 8px;
+      padding: 12px 16px;
+      width: 190px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.08);
+    }
+    .hud-box-title {
+      font-size: 0.65rem;
+      font-family: monospace;
+      color: #00f0ff;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      border-bottom: 1px stroke rgba(0, 240, 255, 0.2);
+      padding-bottom: 4px;
+      font-weight: bold;
+    }
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: monospace;
+      font-size: 0.65rem;
+      color: #94a3b8;
+      margin-bottom: 4px;
+    }
+    .stat-val { color: #38bdf8; font-weight: bold; }
+
+    /* Live Equalizer Bars */
+    .eq-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 30px;
+    }
+    .eq-bar {
+      flex: 1;
+      background: linear-gradient(180deg, #00f0ff, #0066ff);
+      height: var(--h);
+      border-radius: 2px;
+      animation: eqPulse 1.2s infinite ease-in-out alternate;
+    }
+    .eq-bar:nth-child(2) { animation-delay: 0.2s; }
+    .eq-bar:nth-child(3) { animation-delay: 0.4s; }
+    .eq-bar:nth-child(4) { animation-delay: 0.1s; }
+    .eq-bar:nth-child(5) { animation-delay: 0.5s; }
+    .eq-bar:nth-child(6) { animation-delay: 0.3s; }
+
+    @keyframes eqPulse {
+      0% { height: 20%; }
+      100% { height: 95%; }
+    }
+
+    .hex-ticker {
+      font-family: monospace;
+      font-size: 0.6rem;
+      color: #00f0ff;
+      opacity: 0.7;
+      line-height: 1.4;
+    }
+
+    /* Radar Sweep Widget */
+    .radar-scope {
+      width: 70px;
+      height: 70px;
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      border-radius: 50%;
+      position: relative;
+      margin: 0 auto;
+      overflow: hidden;
+      background: radial-gradient(circle, rgba(0,240,255,0.1) 0%, transparent 70%);
+    }
+    .radar-line {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      height: 2px;
+      background: linear-gradient(90deg, #00f0ff, transparent);
+      transform-origin: 0% 0%;
+      animation: radarScan 2.5s linear infinite;
+    }
+    @keyframes radarScan {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Central Scanner Container */
     #hand-scanner-wrapper {
       position: relative;
-      width: 320px;
-      height: 360px;
+      width: 380px;
+      height: 380px;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 2;
     }
 
+    /* Horizontal Circuit Board Traces (Image 2 style) */
+    .circuit-traces-left, .circuit-traces-right {
+      position: absolute;
+      width: 260px;
+      height: 180px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      opacity: 0.6;
+    }
+    .circuit-traces-left { left: -240px; }
+    .circuit-traces-right { right: -240px; }
+
     /* Outer Rotating HUD Rings */
     .hud-ring-outer {
       position: absolute;
-      width: 330px;
-      height: 330px;
-      border: 1px dashed rgba(0, 240, 255, 0.35);
+      width: 360px;
+      height: 360px;
+      border: 1px dashed rgba(0, 240, 255, 0.4);
       border-radius: 50%;
       animation: rotateClockwise 25s linear infinite;
       pointer-events: none;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
     }
     .hud-ring-inner {
       position: absolute;
-      width: 290px;
-      height: 290px;
-      border: 2px stroke rgba(0, 140, 255, 0.2);
+      width: 320px;
+      height: 320px;
+      border: 2px stroke rgba(0, 140, 255, 0.25);
       border-top-color: #00f0ff;
       border-bottom-color: #00f0ff;
       border-radius: 50%;
       animation: rotateCounterClockwise 15s linear infinite;
       pointer-events: none;
     }
+
+    .hud-rotate { animation: rotateClockwise 20s linear infinite; }
+    .hud-rotate-reverse { animation: rotateCounterClockwise 15s linear infinite; }
 
     @keyframes rotateClockwise {
       0% { transform: rotate(0deg); }
@@ -250,67 +394,68 @@
     .telemetry-badge {
       position: absolute;
       font-family: monospace;
-      font-size: 0.65rem;
+      font-size: 0.68rem;
       color: #38bdf8;
-      opacity: 0.8;
+      opacity: 0.85;
       letter-spacing: 1px;
       pointer-events: none;
       line-height: 1.5;
+      text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
     }
-    .top-left-badge { top: 10px; left: -10px; }
-    .bottom-right-badge { bottom: 10px; right: -10px; text-align: right; }
+    .top-left-badge { top: 0px; left: 0px; }
+    .bottom-right-badge { bottom: 0px; right: 0px; text-align: right; }
     .telemetry-badge .lbl { color: #00f0ff; font-weight: bold; }
 
     /* Hand Scanner Box */
     #hand-area {
-      width: 220px;
-      height: 280px;
+      width: 240px;
+      height: 300px;
       position: relative;
       cursor: pointer;
-      background: rgba(4, 18, 44, 0.7);
-      border: 2px solid rgba(0, 240, 255, 0.35);
-      border-radius: 20px;
+      background: rgba(4, 18, 44, 0.75);
+      border: 2px solid rgba(0, 240, 255, 0.4);
+      border-radius: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.1), 0 0 20px rgba(0, 120, 255, 0.2);
-      backdrop-filter: blur(4px);
+      box-shadow: inset 0 0 25px rgba(0, 240, 255, 0.15), 0 0 25px rgba(0, 120, 255, 0.3);
+      backdrop-filter: blur(6px);
     }
     #hand-area:hover {
       border-color: #00f0ff;
-      box-shadow: inset 0 0 30px rgba(0, 240, 255, 0.2), 0 0 30px rgba(0, 240, 255, 0.5);
+      box-shadow: inset 0 0 35px rgba(0, 240, 255, 0.25), 0 0 35px rgba(0, 240, 255, 0.6);
       transform: scale(1.02);
     }
     #hand-area.scanning {
       border-color: #00f0ff;
-      box-shadow: inset 0 0 40px rgba(0, 240, 255, 0.35), 0 0 45px rgba(0, 240, 255, 0.7);
+      box-shadow: inset 0 0 45px rgba(0, 240, 255, 0.4), 0 0 50px rgba(0, 240, 255, 0.8);
     }
     #hand-area.granted {
       border-color: #38bdf8;
-      box-shadow: inset 0 0 50px rgba(0, 240, 255, 0.5), 0 0 60px rgba(0, 240, 255, 0.85);
+      box-shadow: inset 0 0 60px rgba(0, 240, 255, 0.6), 0 0 70px rgba(0, 240, 255, 0.9);
     }
 
     .hand-svg {
-      width: 150px;
-      height: 210px;
+      width: 170px;
+      height: 230px;
       transition: all 0.5s ease;
     }
     #hand-area.scanning .hand-svg {
-      filter: drop-shadow(0 0 12px #00f0ff);
+      filter: drop-shadow(0 0 15px #00f0ff);
     }
 
     /* Glowing Blue Laser Scan Beam */
     #scan-line {
       position: absolute;
-      left: 8px;
-      right: 8px;
+      left: 10px;
+      right: 10px;
       height: 4px;
       background: linear-gradient(90deg, transparent, #00f0ff, #ffffff, #00f0ff, transparent);
       border-radius: 2px;
       top: 10px;
       opacity: 0;
-      box-shadow: 0 0 15px #00f0ff, 0 0 30px #00f0ff;
+      box-shadow: 0 0 18px #00f0ff, 0 0 35px #00f0ff;
     }
     #hand-area.scanning #scan-line {
       opacity: 1;
@@ -326,18 +471,18 @@
     /* Target Node Pulsing */
     @keyframes nodePulse {
       0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; filter: drop-shadow(0 0 6px #00f0ff); }
+      50% { opacity: 1; filter: drop-shadow(0 0 8px #00f0ff); }
     }
     .node-pulse { animation: nodePulse 2s infinite ease-in-out; }
 
     /* Scan Status & Progress */
     #scan-status-container {
-      margin-top: 30px;
+      margin-top: 25px;
       display: flex;
       flex-direction: column;
       align-items: center;
       z-index: 2;
-      width: 300px;
+      width: 320px;
     }
     #scan-status {
       font-size: 0.85rem;
@@ -352,7 +497,7 @@
     }
     #scan-status.granted {
       color: #00f0ff;
-      text-shadow: 0 0 12px rgba(0, 240, 255, 0.8);
+      text-shadow: 0 0 14px rgba(0, 240, 255, 0.9);
     }
 
     .progress-bar-track {
@@ -360,7 +505,7 @@
       height: 6px;
       background: rgba(0, 240, 255, 0.1);
       border-radius: 3px;
-      border: 1px solid rgba(0, 240, 255, 0.2);
+      border: 1px solid rgba(0, 240, 255, 0.25);
       overflow: hidden;
       margin-bottom: 8px;
     }
@@ -368,7 +513,7 @@
       width: 0%;
       height: 100%;
       background: linear-gradient(90deg, #0066ff, #00f0ff);
-      box-shadow: 0 0 10px #00f0ff;
+      box-shadow: 0 0 12px #00f0ff;
       transition: width 0.1s linear;
     }
 
@@ -469,126 +614,195 @@
 
 <body>
 
-  <!-- PHASE 1: Blue Biometric Hand Scan Screen -->
+  <!-- PHASE 1: Ultra Futuristic Blue Biometric Scan Screen -->
   <div id="scan-screen">
-    <!-- Sci-Fi Grid Backdrop & Tech Corner Brackets -->
+    <!-- Floating Cyber Particles Canvas & Grid -->
+    <canvas id="bg-cyber-canvas"></canvas>
     <div class="cyber-bg-grid"></div>
-    <div class="hud-corner top-left"></div>
-    <div class="hud-corner top-right"></div>
-    <div class="hud-corner bottom-left"></div>
-    <div class="hud-corner bottom-right"></div>
 
-    <!-- Header Title -->
-    <div id="scan-title">
-      <span class="symbol-accent">◈</span> SYSTEM ACCESS // BIOMETRIC AUTHORIZATION <span class="symbol-accent">◈</span>
-    </div>
+    <div class="hud-frame">
+      <div class="hud-corner top-left"></div>
+      <div class="hud-corner top-right"></div>
+      <div class="hud-corner bottom-left"></div>
+      <div class="hud-corner bottom-right"></div>
 
-    <!-- Scanner Container with Concentric HUD Rings -->
-    <div id="hand-scanner-wrapper">
-      <!-- Outer Rotating HUD Rings -->
-      <div class="hud-ring-outer"></div>
-      <div class="hud-ring-inner"></div>
-
-      <!-- Telemetry Badges -->
-      <div class="telemetry-badge top-left-badge">
-        <span class="lbl">LAT:</span> 28.1325/002<br>
-        <span class="lbl">ID:</span> CFER0.426289
-      </div>
-      <div class="telemetry-badge bottom-right-badge">
-        <span class="lbl">SEC LEVEL:</span> 05<br>
-        <span class="lbl">HASH:</span> 0.989321 UVT
+      <!-- Header Title -->
+      <div id="scan-title">
+        <span class="symbol-accent">◈</span> SYSTEM ACCESS // BIOMETRIC AUTHORIZATION <span class="symbol-accent">◈</span>
       </div>
 
-      <!-- Hand Scanner Touch Area -->
-      <div id="hand-area">
-        <!-- High-Tech SVG Vector Hand Print Graphic -->
-        <svg viewBox="0 0 200 260" class="hand-svg">
-          <defs>
-            <filter id="cyan-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="4" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-            <linearGradient id="scan-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.85" />
-              <stop offset="100%" stop-color="#0066ff" stop-opacity="0.25" />
-            </linearGradient>
-          </defs>
+      <!-- Left Telemetry Panel (Charts & Hex Stream) -->
+      <div class="side-hud-panel left-panel">
+        <div class="hud-box">
+          <div class="hud-box-title">SYSTEM DIAGNOSTICS</div>
+          <div class="stat-row"><span>CPU CORE:</span><span class="stat-val">3.8 GHz</span></div>
+          <div class="stat-row"><span>CYBER HASH:</span><span class="stat-val">0x8F92A</span></div>
+          <div class="stat-row"><span>ENCRYPTION:</span><span class="stat-val">AES-512</span></div>
+        </div>
 
-          <!-- Cyber Grid inside hand outline -->
-          <g class="hand-grid" stroke="rgba(0, 240, 255, 0.15)" stroke-width="1">
-            <path d="M20 40 H180 M20 80 H180 M20 120 H180 M20 160 H180 M20 200 H180" />
-            <path d="M40 20 V240 M80 20 V240 M120 20 V240 M160 20 V240" />
-          </g>
+        <div class="hud-box">
+          <div class="hud-box-title">SIGNAL FREQUENCY</div>
+          <div class="eq-bars">
+            <div class="eq-bar" style="--h: 60%"></div>
+            <div class="eq-bar" style="--h: 90%"></div>
+            <div class="eq-bar" style="--h: 40%"></div>
+            <div class="eq-bar" style="--h: 80%"></div>
+            <div class="eq-bar" style="--h: 100%"></div>
+            <div class="eq-bar" style="--h: 70%"></div>
+          </div>
+        </div>
 
-          <!-- Hand Silhouette & Finger Outlines -->
-          <path class="hand-path" d="
-            M 85,240 
-            L 82,180 
-            C 75,175 60,165 48,150 
-            C 35,135 28,110 32,95 
-            C 35,85 45,82 52,90 
-            C 60,100 68,115 75,130 
-            L 75,65 
-            C 75,52 87,52 87,65 
-            L 87,120 
-            L 97,45 
-            C 97,32 109,32 109,45 
-            L 109,120 
-            L 119,55 
-            C 119,42 131,42 131,55 
-            L 131,125 
-            L 139,85 
-            C 139,74 150,74 150,85 
-            L 150,145 
-            C 150,180 135,220 115,240 
-            Z" 
-            fill="url(#scan-grad)" stroke="#00f0ff" stroke-width="2.5" filter="url(#cyan-glow)"/>
+        <div class="hud-box hex-ticker" id="hex-ticker">
+          01001001 01001110<br>
+          01010101 01000111<br>
+          01010010 01000001
+        </div>
+      </div>
 
-          <!-- Fingerprint Whorls on Fingertips -->
-          <g class="fingerprints" stroke="#80f3ff" stroke-width="1.2" fill="none" opacity="0.75">
-            <path d="M36 92 A 6 6 0 0 1 44 94 M34 96 A 8 8 0 0 1 46 98" />
-            <path d="M78 60 A 5 5 0 0 1 84 60 M76 64 A 7 7 0 0 1 86 64" />
-            <path d="M100 40 A 5 5 0 0 1 106 40 M98 44 A 7 7 0 0 1 108 44" />
-            <path d="M122 50 A 5 5 0 0 1 128 50 M120 54 A 7 7 0 0 1 130 54" />
-            <path d="M142 80 A 4 4 0 0 1 148 80 M140 84 A 6 6 0 0 1 150 84" />
-          </g>
+      <!-- Right Telemetry Panel (Radar Scope) -->
+      <div class="side-hud-panel right-panel">
+        <div class="hud-box radar-box">
+          <div class="hud-box-title">RADAR SCOPE</div>
+          <div class="radar-scope">
+            <div class="radar-line"></div>
+          </div>
+        </div>
 
-          <!-- Biometric Palm Crease Lines -->
-          <g class="palm-lines" stroke="#00f0ff" stroke-width="1.8" stroke-dasharray="3 2" fill="none" opacity="0.85">
-            <path d="M 52,145 C 70,165 95,175 125,170" />
-            <path d="M 50,130 C 80,135 110,145 135,130" />
-            <path d="M 95,122 C 90,150 85,185 88,220" />
-          </g>
+        <div class="hud-box">
+          <div class="hud-box-title">SECURITY STATUS</div>
+          <div class="stat-row"><span>FIREWALL:</span><span class="stat-val">ACTIVE</span></div>
+          <div class="stat-row"><span>CLEARANCE:</span><span class="stat-val">LEVEL 5</span></div>
+          <div class="stat-row"><span>BIOMETRIC:</span><span class="stat-val">READY</span></div>
+        </div>
+      </div>
 
-          <!-- Fingertip Scan Target Nodes -->
-          <g class="scan-nodes">
-            <circle cx="40" cy="88" r="4" fill="#00f0ff" class="node-pulse" />
-            <circle cx="81" cy="56" r="4" fill="#00f0ff" class="node-pulse" />
-            <circle cx="103" cy="38" r="4" fill="#00f0ff" class="node-pulse" />
-            <circle cx="125" cy="48" r="4" fill="#00f0ff" class="node-pulse" />
-            <circle cx="145" cy="78" r="4" fill="#00f0ff" class="node-pulse" />
-            <circle cx="100" cy="150" r="7" fill="none" stroke="#00f0ff" stroke-width="1.5" />
-            <circle cx="100" cy="150" r="2.5" fill="#00f0ff" />
-          </g>
+      <!-- Central Scanner Wrapper -->
+      <div id="hand-scanner-wrapper">
+        <!-- Horizontal Circuit Board Traces (Image 2 style) -->
+        <svg class="circuit-traces-left" viewBox="0 0 300 200">
+          <path d="M 300 100 L 200 100 L 150 40 L 0 40 M 200 100 L 150 160 L 0 160 M 300 70 L 220 70 L 180 20 L 0 20 M 300 130 L 220 130 L 180 180 L 0 180" fill="none" stroke="rgba(0, 240, 255, 0.4)" stroke-width="1.5"/>
+          <circle cx="150" cy="40" r="3" fill="#00f0ff"/>
+          <circle cx="150" cy="160" r="3" fill="#00f0ff"/>
+          <circle cx="180" cy="20" r="3" fill="#00f0ff"/>
+          <circle cx="180" cy="180" r="3" fill="#00f0ff"/>
         </svg>
 
-        <!-- Glowing Blue Laser Beam -->
-        <div id="scan-line"></div>
-      </div>
-    </div>
+        <svg class="circuit-traces-right" viewBox="0 0 300 200">
+          <path d="M 0 100 L 100 100 L 150 40 L 300 40 M 100 100 L 150 160 L 300 160 M 0 70 L 80 70 L 120 20 L 300 20 M 0 130 L 80 130 L 120 180 L 300 180" fill="none" stroke="rgba(0, 240, 255, 0.4)" stroke-width="1.5"/>
+          <circle cx="150" cy="40" r="3" fill="#00f0ff"/>
+          <circle cx="150" cy="160" r="3" fill="#00f0ff"/>
+          <circle cx="120" cy="20" r="3" fill="#00f0ff"/>
+          <circle cx="120" cy="180" r="3" fill="#00f0ff"/>
+        </svg>
 
-    <!-- Scan Status & Progress Bar -->
-    <div id="scan-status-container">
-      <div id="scan-status">
-        <span class="status-symbol">❖</span> PLACE HAND ON SCANNER TO INITIALIZE
+        <!-- Outer Rotating HUD Rings -->
+        <div class="hud-ring-outer"></div>
+        <div class="hud-ring-inner"></div>
+
+        <!-- Telemetry Callouts -->
+        <div class="telemetry-badge top-left-badge">
+          <span class="lbl">LAT:</span> 28.1325/002<br>
+          <span class="lbl">ID:</span> CFER0.426289
+        </div>
+        <div class="telemetry-badge bottom-right-badge">
+          <span class="lbl">SEC LEVEL:</span> 05<br>
+          <span class="lbl">HASH:</span> 0.989321 UVT
+        </div>
+
+        <!-- Hand Scanner Touch Area -->
+        <div id="hand-area">
+          <!-- High-Tech SVG Vector Hand Print Graphic -->
+          <svg viewBox="0 0 200 260" class="hand-svg">
+            <defs>
+              <filter id="cyan-glow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <linearGradient id="scan-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.9" />
+                <stop offset="50%" stop-color="#0088ff" stop-opacity="0.5" />
+                <stop offset="100%" stop-color="#0044ff" stop-opacity="0.2" />
+              </linearGradient>
+            </defs>
+
+            <!-- Cyber Grid inside hand -->
+            <g class="hand-grid" stroke="rgba(0, 240, 255, 0.2)" stroke-width="1">
+              <path d="M10 30 H190 M10 70 H190 M10 110 H190 M10 150 H190 M10 190 H190 M10 230 H190" />
+              <path d="M30 10 V250 M70 10 V250 M110 10 V250 M150 10 V250 M190 10 V250" />
+            </g>
+
+            <!-- Anatomically Detailed Glowing Hand Silhouette -->
+            <path class="hand-path" d="
+              M 85,245 
+              L 80,185 
+              C 72,178 55,165 42,148 
+              C 28,132 22,108 26,92 
+              C 30,80 42,78 50,86 
+              C 58,96 66,112 74,128 
+              L 74,60 
+              C 74,45 88,45 88,60 
+              L 88,118 
+              L 98,38 
+              C 98,24 112,24 112,38 
+              L 112,118 
+              L 122,48 
+              C 122,34 136,34 136,48 
+              L 136,124 
+              L 144,80 
+              C 144,68 156,68 156,80 
+              L 156,145 
+              C 156,182 140,222 118,245 
+              Z" 
+              fill="url(#scan-grad)" stroke="#00f0ff" stroke-width="2.5" filter="url(#cyan-glow)"/>
+
+            <!-- Fingerprint Arches & Ridge Lines -->
+            <g class="fingerprints" stroke="#80f3ff" stroke-width="1.3" fill="none" opacity="0.85">
+              <path d="M34 88 A 6 6 0 0 1 42 90 M32 92 A 8 8 0 0 1 44 94 M30 96 A 10 10 0 0 1 46 98" />
+              <path d="M78 54 A 5 5 0 0 1 84 54 M76 58 A 7 7 0 0 1 86 58 M74 62 A 9 9 0 0 1 88 62" />
+              <path d="M102 32 A 5 5 0 0 1 108 32 M100 36 A 7 7 0 0 1 110 36 M98 40 A 9 9 0 0 1 112 40" />
+              <path d="M126 42 A 5 5 0 0 1 132 42 M124 46 A 7 7 0 0 1 134 46 M122 50 A 9 9 0 0 1 136 50" />
+              <path d="M146 74 A 4 4 0 0 1 152 74 M144 78 A 6 6 0 0 1 154 78 M142 82 A 8 8 0 0 1 156 82" />
+            </g>
+
+            <!-- Biometric Palm Lines -->
+            <g class="palm-lines" stroke="#00f0ff" stroke-width="1.8" stroke-dasharray="3 2" fill="none" opacity="0.9">
+              <path d="M 48,142 C 68,162 95,172 128,165" />
+              <path d="M 46,126 C 78,132 110,142 138,126" />
+              <path d="M 94,116 C 88,146 83,182 86,220" />
+            </g>
+
+            <!-- Target Nodes & Palm Reticle -->
+            <g class="scan-nodes">
+              <circle cx="37" cy="85" r="4.5" fill="#00f0ff" class="node-pulse" />
+              <circle cx="81" cy="50" r="4.5" fill="#00f0ff" class="node-pulse" />
+              <circle cx="105" cy="32" r="4.5" fill="#00f0ff" class="node-pulse" />
+              <circle cx="129" cy="42" r="4.5" fill="#00f0ff" class="node-pulse" />
+              <circle cx="149" cy="74" r="4.5" fill="#00f0ff" class="node-pulse" />
+
+              <circle cx="100" cy="145" r="14" fill="none" stroke="#00f0ff" stroke-width="1" stroke-dasharray="4 2" class="hud-rotate"/>
+              <circle cx="100" cy="145" r="8" fill="none" stroke="#00f0ff" stroke-width="1.5" />
+              <circle cx="100" cy="145" r="3" fill="#00f0ff" />
+            </g>
+          </svg>
+
+          <!-- Glowing Laser Scan Beam -->
+          <div id="scan-line"></div>
+        </div>
       </div>
-      <div class="progress-bar-track">
-        <div id="scan-progress"></div>
+
+      <!-- Scan Status & Progress Bar -->
+      <div id="scan-status-container">
+        <div id="scan-status">
+          <span class="status-symbol">❖</span> PLACE HAND ON SCANNER TO INITIALIZE
+        </div>
+        <div class="progress-bar-track">
+          <div id="scan-progress"></div>
+        </div>
+        <div id="scan-percent">DATA MATCH: 0%</div>
       </div>
-      <div id="scan-percent">DATA MATCH: 0%</div>
     </div>
   </div>
 
@@ -646,6 +860,54 @@
   <canvas id="c"></canvas>
 
   <script>
+    // ====== BACKGROUND CYBER PARTICLES ======
+    const bgCanvas = document.getElementById('bg-cyber-canvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    let bgParticles = [];
+
+    function initBgParticles() {
+      bgCanvas.width = window.innerWidth;
+      bgCanvas.height = window.innerHeight;
+      bgParticles = [];
+      for (let i = 0; i < 45; i++) {
+        bgParticles.push({
+          x: Math.random() * bgCanvas.width,
+          y: Math.random() * bgCanvas.height,
+          radius: Math.random() * 2 + 1,
+          vy: -Math.random() * 0.5 - 0.2,
+          alpha: Math.random() * 0.5 + 0.2
+        });
+      }
+    }
+
+    function animateBgParticles() {
+      if (document.getElementById('scan-screen').classList.contains('hidden')) return;
+      bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+      for (let p of bgParticles) {
+        p.y += p.vy;
+        if (p.y < 0) p.y = bgCanvas.height;
+        bgCtx.fillStyle = '#00f0ff';
+        bgCtx.globalAlpha = p.alpha;
+        bgCtx.beginPath();
+        bgCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        bgCtx.fill();
+      }
+      bgCtx.globalAlpha = 1.0;
+      requestAnimationFrame(animateBgParticles);
+    }
+    initBgParticles();
+    animateBgParticles();
+    window.addEventListener('resize', initBgParticles);
+
+    // Live Hex Ticker Update
+    setInterval(() => {
+      const ticker = document.getElementById('hex-ticker');
+      if (ticker) {
+        const hex = () => Math.floor(Math.random()*255).toString(16).padStart(2,'0').toUpperCase();
+        ticker.innerHTML = `0x${hex()}${hex()} 0x${hex()}${hex()}<br>0x${hex()}${hex()} 0x${hex()}${hex()}<br>0x${hex()}${hex()} 0x${hex()}${hex()}`;
+      }
+    }, 400);
+
     // ====== WEB AUDIO SYNTH SOUND ENGINE ======
     class SoundEngine {
       constructor() {
@@ -674,7 +936,6 @@
         }
       }
 
-      // Soft high-tech hover / click blip
       playHover() {
         this.ensureContext();
         if (!this.ctx) return;
@@ -691,7 +952,6 @@
         osc.stop(this.ctx.currentTime + 0.08);
       }
 
-      // Scanning sound loop (pulsing laser sweep tone)
       startScan() {
         this.ensureContext();
         if (!this.ctx || this.scanOsc) return;
@@ -704,14 +964,12 @@
         this.scanOsc.type = 'sawtooth';
         this.scanOsc.frequency.setValueAtTime(350, this.ctx.currentTime);
 
-        // LFO for scanner pulsation (8 Hz pulse)
         lfo.type = 'sine';
         lfo.frequency.setValueAtTime(8, this.ctx.currentTime);
         lfoGain.gain.setValueAtTime(150, this.ctx.currentTime);
 
         lfo.connect(this.scanOsc.frequency);
         
-        // Low pass filter for warm sci-fi sound
         const filter = this.ctx.createBiquadFilter();
         filter.type = 'lowpass';
         filter.frequency.setValueAtTime(900, this.ctx.currentTime);
@@ -744,13 +1002,11 @@
         }
       }
 
-      // Identity Verified / Access Granted Sci-Fi Power Up
       playGranted() {
         this.ensureContext();
         if (!this.ctx) return;
         const now = this.ctx.currentTime;
 
-        // Ascending sci-fi power chord: C5 (523Hz), E5 (659Hz), G5 (783Hz), C6 (1046Hz)
         const notes = [523.25, 659.25, 783.99, 1046.50];
         notes.forEach((freq, idx) => {
           const osc = this.ctx.createOscillator();
@@ -766,7 +1022,6 @@
           osc.stop(now + idx * 0.08 + 0.6);
         });
 
-        // Sub-bass boom
         const subOsc = this.ctx.createOscillator();
         const subGain = this.ctx.createGain();
         subOsc.type = 'sine';
@@ -780,13 +1035,11 @@
         subOsc.stop(now + 0.8);
       }
 
-      // Lock Mechanical Unlock Sound
       playUnlock() {
         this.ensureContext();
         if (!this.ctx) return;
         const now = this.ctx.currentTime;
 
-        // Mechanical unlatch click
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'triangle';
@@ -799,7 +1052,6 @@
         osc.start(now);
         osc.stop(now + 0.15);
 
-        // High frequency energy flash chime
         const energyOsc = this.ctx.createOscillator();
         const energyGain = this.ctx.createGain();
         energyOsc.type = 'sine';
@@ -813,7 +1065,6 @@
         energyOsc.stop(now + 0.4);
       }
 
-      // Curtain Open Sweep Sound
       playCurtain() {
         this.ensureContext();
         if (!this.ctx) return;
@@ -848,13 +1099,11 @@
         whiteNoise.stop(now + 1.2);
       }
 
-      // Ribbon Sever Slice & Triumphant Celebration Sound
       playCut() {
         this.ensureContext();
         if (!this.ctx) return;
         const now = this.ctx.currentTime;
 
-        // 1. Sharp Scissor Laser Slice
         const sliceOsc = this.ctx.createOscillator();
         const sliceGain = this.ctx.createGain();
         sliceOsc.type = 'sawtooth';
@@ -867,7 +1116,6 @@
         sliceOsc.start(now);
         sliceOsc.stop(now + 0.12);
 
-        // 2. Triumphant Celebration Fanfare Chord (D Major)
         const chord = [293.66, 369.99, 440.00, 587.33, 739.99, 880.00];
         chord.forEach((freq, i) => {
           const osc = this.ctx.createOscillator();
@@ -883,7 +1131,6 @@
           osc.stop(now + 1.8);
         });
 
-        // 3. Sparkling Celebration Shimmer Chimes
         for (let i = 0; i < 6; i++) {
           const chimeOsc = this.ctx.createOscillator();
           const chimeGain = this.ctx.createGain();
@@ -1063,7 +1310,6 @@
       if (isSevered) return;
       isSevered = true;
 
-      // Play ribbon cut fanfare & celebration audio
       soundEngine.playCut();
 
       setTimeout(() => {
@@ -1191,7 +1437,6 @@
       '#ba0d0d'
     ];
 
-    // Sci-Fi Scissor Cursor Symbol Drawing (Replaces emoji)
     function drawSciFiScissors(ctx, x, y) {
       ctx.save();
       ctx.translate(x + 12, y - 12);
@@ -1200,7 +1445,6 @@
       ctx.shadowColor = '#d4af37';
       ctx.shadowBlur = 8;
 
-      // Blade 1 (Upper)
       ctx.beginPath();
       ctx.moveTo(0, 0);
       ctx.lineTo(-24, -18);
@@ -1209,7 +1453,6 @@
       ctx.fillStyle = '#e2e8f0';
       ctx.fill();
 
-      // Blade 2 (Lower)
       ctx.beginPath();
       ctx.moveTo(0, 0);
       ctx.lineTo(-24, 18);
@@ -1218,7 +1461,6 @@
       ctx.fillStyle = '#cbd5e1';
       ctx.fill();
 
-      // Scissor Metallic Gold Handles
       ctx.lineWidth = 2.5;
       ctx.strokeStyle = '#d4af37';
 
@@ -1230,7 +1472,6 @@
       ctx.arc(-32, 20, 8, 0, Math.PI * 2);
       ctx.stroke();
 
-      // Pivot Screw
       ctx.fillStyle = '#ffd700';
       ctx.beginPath();
       ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
@@ -1244,7 +1485,6 @@
 
       if (!activeHoriz) return;
 
-      // 1. Drop Shadow
       ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
       for (let y = 0; y < rows - 1; y++) {
         for (let x = 0; x < cols - 1; x++) {
@@ -1265,7 +1505,6 @@
         }
       }
 
-      // 2. Main Red Silk Ribbon Quads
       for (let y = 0; y < rows - 1; y++) {
         ctx.fillStyle = quadColors[y] || quadColors[0];
         ctx.strokeStyle = quadColors[y] || quadColors[0];
@@ -1290,7 +1529,6 @@
         }
       }
 
-      // 3. Sparks
       for (let s of sparks) {
         ctx.fillStyle = s.color;
         ctx.globalAlpha = s.life;
@@ -1300,7 +1538,6 @@
       }
       ctx.globalAlpha = 1.0;
 
-      // 4. Blade Trail
       if (trail.length > 1) {
         ctx.beginPath();
         ctx.moveTo(trail[0].x, trail[0].y);
@@ -1312,7 +1549,6 @@
         ctx.stroke();
       }
 
-      // 5. Confetti
       for (let c of confetti) {
         ctx.save();
         ctx.translate(c.x, c.y);
@@ -1322,7 +1558,6 @@
         ctx.restore();
       }
 
-      // 6. Golden Scissor Cursor Indicator (Symbol vector drawing)
       if (mouse.x > 0 && mouse.y > 0) {
         drawSciFiScissors(ctx, mouse.x, mouse.y);
       }
@@ -1376,7 +1611,6 @@
     // ====== MULTI-PHASE CEREMONY ORCHESTRATION ======
     let ceremonyStarted = false;
 
-    // Phase 1: Hand Scan
     const handArea = document.getElementById('hand-area');
     const scanStatus = document.getElementById('scan-status');
     const scanProgress = document.getElementById('scan-progress');
@@ -1419,7 +1653,6 @@
     handArea.addEventListener('click', startScan);
     handArea.addEventListener('touchstart', (e) => { e.preventDefault(); startScan(); });
 
-    // Phase 2: Lock Unlock
     function startLockPhase() {
       document.getElementById('scan-screen').classList.add('hidden');
       const lockOverlay = document.getElementById('lock-overlay');
@@ -1433,7 +1666,6 @@
       }, 800);
     }
 
-    // Phase 3: Curtain Reveal
     function startCurtainPhase() {
       document.getElementById('lock-overlay').classList.add('hidden');
       soundEngine.playCurtain();
