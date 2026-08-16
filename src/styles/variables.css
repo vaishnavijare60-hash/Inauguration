@@ -1,0 +1,23 @@
+:root {
+  /* Brand Theme Colors */
+  --bg-cream: #fef6e8;
+  --bg-warm-gradient: radial-gradient(circle at center, #fffdf8 0%, #fef6e8 50%, #fdf0d5 100%);
+  --gold-primary: #b8860b;
+  --gold-light: #d4af37;
+  --gold-dim: rgba(184, 134, 11, 0.35);
+  --gold-bg-dim: rgba(184, 134, 11, 0.08);
+  --crimson-primary: #9c1111;
+  --crimson-light: #ff4444;
+  --crimson-dim: rgba(156, 17, 17, 0.2);
+  --success-green: #27ae60;
+  --ink-dark: #1a1a2e;
+  --ink-subtle: #555555;
+  --ink-muted: #334155;
+
+  /* Typography */
+  --font-main: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  --font-mono: monospace;
+
+  /* Responsive Spacing & Scaling for Big Screens */
+  --max-content-width: clamp(800px, 85vw, 1400px);
+}

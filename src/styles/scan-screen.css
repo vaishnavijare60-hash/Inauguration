@@ -1,0 +1,346 @@
+/* ====== PHASE 1: Professional Executive Authorization Screen ====== */
+#scan-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--bg-warm-gradient);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: default;
+  overflow: hidden;
+  font-family: var(--font-main);
+  width: 100vw;
+  height: 100vh;
+}
+
+#scan-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Background Ambient Canvas & Grid */
+#bg-cyber-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cyber-bg-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(184, 134, 11, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184, 134, 11, 0.06) 1px, transparent 1px);
+  background-size: clamp(40px, 3vw, 70px) clamp(40px, 3vw, 70px);
+}
+
+.hud-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 1800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: clamp(20px, 3vw, 60px);
+}
+
+.hud-corner {
+  position: absolute;
+  width: clamp(28px, 4vw, 60px);
+  height: clamp(28px, 4vw, 60px);
+  border-color: var(--gold-primary);
+  border-style: solid;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.hud-corner.top-left {
+  top: clamp(16px, 2vw, 40px);
+  left: clamp(16px, 2vw, 40px);
+  border-width: 3px 0 0 3px;
+}
+
+.hud-corner.top-right {
+  top: clamp(16px, 2vw, 40px);
+  right: clamp(16px, 2vw, 40px);
+  border-width: 3px 3px 0 0;
+}
+
+.hud-corner.bottom-left {
+  bottom: clamp(16px, 2vw, 40px);
+  left: clamp(16px, 2vw, 40px);
+  border-width: 0 0 3px 3px;
+}
+
+.hud-corner.bottom-right {
+  bottom: clamp(16px, 2vw, 40px);
+  right: clamp(16px, 2vw, 40px);
+  border-width: 0 3px 3px 0;
+}
+
+#scan-title {
+  color: var(--ink-dark);
+  font-size: clamp(1rem, 1.8vw, 2.2rem);
+  letter-spacing: clamp(3px, 0.5vw, 8px);
+  text-transform: uppercase;
+  margin-top: clamp(10px, 2vh, 30px);
+  margin-bottom: clamp(10px, 2vh, 30px);
+  z-index: 2;
+  text-shadow: 0 2px 12px rgba(184, 134, 11, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-weight: 700;
+  text-align: center;
+  width: 90%;
+}
+
+.symbol-accent {
+  color: var(--crimson-primary);
+}
+
+/* Side Telemetry Panels - Scaled Comfortably for Big Teaching Boards */
+.side-hud-panel {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2.5vh, 36px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.left-panel {
+  left: clamp(30px, 4vw, 100px);
+}
+
+.right-panel {
+  right: clamp(30px, 4vw, 100px);
+}
+
+@media (max-width: 1024px) {
+  .side-hud-panel {
+    display: none;
+  }
+}
+
+.hud-box {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1.5px solid rgba(184, 134, 11, 0.35);
+  border-radius: 12px;
+  padding: clamp(12px, 1.2vw, 22px);
+  width: clamp(200px, 16vw, 320px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.hud-box-title {
+  font-size: clamp(0.75rem, 0.9vw, 1.1rem);
+  color: var(--crimson-primary);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(156, 17, 17, 0.2);
+  padding-bottom: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: clamp(0.75rem, 0.85vw, 1rem);
+  color: var(--ink-subtle);
+  margin-bottom: 8px;
+}
+
+.stat-val {
+  color: var(--ink-dark);
+  font-weight: 600;
+}
+
+/* Central Scanner Wrapper */
+#hand-scanner-wrapper {
+  position: relative;
+  width: clamp(260px, 24vw, 480px);
+  height: clamp(300px, 27vw, 540px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Outer Concentric Accent Rings */
+.hud-ring-outer {
+  position: absolute;
+  width: clamp(260px, 24vw, 460px);
+  height: clamp(260px, 24vw, 460px);
+  border: 1.5px dashed rgba(184, 134, 11, 0.4);
+  border-radius: 50%;
+  animation: rotateClockwise 30s linear infinite;
+  pointer-events: none;
+}
+
+.hud-ring-inner {
+  position: absolute;
+  width: clamp(220px, 20vw, 400px);
+  height: clamp(220px, 20vw, 400px);
+  border: 2px solid rgba(184, 134, 11, 0.25);
+  border-top-color: var(--gold-primary);
+  border-bottom-color: var(--gold-primary);
+  border-radius: 50%;
+  animation: rotateCounterClockwise 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotateClockwise {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes rotateCounterClockwise {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+/* Hand Scanner Box */
+#hand-area {
+  width: clamp(190px, 17vw, 320px);
+  height: clamp(230px, 22vw, 400px);
+  position: relative;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2.5px solid rgba(184, 134, 11, 0.55);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 0 30px rgba(184, 134, 11, 0.1), 0 12px 35px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12px);
+  padding: clamp(14px, 1.2vw, 24px);
+  overflow: hidden;
+}
+
+#hand-area:hover {
+  border-color: var(--gold-primary);
+  box-shadow: inset 0 0 40px rgba(184, 134, 11, 0.2), 0 0 45px rgba(184, 134, 11, 0.3);
+  transform: scale(1.03);
+}
+
+#hand-area.scanning {
+  border-color: var(--crimson-primary);
+  box-shadow: inset 0 0 50px rgba(156, 17, 17, 0.2), 0 0 55px rgba(156, 17, 17, 0.4);
+}
+
+#hand-area.granted {
+  border-color: var(--success-green);
+  box-shadow: inset 0 0 60px rgba(39, 174, 96, 0.25), 0 0 65px rgba(39, 174, 96, 0.45);
+}
+
+.hand-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(184, 134, 11, 0.45));
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+#hand-area:hover .hand-image {
+  filter: drop-shadow(0 0 24px rgba(184, 134, 11, 0.65));
+  transform: scale(1.04);
+}
+
+#hand-area.scanning .hand-image {
+  filter: drop-shadow(0 0 32px var(--crimson-primary));
+}
+
+/* Laser Scan Beam */
+#scan-line {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  height: 5px;
+  background: linear-gradient(90deg, transparent, var(--crimson-primary), var(--crimson-light), var(--crimson-primary), transparent);
+  border-radius: 3px;
+  top: 12px;
+  opacity: 0;
+  box-shadow: 0 0 18px var(--crimson-primary), 0 0 35px rgba(156, 17, 17, 0.6);
+  z-index: 10;
+}
+
+#hand-area.scanning #scan-line {
+  opacity: 1;
+  animation: scanMove 1.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes scanMove {
+  0% { top: 12px; }
+  50% { top: calc(100% - 16px); }
+  100% { top: 12px; }
+}
+
+/* Scan Status & Progress Bar */
+#scan-status-container {
+  margin-top: clamp(16px, 2.5vh, 40px);
+  margin-bottom: clamp(10px, 2vh, 30px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+  width: clamp(280px, 28vw, 550px);
+}
+
+#scan-status {
+  font-size: clamp(0.85rem, 1.3vw, 1.5rem);
+  letter-spacing: clamp(2.5px, 0.35vw, 6px);
+  text-transform: uppercase;
+  color: var(--ink-subtle);
+  transition: color 0.4s;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+#scan-status.granted {
+  color: var(--success-green);
+  text-shadow: 0 0 16px rgba(39, 174, 96, 0.5);
+}
+
+.progress-bar-track {
+  width: 100%;
+  height: clamp(8px, 1vh, 14px);
+  background: rgba(184, 134, 11, 0.15);
+  border-radius: 6px;
+  border: 1px solid rgba(184, 134, 11, 0.35);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+#scan-progress {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--crimson-primary), var(--crimson-light));
+  box-shadow: 0 0 14px rgba(156, 17, 17, 0.5);
+  transition: width 0.1s linear;
+}
+
+#scan-percent {
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 1.1vw, 1.3rem);
+  color: var(--crimson-primary);
+  letter-spacing: 2px;
+  font-weight: 700;
+}
