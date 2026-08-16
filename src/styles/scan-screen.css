@@ -14,6 +14,7 @@
   font-family: var(--font-main);
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
 }
 
 #scan-screen.hidden {
@@ -37,7 +38,7 @@
   background-image:
     linear-gradient(rgba(184, 134, 11, 0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(184, 134, 11, 0.06) 1px, transparent 1px);
-  background-size: clamp(40px, 3vw, 70px) clamp(40px, 3vw, 70px);
+  background-size: clamp(35px, 3vw, 70px) clamp(35px, 3vw, 70px);
 }
 
 .hud-frame {
@@ -49,13 +50,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  padding: clamp(20px, 3vw, 60px);
+  padding: clamp(16px, 3vw, 60px);
 }
 
 .hud-corner {
   position: absolute;
-  width: clamp(28px, 4vw, 60px);
-  height: clamp(28px, 4vw, 60px);
+  width: clamp(20px, 4vw, 60px);
+  height: clamp(20px, 4vw, 60px);
   border-color: var(--gold-primary);
   border-style: solid;
   opacity: 0.6;
@@ -63,45 +64,45 @@
 }
 
 .hud-corner.top-left {
-  top: clamp(16px, 2vw, 40px);
-  left: clamp(16px, 2vw, 40px);
+  top: clamp(12px, 2vw, 40px);
+  left: clamp(12px, 2vw, 40px);
   border-width: 3px 0 0 3px;
 }
 
 .hud-corner.top-right {
-  top: clamp(16px, 2vw, 40px);
-  right: clamp(16px, 2vw, 40px);
+  top: clamp(12px, 2vw, 40px);
+  right: clamp(12px, 2vw, 40px);
   border-width: 3px 3px 0 0;
 }
 
 .hud-corner.bottom-left {
-  bottom: clamp(16px, 2vw, 40px);
-  left: clamp(16px, 2vw, 40px);
+  bottom: clamp(12px, 2vw, 40px);
+  left: clamp(12px, 2vw, 40px);
   border-width: 0 0 3px 3px;
 }
 
 .hud-corner.bottom-right {
-  bottom: clamp(16px, 2vw, 40px);
-  right: clamp(16px, 2vw, 40px);
+  bottom: clamp(12px, 2vw, 40px);
+  right: clamp(12px, 2vw, 40px);
   border-width: 0 3px 3px 0;
 }
 
 #scan-title {
   color: var(--ink-dark);
-  font-size: clamp(1rem, 1.8vw, 2.2rem);
-  letter-spacing: clamp(3px, 0.5vw, 8px);
+  font-size: clamp(0.85rem, 1.8vw, 2.2rem);
+  letter-spacing: clamp(2px, 0.5vw, 8px);
   text-transform: uppercase;
-  margin-top: clamp(10px, 2vh, 30px);
-  margin-bottom: clamp(10px, 2vh, 30px);
+  margin-top: clamp(8px, 1.5vh, 30px);
+  margin-bottom: clamp(8px, 1.5vh, 30px);
   z-index: 2;
   text-shadow: 0 2px 12px rgba(184, 134, 11, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 10px;
   font-weight: 700;
   text-align: center;
-  width: 90%;
+  width: 92%;
 }
 
 .symbol-accent {
@@ -171,8 +172,8 @@
 /* Central Scanner Wrapper */
 #hand-scanner-wrapper {
   position: relative;
-  width: clamp(260px, 24vw, 480px);
-  height: clamp(300px, 27vw, 540px);
+  width: clamp(220px, 24vw, 480px);
+  height: clamp(260px, 27vw, 540px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -182,8 +183,8 @@
 /* Outer Concentric Accent Rings */
 .hud-ring-outer {
   position: absolute;
-  width: clamp(260px, 24vw, 460px);
-  height: clamp(260px, 24vw, 460px);
+  width: clamp(220px, 24vw, 460px);
+  height: clamp(220px, 24vw, 460px);
   border: 1.5px dashed rgba(184, 134, 11, 0.4);
   border-radius: 50%;
   animation: rotateClockwise 30s linear infinite;
@@ -192,8 +193,8 @@
 
 .hud-ring-inner {
   position: absolute;
-  width: clamp(220px, 20vw, 400px);
-  height: clamp(220px, 20vw, 400px);
+  width: clamp(190px, 20vw, 400px);
+  height: clamp(190px, 20vw, 400px);
   border: 2px solid rgba(184, 134, 11, 0.25);
   border-top-color: var(--gold-primary);
   border-bottom-color: var(--gold-primary);
@@ -214,8 +215,8 @@
 
 /* Hand Scanner Box */
 #hand-area {
-  width: clamp(190px, 17vw, 320px);
-  height: clamp(230px, 22vw, 400px);
+  width: clamp(160px, 17vw, 320px);
+  height: clamp(200px, 22vw, 400px);
   position: relative;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.95);
@@ -227,14 +228,16 @@
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: inset 0 0 30px rgba(184, 134, 11, 0.1), 0 12px 35px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(12px);
-  padding: clamp(14px, 1.2vw, 24px);
+  padding: clamp(10px, 1.2vw, 24px);
   overflow: hidden;
+  touch-action: none;
 }
 
-#hand-area:hover {
+#hand-area:hover,
+#hand-area:active {
   border-color: var(--gold-primary);
   box-shadow: inset 0 0 40px rgba(184, 134, 11, 0.2), 0 0 45px rgba(184, 134, 11, 0.3);
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 #hand-area.scanning {
@@ -255,9 +258,10 @@
   transition: filter 0.4s ease, transform 0.4s ease;
 }
 
-#hand-area:hover .hand-image {
+#hand-area:hover .hand-image,
+#hand-area:active .hand-image {
   filter: drop-shadow(0 0 24px rgba(184, 134, 11, 0.65));
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
 #hand-area.scanning .hand-image {
@@ -291,27 +295,29 @@
 
 /* Scan Status & Progress Bar */
 #scan-status-container {
-  margin-top: clamp(16px, 2.5vh, 40px);
-  margin-bottom: clamp(10px, 2vh, 30px);
+  margin-top: clamp(12px, 2vh, 40px);
+  margin-bottom: clamp(8px, 1.5vh, 30px);
   display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 2;
-  width: clamp(280px, 28vw, 550px);
+  width: clamp(260px, 85vw, 550px);
 }
 
 #scan-status {
-  font-size: clamp(0.85rem, 1.3vw, 1.5rem);
-  letter-spacing: clamp(2.5px, 0.35vw, 6px);
+  font-size: clamp(0.75rem, 3.2vw, 1.4rem);
+  letter-spacing: clamp(1.5px, 0.35vw, 5px);
   text-transform: uppercase;
   color: var(--ink-subtle);
   transition: color 0.4s;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 8px;
   font-weight: 700;
   text-align: center;
+  line-height: 1.3;
 }
 
 #scan-status.granted {
@@ -321,12 +327,12 @@
 
 .progress-bar-track {
   width: 100%;
-  height: clamp(8px, 1vh, 14px);
+  height: clamp(6px, 1vh, 14px);
   background: rgba(184, 134, 11, 0.15);
   border-radius: 6px;
   border: 1px solid rgba(184, 134, 11, 0.35);
   overflow: hidden;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 #scan-progress {
@@ -339,8 +345,112 @@
 
 #scan-percent {
   font-family: var(--font-mono);
-  font-size: clamp(0.85rem, 1.1vw, 1.3rem);
+  font-size: clamp(0.75rem, 2.8vw, 1.2rem);
   color: var(--crimson-primary);
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   font-weight: 700;
+}
+
+/* ==========================================================================
+   MOBILE & TABLET RESPONSIVE OVERRIDES
+   ========================================================================== */
+
+@media (max-width: 600px) {
+  .hud-frame {
+    padding: 14px 10px;
+    justify-content: space-around;
+  }
+
+  #scan-title {
+    font-size: clamp(0.75rem, 3.5vw, 1.1rem);
+    letter-spacing: 1.5px;
+    flex-wrap: wrap;
+    line-height: 1.35;
+    margin-top: 4px;
+    margin-bottom: 8px;
+  }
+
+  .symbol-accent {
+    font-size: 0.8em;
+  }
+
+  #hand-scanner-wrapper {
+    width: clamp(190px, 75vw, 280px);
+    height: clamp(220px, 32vh, 320px);
+  }
+
+  .hud-ring-outer {
+    width: clamp(190px, 72vw, 270px);
+    height: clamp(190px, 72vw, 270px);
+  }
+
+  .hud-ring-inner {
+    width: clamp(160px, 60vw, 230px);
+    height: clamp(160px, 60vw, 230px);
+  }
+
+  #hand-area {
+    width: clamp(140px, 50vw, 200px);
+    height: clamp(170px, 25vh, 250px);
+    border-radius: 18px;
+    padding: 10px;
+  }
+
+  #scan-status-container {
+    width: 90vw;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+
+  #scan-status {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  #scan-percent {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-height: 650px) and (orientation: landscape) {
+  .hud-frame {
+    padding: 6px 16px;
+    justify-content: space-between;
+  }
+
+  #scan-title {
+    font-size: 0.8rem;
+    margin-top: 2px;
+    margin-bottom: 4px;
+  }
+
+  #hand-scanner-wrapper {
+    height: 48vh;
+    width: 48vh;
+  }
+
+  .hud-ring-outer {
+    width: 46vh;
+    height: 46vh;
+  }
+
+  .hud-ring-inner {
+    width: 38vh;
+    height: 38vh;
+  }
+
+  #hand-area {
+    height: 38vh;
+    width: 30vh;
+  }
+
+  #scan-status-container {
+    margin-top: 2px;
+    margin-bottom: 4px;
+  }
+
+  #scan-status {
+    font-size: 0.7rem;
+    margin-bottom: 4px;
+  }
 }

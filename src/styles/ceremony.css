@@ -15,7 +15,7 @@
   background: rgba(255, 255, 255, 0.35);
 }
 
-/* Central Ceremony Branding (Proportionately Sized for Big Displays) */
+/* Central Ceremony Branding (Proportionately Sized for Mobile & Big Displays) */
 #ceremony-container {
   position: absolute;
   top: 42%;
@@ -27,21 +27,22 @@
   align-items: center;
   text-align: center;
   pointer-events: none;
-  width: 90%;
+  width: 92%;
   max-width: var(--max-content-width);
 }
 
-/* --- Balanced Typography for Big Screen Digital Teaching Boards --- */
+/* --- Balanced Typography for All Displays --- */
 
 #college-title {
   color: var(--crimson-primary);
-  font-size: clamp(1.1rem, 2vw, 2.4rem);
+  font-size: clamp(0.9rem, 2vw, 2.4rem);
   font-weight: 700;
-  letter-spacing: clamp(2px, 0.5vw, 7px);
+  letter-spacing: clamp(1.5px, 0.5vw, 7px);
   text-transform: uppercase;
-  margin-bottom: 16px;
+  margin-bottom: clamp(8px, 1.5vh, 16px);
   opacity: 0;
   transform: translateY(-18px);
+  line-height: 1.3;
 }
 
 #college-title.animate {
@@ -49,8 +50,8 @@
 }
 
 #ceremony-logo {
-  max-width: clamp(280px, 30vw, 550px);
-  width: 70vw;
+  max-width: clamp(200px, 30vw, 550px);
+  width: 65vw;
   height: auto;
   scale: 0.85;
   filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.1));
@@ -72,10 +73,11 @@
 #ceremony-title {
   color: #111827;
   font-weight: 700;
-  letter-spacing: clamp(3px, 0.6vw, 10px);
+  letter-spacing: clamp(2px, 0.6vw, 10px);
   text-transform: uppercase;
-  margin-top: 24px;
-  font-size: clamp(1.6rem, 3vw, 3.8rem);
+  margin-top: clamp(12px, 2vh, 24px);
+  font-size: clamp(1.2rem, 3.2vw, 3.8rem);
+  line-height: 1.25;
   opacity: 0;
   transform: translateY(22px);
 }
@@ -85,9 +87,9 @@
 }
 
 #ceremony-status {
-  margin-top: 18px;
-  font-size: clamp(1.1rem, 1.8vw, 2.2rem);
-  letter-spacing: clamp(2px, 0.5vw, 6px);
+  margin-top: clamp(10px, 1.5vh, 18px);
+  font-size: clamp(0.85rem, 1.8vw, 2.2rem);
+  letter-spacing: clamp(1.5px, 0.5vw, 6px);
   color: var(--crimson-primary);
   text-transform: uppercase;
   opacity: 0;
@@ -105,9 +107,9 @@
 
 /* Post-cut reveal text */
 #post-cut-message {
-  margin-top: 24px;
-  font-size: clamp(1.1rem, 1.8vw, 2.2rem);
-  letter-spacing: clamp(1.5px, 0.4vw, 5px);
+  margin-top: clamp(12px, 1.8vh, 24px);
+  font-size: clamp(0.85rem, 1.8vw, 2.2rem);
+  letter-spacing: clamp(1px, 0.4vw, 5px);
   color: var(--ink-muted);
   font-weight: 500;
   font-style: italic;
@@ -136,4 +138,37 @@
 @keyframes slideUpFade {
   0% { opacity: 0; transform: translateY(22px); }
   100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 600px) {
+  #ceremony-container {
+    top: 40%;
+    width: 95%;
+  }
+
+  #college-title {
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+  }
+
+  #ceremony-logo {
+    max-width: 220px;
+    width: 60vw;
+  }
+
+  #ceremony-title {
+    font-size: 1.15rem;
+    letter-spacing: 1.5px;
+  }
+
+  #ceremony-status {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  #post-cut-message {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
 }
