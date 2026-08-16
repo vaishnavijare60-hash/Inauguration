@@ -2,7 +2,7 @@ import { soundEngine } from './soundEngine.js';
 
 /**
  * Executive Ceremony Flow: Biometric Scanner Touch -> Silk Curtains Reveal -> Ribbon Cutting Page
- * (Bypasses lock overlay completely for a clean, direct executive transition)
+ * (Includes natural voice announcement for executive inauguration)
  * @param {Function} onCeremonyStart Callback triggered when curtains open to start ribbon physics
  */
 export function initScanScreen(onCeremonyStart) {
@@ -33,6 +33,7 @@ export function initScanScreen(onCeremonyStart) {
         clearInterval(interval);
         soundEngine.stopScan();
         soundEngine.playGranted();
+        soundEngine.speakVoice("Inauguration Authorized. Welcome to the Department of Computer Engineering.");
 
         handArea.classList.remove('scanning');
         handArea.classList.add('granted');

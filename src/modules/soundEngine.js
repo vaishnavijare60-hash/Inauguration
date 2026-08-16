@@ -1,6 +1,6 @@
 /**
- * Executive Acoustic Sound Engine for Official Ceremony Audio Feedback.
- * Clean, warm, high-end acoustic harmonics (No harsh/arcade tones).
+ * Executive Acoustic Sound Engine & Voice Synthesizer for Official Ceremony Feedback.
+ * Clean, warm, high-end acoustic harmonics + Natural Voice Announcements.
  */
 export class SoundEngine {
   constructor() {
@@ -26,6 +26,36 @@ export class SoundEngine {
     this.init();
     if (this.ctx && this.ctx.state === 'suspended') {
       this.ctx.resume();
+    }
+  }
+
+  /* Professional Executive Speech Voice Announcement */
+  speakVoice(text) {
+    if (!('speechSynthesis' in window)) return;
+    try {
+      window.speechSynthesis.cancel();
+      const msg = new SpeechSynthesisUtterance(text);
+      msg.rate = 0.92; // Warm, executive pacing
+      msg.pitch = 1.0;
+      msg.volume = 1.0;
+
+      const voices = window.speechSynthesis.getVoices();
+      const chosenVoice = voices.find(v => v.lang.startsWith('en') && (
+        v.name.includes('Google') || 
+        v.name.includes('Natural') || 
+        v.name.includes('Samantha') || 
+        v.name.includes('Daniel') || 
+        v.name.includes('Karen') || 
+        v.name.includes('Serena') || 
+        v.name.includes('Oliver')
+      )) || voices.find(v => v.lang.startsWith('en'));
+
+      if (chosenVoice) {
+        msg.voice = chosenVoice;
+      }
+      window.speechSynthesis.speak(msg);
+    } catch (e) {
+      console.warn("Voice Synthesis warning:", e);
     }
   }
 
