@@ -168,7 +168,7 @@
       position: fixed;
       inset: 0;
       z-index: 1000;
-      background: radial-gradient(circle at center, #0f172a 0%, #090d16 60%, #030712 100%);
+      background: radial-gradient(circle at center, #fffdf8 0%, #fef6e8 50%, #fdf0d5 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -198,8 +198,8 @@
       inset: 0;
       pointer-events: none;
       background-image: 
-        linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+        linear-gradient(rgba(184, 134, 11, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184, 134, 11, 0.06) 1px, transparent 1px);
       background-size: 50px 50px;
     }
 
@@ -218,9 +218,9 @@
       position: absolute;
       width: clamp(24px, 3vw, 45px);
       height: clamp(24px, 3vw, 45px);
-      border-color: #38bdf8;
+      border-color: #b8860b;
       border-style: solid;
-      opacity: 0.55;
+      opacity: 0.6;
       pointer-events: none;
     }
     .hud-corner.top-left { top: 24px; left: 24px; border-width: 2px 0 0 2px; }
@@ -229,20 +229,20 @@
     .hud-corner.bottom-right { bottom: 24px; right: 24px; border-width: 0 2px 2px 0; }
 
     #scan-title {
-      color: #f1f5f9;
+      color: #1a1a2e;
       font-size: clamp(0.85rem, 1.3vw, 1.5rem);
       letter-spacing: clamp(3px, 0.4vw, 6px);
       text-transform: uppercase;
       margin-bottom: clamp(16px, 2.5vh, 36px);
       z-index: 2;
-      text-shadow: 0 2px 12px rgba(56, 189, 248, 0.35);
+      text-shadow: 0 2px 12px rgba(184, 134, 11, 0.2);
       display: flex;
       align-items: center;
       gap: 10px;
       font-weight: 700;
       text-align: center;
     }
-    .symbol-accent { color: #38bdf8; }
+    .symbol-accent { color: #9c1111; }
 
     /* Side Telemetry Panels (Scaled Comfortably for Teaching Boards) */
     .side-hud-panel {
@@ -263,20 +263,20 @@
     }
 
     .hud-box {
-      background: rgba(15, 23, 42, 0.75);
-      border: 1px solid rgba(56, 189, 248, 0.25);
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(184, 134, 11, 0.3);
       border-radius: 10px;
       padding: clamp(10px, 1vw, 18px);
       width: clamp(160px, 14vw, 230px);
       backdrop-filter: blur(8px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     }
     .hud-box-title {
       font-size: clamp(0.65rem, 0.75vw, 0.9rem);
-      color: #38bdf8;
+      color: #9c1111;
       letter-spacing: 2px;
       margin-bottom: 8px;
-      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+      border-bottom: 1px solid rgba(156, 17, 17, 0.2);
       padding-bottom: 4px;
       font-weight: 700;
       text-transform: uppercase;
@@ -285,10 +285,10 @@
       display: flex;
       justify-content: space-between;
       font-size: clamp(0.65rem, 0.75vw, 0.88rem);
-      color: #94a3b8;
+      color: #555;
       margin-bottom: 6px;
     }
-    .stat-val { color: #f8fafc; font-weight: 600; }
+    .stat-val { color: #1a1a2e; font-weight: 600; }
 
     /* Central Scanner Wrapper */
     #hand-scanner-wrapper {
@@ -306,7 +306,7 @@
       position: absolute;
       width: clamp(240px, 21vw, 360px);
       height: clamp(240px, 21vw, 360px);
-      border: 1.2px dashed rgba(56, 189, 248, 0.3);
+      border: 1.2px dashed rgba(184, 134, 11, 0.35);
       border-radius: 50%;
       animation: rotateClockwise 30s linear infinite;
       pointer-events: none;
@@ -315,9 +315,9 @@
       position: absolute;
       width: clamp(210px, 18vw, 310px);
       height: clamp(210px, 18vw, 310px);
-      border: 1.5px solid rgba(56, 189, 248, 0.2);
-      border-top-color: #38bdf8;
-      border-bottom-color: #38bdf8;
+      border: 1.5px solid rgba(184, 134, 11, 0.2);
+      border-top-color: #b8860b;
+      border-bottom-color: #b8860b;
       border-radius: 50%;
       animation: rotateCounterClockwise 20s linear infinite;
       pointer-events: none;
@@ -338,45 +338,45 @@
       height: clamp(210px, 19vw, 310px);
       position: relative;
       cursor: pointer;
-      background: rgba(15, 23, 42, 0.85);
-      border: 2px solid rgba(56, 189, 248, 0.45);
+      background: rgba(255, 255, 255, 0.92);
+      border: 2px solid rgba(184, 134, 11, 0.5);
       border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: inset 0 0 25px rgba(56, 189, 248, 0.12), 0 10px 30px rgba(0, 0, 0, 0.35);
+      box-shadow: inset 0 0 25px rgba(184, 134, 11, 0.08), 0 10px 30px rgba(0, 0, 0, 0.1);
       backdrop-filter: blur(10px);
       padding: clamp(10px, 1vw, 18px);
       overflow: hidden;
     }
     #hand-area:hover {
-      border-color: #38bdf8;
-      box-shadow: inset 0 0 35px rgba(56, 189, 248, 0.25), 0 0 40px rgba(56, 189, 248, 0.45);
+      border-color: #b8860b;
+      box-shadow: inset 0 0 35px rgba(184, 134, 11, 0.15), 0 0 40px rgba(184, 134, 11, 0.25);
       transform: scale(1.02);
     }
     #hand-area.scanning {
-      border-color: #38bdf8;
-      box-shadow: inset 0 0 45px rgba(56, 189, 248, 0.4), 0 0 50px rgba(56, 189, 248, 0.65);
+      border-color: #9c1111;
+      box-shadow: inset 0 0 45px rgba(156, 17, 17, 0.15), 0 0 50px rgba(156, 17, 17, 0.3);
     }
     #hand-area.granted {
-      border-color: #34d399;
-      box-shadow: inset 0 0 55px rgba(52, 211, 153, 0.45), 0 0 60px rgba(52, 211, 153, 0.75);
+      border-color: #27ae60;
+      box-shadow: inset 0 0 55px rgba(39, 174, 96, 0.2), 0 0 60px rgba(39, 174, 96, 0.4);
     }
 
     .hand-image {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.65));
+      filter: drop-shadow(0 0 14px rgba(184, 134, 11, 0.4));
       transition: filter 0.4s ease, transform 0.4s ease;
     }
     #hand-area:hover .hand-image {
-      filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.85));
+      filter: drop-shadow(0 0 20px rgba(184, 134, 11, 0.6));
       transform: scale(1.03);
     }
     #hand-area.scanning .hand-image {
-      filter: drop-shadow(0 0 28px #38bdf8);
+      filter: drop-shadow(0 0 28px #9c1111);
     }
 
     /* Laser Scan Beam */
@@ -385,11 +385,11 @@
       left: 10px;
       right: 10px;
       height: 4px;
-      background: linear-gradient(90deg, transparent, #38bdf8, #ffffff, #38bdf8, transparent);
+      background: linear-gradient(90deg, transparent, #9c1111, #ff4444, #9c1111, transparent);
       border-radius: 2px;
       top: 10px;
       opacity: 0;
-      box-shadow: 0 0 15px #38bdf8, 0 0 30px #38bdf8;
+      box-shadow: 0 0 15px #9c1111, 0 0 30px rgba(156, 17, 17, 0.5);
       z-index: 10;
     }
     #hand-area.scanning #scan-line {
@@ -416,7 +416,7 @@
       font-size: clamp(0.75rem, 1.1vw, 1.25rem);
       letter-spacing: clamp(2.5px, 0.3vw, 5px);
       text-transform: uppercase;
-      color: #cbd5e1;
+      color: #555;
       transition: color 0.4s;
       margin-bottom: 10px;
       display: flex;
@@ -426,31 +426,31 @@
       text-align: center;
     }
     #scan-status.granted {
-      color: #34d399;
-      text-shadow: 0 0 14px rgba(52, 211, 153, 0.75);
+      color: #27ae60;
+      text-shadow: 0 0 14px rgba(39, 174, 96, 0.5);
     }
 
     .progress-bar-track {
       width: 100%;
       height: clamp(6px, 0.8vh, 10px);
-      background: rgba(56, 189, 248, 0.12);
+      background: rgba(184, 134, 11, 0.12);
       border-radius: 4px;
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      border: 1px solid rgba(184, 134, 11, 0.3);
       overflow: hidden;
       margin-bottom: 8px;
     }
     #scan-progress {
       width: 0%;
       height: 100%;
-      background: linear-gradient(90deg, #0284c7, #38bdf8);
-      box-shadow: 0 0 12px #38bdf8;
+      background: linear-gradient(90deg, #9c1111, #e63946);
+      box-shadow: 0 0 12px rgba(156, 17, 17, 0.4);
       transition: width 0.1s linear;
     }
 
     #scan-percent {
       font-family: monospace;
       font-size: clamp(0.75rem, 0.95vw, 1.1rem);
-      color: #38bdf8;
+      color: #9c1111;
       letter-spacing: 2px;
       font-weight: 700;
     }
@@ -465,7 +465,7 @@
       justify-content: center;
       pointer-events: none;
       opacity: 0;
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(255, 253, 248, 0.92);
       backdrop-filter: blur(12px);
       transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
@@ -484,7 +484,7 @@
     .lock-svg {
       width: clamp(100px, 12vw, 170px);
       height: clamp(100px, 12vw, 170px);
-      filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.45));
+      filter: drop-shadow(0 0 24px rgba(156, 17, 17, 0.3));
     }
     #lock-shackle {
       transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -492,15 +492,15 @@
     }
     #lock-shackle.unlocked-shackle {
       transform: translateY(-14px) rotate(-22deg);
-      stroke: #34d399;
+      stroke: #27ae60;
     }
 
     #lock-status-text {
       margin-top: 18px;
       font-size: clamp(0.9rem, 1.4vw, 1.6rem);
       letter-spacing: clamp(3px, 0.4vw, 7px);
-      color: #38bdf8;
-      text-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+      color: #9c1111;
+      text-shadow: 0 0 12px rgba(156, 17, 17, 0.3);
       font-weight: 700;
       text-transform: uppercase;
       text-align: center;
@@ -641,23 +641,23 @@
         </defs>
 
         <!-- Outer Rotating Ring -->
-        <circle cx="100" cy="100" r="85" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="10 5" class="hud-rotate" />
-        <circle cx="100" cy="100" r="72" fill="none" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1" stroke-dasharray="3 6" class="hud-rotate-reverse" />
+        <circle cx="100" cy="100" r="85" fill="none" stroke="#b8860b" stroke-width="1.5" stroke-dasharray="10 5" class="hud-rotate" />
+        <circle cx="100" cy="100" r="72" fill="none" stroke="rgba(184, 134, 11, 0.4)" stroke-width="1" stroke-dasharray="3 6" class="hud-rotate-reverse" />
         
         <!-- Shield Base -->
         <path d="M 100 45 L 140 60 V 105 C 140 135 100 155 100 155 C 100 155 60 135 60 105 V 60 Z" 
-              fill="rgba(15, 23, 42, 0.9)" stroke="#38bdf8" stroke-width="2.5" filter="url(#lock-glow-filter)" />
+              fill="rgba(156, 17, 17, 0.85)" stroke="#b8860b" stroke-width="2.5" filter="url(#lock-glow-filter)" />
 
         <!-- Lock Shackle -->
         <path id="lock-shackle" d="M 85 85 V 70 C 85 60 115 60 115 70 V 85" 
-              fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" />
+              fill="none" stroke="#9c1111" stroke-width="4" stroke-linecap="round" />
 
         <!-- Lock Body -->
-        <rect x="80" y="85" width="40" height="32" rx="4" fill="#38bdf8" opacity="0.95" />
+        <rect x="80" y="85" width="40" height="32" rx="4" fill="#9c1111" opacity="0.95" />
 
         <!-- Keyhole Core -->
-        <circle cx="100" cy="98" r="3.5" fill="#0f172a" />
-        <polygon points="98,98 102,98 103,109 97,109" fill="#0f172a" />
+        <circle cx="100" cy="98" r="3.5" fill="#fef6e8" />
+        <polygon points="98,98 102,98 103,109 97,109" fill="#fef6e8" />
       </svg>
       <div id="lock-status-text">OFFICIAL CEREMONY LATCH RELEASED</div>
     </div>
@@ -706,7 +706,7 @@
       for (let p of bgParticles) {
         p.y += p.vy;
         if (p.y < 0) p.y = bgCanvas.height;
-        bgCtx.fillStyle = '#38bdf8';
+        bgCtx.fillStyle = '#b8860b';
         bgCtx.globalAlpha = p.alpha;
         bgCtx.beginPath();
         bgCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
