@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Official Inauguration Ceremony - DPCOE Department of Computer Engineering. Interactive futuristic ribbon-cutting ceremony and biometric authorization.">
+  <meta name="description" content="Official Inauguration Ceremony - DPCOE Department of Computer Engineering. Interactive ribbon-cutting ceremony and biometric inauguration authorization.">
   <title>DPCOE Computer Department - Inauguration Ceremony</title>
   <style>
     * {
@@ -20,14 +20,14 @@
       height: 100%;
       background: #ffffff;
       overflow: hidden;
-      font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
       cursor: crosshair;
     }
 
-    /* Central Ceremony Branding (Original Intact) */
+    /* Central Ceremony Branding (Responsive Big Screen Sizing) */
     #ceremony-container {
       position: absolute;
-      top: 40%;
+      top: 42%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 1;
@@ -36,19 +36,19 @@
       align-items: center;
       text-align: center;
       pointer-events: none;
-      width: 90%;
-      max-width: 800px;
+      width: 92%;
+      max-width: 1200px;
     }
 
-    /* --- Staggered Entrance Choreography --- */
+    /* --- Responsive Typography for Teaching Boards & Big Screens --- */
 
     #college-title {
       color: #9c1111;
-      font-size: 1.15rem;
+      font-size: clamp(1.2rem, 2.2vw, 2.8rem);
       font-weight: 700;
-      letter-spacing: 4px;
+      letter-spacing: clamp(3px, 0.5vw, 8px);
       text-transform: uppercase;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       opacity: 0;
       transform: translateY(-18px);
     }
@@ -57,11 +57,11 @@
     }
 
     #ceremony-logo {
-      max-width: 420px;
-      width: 75vw;
+      max-width: clamp(320px, 35vw, 600px);
+      width: 80vw;
       height: auto;
-      scale: 0.8;
-      filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.08));
+      scale: 0.85;
+      filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.1));
       opacity: 0;
       transform: scale(0.7);
       transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -73,16 +73,16 @@
 
     #ceremony-logo.revealed {
       transform: scale(1.08);
-      filter: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.14));
+      filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.18));
     }
 
     #ceremony-title {
       color: #111827;
-      font-weight: 600;
-      letter-spacing: 8px;
+      font-weight: 700;
+      letter-spacing: clamp(4px, 0.8vw, 12px);
       text-transform: uppercase;
-      margin-top: 25px;
-      font-size: 1.8rem;
+      margin-top: 30px;
+      font-size: clamp(1.8rem, 3.5vw, 4.5rem);
       opacity: 0;
       transform: translateY(22px);
     }
@@ -91,17 +91,17 @@
     }
 
     #ceremony-status {
-      margin-top: 15px;
-      font-size: 1.05rem;
-      letter-spacing: 3px;
-      color: #6e0707d2;
+      margin-top: 20px;
+      font-size: clamp(1.1rem, 2vw, 2.4rem);
+      letter-spacing: clamp(3px, 0.5vw, 8px);
+      color: #9c1111;
       text-transform: uppercase;
       opacity: 0;
       transform: translateY(16px) scale(0.92);
       transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
         transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-      font-weight: 700;
-      text-shadow: 0 2px 10px rgba(186, 13, 13, 0.2);
+      font-weight: 800;
+      text-shadow: 0 4px 15px rgba(156, 17, 17, 0.25);
     }
 
     #ceremony-status.visible {
@@ -111,11 +111,11 @@
 
     /* Post-cut reveal text */
     #post-cut-message {
-      margin-top: 28px;
-      font-size: 1.2rem;
-      letter-spacing: 2px;
-      color: #444;
-      font-weight: 400;
+      margin-top: 32px;
+      font-size: clamp(1.2rem, 2.2vw, 2.8rem);
+      letter-spacing: clamp(2px, 0.4vw, 6px);
+      color: #334155;
+      font-weight: 500;
       font-style: italic;
       opacity: 0;
       transform: translateY(20px) scale(0.95);
@@ -145,12 +145,12 @@
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* ====== PHASE 1: Ultra Futuristic Blue Biometric Scan Screen ====== */
+    /* ====== PHASE 1: Executive Professional Authorization Screen ====== */
     #scan-screen {
       position: fixed;
       inset: 0;
       z-index: 1000;
-      background: radial-gradient(circle at center, #071738 0%, #030a1c 60%, #01040d 100%);
+      background: radial-gradient(circle at center, #0f172a 0%, #090d16 60%, #030712 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -166,7 +166,7 @@
       pointer-events: none;
     }
 
-    /* Background Cyber Canvas & Grid */
+    /* Background Ambient Canvas & Grid */
     #bg-cyber-canvas {
       position: absolute;
       inset: 0;
@@ -180,9 +180,9 @@
       inset: 0;
       pointer-events: none;
       background-image: 
-        linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
-      background-size: 40px 40px;
+        linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
     }
 
     .hud-frame {
@@ -193,193 +193,117 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      padding: clamp(20px, 3vw, 60px);
     }
 
     .hud-corner {
       position: absolute;
-      width: 40px;
-      height: 40px;
-      border-color: #00f0ff;
+      width: clamp(30px, 4vw, 60px);
+      height: clamp(30px, 4vw, 60px);
+      border-color: #38bdf8;
       border-style: solid;
-      opacity: 0.7;
+      opacity: 0.6;
       pointer-events: none;
-      filter: drop-shadow(0 0 8px #00f0ff);
     }
-    .hud-corner.top-left { top: 24px; left: 24px; border-width: 2px 0 0 2px; }
-    .hud-corner.top-right { top: 24px; right: 24px; border-width: 2px 2px 0 0; }
-    .hud-corner.bottom-left { bottom: 24px; left: 24px; border-width: 0 0 2px 2px; }
-    .hud-corner.bottom-right { bottom: 24px; right: 24px; border-width: 0 2px 2px 0; }
+    .hud-corner.top-left { top: 30px; left: 30px; border-width: 3px 0 0 3px; }
+    .hud-corner.top-right { top: 30px; right: 30px; border-width: 3px 3px 0 0; }
+    .hud-corner.bottom-left { bottom: 30px; left: 30px; border-width: 0 0 3px 3px; }
+    .hud-corner.bottom-right { bottom: 30px; right: 30px; border-width: 0 3px 3px 0; }
 
     #scan-title {
-      color: #7dd3fc;
-      font-size: 0.9rem;
-      letter-spacing: 6px;
+      color: #f1f5f9;
+      font-size: clamp(1rem, 1.8vw, 2.2rem);
+      letter-spacing: clamp(4px, 0.6vw, 10px);
       text-transform: uppercase;
-      margin-bottom: 25px;
+      margin-bottom: clamp(20px, 3vh, 50px);
       z-index: 2;
-      text-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+      text-shadow: 0 2px 15px rgba(56, 189, 248, 0.4);
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-weight: 600;
+      gap: 14px;
+      font-weight: 700;
+      text-align: center;
     }
-    .symbol-accent { color: #00f0ff; }
+    .symbol-accent { color: #38bdf8; }
 
-    /* Side Telemetry Panels (Left & Right Sci-Fi HUD Widgets) */
+    /* Side Telemetry Panels (Clean Academic Details for Big Screens) */
     .side-hud-panel {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: clamp(16px, 2vh, 32px);
       z-index: 2;
       pointer-events: none;
     }
-    .left-panel { left: 40px; }
-    .right-panel { right: 40px; }
+    .left-panel { left: clamp(30px, 4vw, 80px); }
+    .right-panel { right: clamp(30px, 4vw, 80px); }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1080px) {
       .side-hud-panel { display: none; }
     }
 
     .hud-box {
-      background: rgba(4, 18, 44, 0.6);
-      border: 1px solid rgba(0, 240, 255, 0.25);
-      border-radius: 8px;
-      padding: 12px 16px;
-      width: 190px;
-      backdrop-filter: blur(4px);
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.08);
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 12px;
+      padding: clamp(14px, 1.5vw, 24px);
+      width: clamp(200px, 18vw, 320px);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     }
     .hud-box-title {
-      font-size: 0.65rem;
-      font-family: monospace;
-      color: #00f0ff;
-      letter-spacing: 2px;
-      margin-bottom: 8px;
-      border-bottom: 1px stroke rgba(0, 240, 255, 0.2);
-      padding-bottom: 4px;
-      font-weight: bold;
+      font-size: clamp(0.7rem, 0.9vw, 1.1rem);
+      color: #38bdf8;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+      padding-bottom: 6px;
+      font-weight: 700;
+      text-transform: uppercase;
     }
     .stat-row {
       display: flex;
       justify-content: space-between;
-      font-family: monospace;
-      font-size: 0.65rem;
+      font-size: clamp(0.7rem, 0.9vw, 1.1rem);
       color: #94a3b8;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
-    .stat-val { color: #38bdf8; font-weight: bold; }
+    .stat-val { color: #f8fafc; font-weight: 600; }
 
-    /* Live Equalizer Bars */
-    .eq-bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 6px;
-      height: 30px;
-    }
-    .eq-bar {
-      flex: 1;
-      background: linear-gradient(180deg, #00f0ff, #0066ff);
-      height: var(--h);
-      border-radius: 2px;
-      animation: eqPulse 1.2s infinite ease-in-out alternate;
-    }
-    .eq-bar:nth-child(2) { animation-delay: 0.2s; }
-    .eq-bar:nth-child(3) { animation-delay: 0.4s; }
-    .eq-bar:nth-child(4) { animation-delay: 0.1s; }
-    .eq-bar:nth-child(5) { animation-delay: 0.5s; }
-    .eq-bar:nth-child(6) { animation-delay: 0.3s; }
-
-    @keyframes eqPulse {
-      0% { height: 20%; }
-      100% { height: 95%; }
-    }
-
-    .hex-ticker {
-      font-family: monospace;
-      font-size: 0.6rem;
-      color: #00f0ff;
-      opacity: 0.7;
-      line-height: 1.4;
-    }
-
-    /* Radar Sweep Widget */
-    .radar-scope {
-      width: 70px;
-      height: 70px;
-      border: 1px solid rgba(0, 240, 255, 0.4);
-      border-radius: 50%;
-      position: relative;
-      margin: 0 auto;
-      overflow: hidden;
-      background: radial-gradient(circle, rgba(0,240,255,0.1) 0%, transparent 70%);
-    }
-    .radar-line {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 50%;
-      height: 2px;
-      background: linear-gradient(90deg, #00f0ff, transparent);
-      transform-origin: 0% 0%;
-      animation: radarScan 2.5s linear infinite;
-    }
-    @keyframes radarScan {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Central Scanner Container */
+    /* Central Scanner Wrapper (Scales for Teaching Board) */
     #hand-scanner-wrapper {
       position: relative;
-      width: 380px;
-      height: 380px;
+      width: clamp(320px, 30vw, 550px);
+      height: clamp(360px, 35vw, 600px);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 2;
     }
 
-    /* Horizontal Circuit Board Traces (Image 2 style) */
-    .circuit-traces-left, .circuit-traces-right {
-      position: absolute;
-      width: 260px;
-      height: 180px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      opacity: 0.6;
-    }
-    .circuit-traces-left { left: -240px; }
-    .circuit-traces-right { right: -240px; }
-
-    /* Outer Rotating HUD Rings */
+    /* Outer Concentric Accent Rings */
     .hud-ring-outer {
       position: absolute;
-      width: 360px;
-      height: 360px;
-      border: 1px dashed rgba(0, 240, 255, 0.4);
+      width: clamp(320px, 30vw, 540px);
+      height: clamp(320px, 30vw, 540px);
+      border: 1.5px dashed rgba(56, 189, 248, 0.35);
       border-radius: 50%;
-      animation: rotateClockwise 25s linear infinite;
+      animation: rotateClockwise 30s linear infinite;
       pointer-events: none;
-      box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
     }
     .hud-ring-inner {
       position: absolute;
-      width: 320px;
-      height: 320px;
-      border: 2px stroke rgba(0, 140, 255, 0.25);
-      border-top-color: #00f0ff;
-      border-bottom-color: #00f0ff;
+      width: clamp(280px, 26vw, 470px);
+      height: clamp(280px, 26vw, 470px);
+      border: 2px solid rgba(56, 189, 248, 0.2);
+      border-top-color: #38bdf8;
+      border-bottom-color: #38bdf8;
       border-radius: 50%;
-      animation: rotateCounterClockwise 15s linear infinite;
+      animation: rotateCounterClockwise 20s linear infinite;
       pointer-events: none;
     }
-
-    .hud-rotate { animation: rotateClockwise 20s linear infinite; }
-    .hud-rotate-reverse { animation: rotateCounterClockwise 15s linear infinite; }
 
     @keyframes rotateClockwise {
       0% { transform: rotate(0deg); }
@@ -390,80 +314,64 @@
       100% { transform: rotate(-360deg); }
     }
 
-    /* Telemetry Readouts */
-    .telemetry-badge {
-      position: absolute;
-      font-family: monospace;
-      font-size: 0.68rem;
-      color: #38bdf8;
-      opacity: 0.85;
-      letter-spacing: 1px;
-      pointer-events: none;
-      line-height: 1.5;
-      text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
-    }
-    .top-left-badge { top: 0px; left: 0px; }
-    .bottom-right-badge { bottom: 0px; right: 0px; text-align: right; }
-    .telemetry-badge .lbl { color: #00f0ff; font-weight: bold; }
-
-    /* Hand Scanner Box */
+    /* Hand Scanner Box (Comfortable Large Touch Target) */
     #hand-area {
-      width: 250px;
-      height: 300px;
+      width: clamp(240px, 22vw, 380px);
+      height: clamp(290px, 28vw, 460px);
       position: relative;
       cursor: pointer;
-      background: rgba(4, 18, 44, 0.8);
-      border: 2px solid rgba(0, 240, 255, 0.4);
-      border-radius: 24px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 2.5px solid rgba(56, 189, 248, 0.45);
+      border-radius: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: inset 0 0 25px rgba(0, 240, 255, 0.15), 0 0 25px rgba(0, 120, 255, 0.3);
-      backdrop-filter: blur(6px);
-      padding: 12px;
+      box-shadow: inset 0 0 35px rgba(56, 189, 248, 0.15), 0 15px 40px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      padding: clamp(12px, 1.5vw, 24px);
       overflow: hidden;
     }
     #hand-area:hover {
-      border-color: #00f0ff;
-      box-shadow: inset 0 0 35px rgba(0, 240, 255, 0.3), 0 0 40px rgba(0, 240, 255, 0.7);
+      border-color: #38bdf8;
+      box-shadow: inset 0 0 45px rgba(56, 189, 248, 0.3), 0 0 50px rgba(56, 189, 248, 0.5);
       transform: scale(1.02);
     }
     #hand-area.scanning {
-      border-color: #00f0ff;
-      box-shadow: inset 0 0 45px rgba(0, 240, 255, 0.4), 0 0 50px rgba(0, 240, 255, 0.85);
+      border-color: #38bdf8;
+      box-shadow: inset 0 0 55px rgba(56, 189, 248, 0.45), 0 0 60px rgba(56, 189, 248, 0.7);
     }
     #hand-area.granted {
-      border-color: #38bdf8;
-      box-shadow: inset 0 0 60px rgba(0, 240, 255, 0.6), 0 0 70px rgba(0, 240, 255, 0.95);
+      border-color: #34d399;
+      box-shadow: inset 0 0 65px rgba(52, 211, 153, 0.5), 0 0 70px rgba(52, 211, 153, 0.8);
     }
 
     .hand-image {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: drop-shadow(0 0 14px #00f0ff);
+      filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.7));
       transition: filter 0.4s ease, transform 0.4s ease;
     }
     #hand-area:hover .hand-image {
-      filter: drop-shadow(0 0 22px #00f0ff);
+      filter: drop-shadow(0 0 25px rgba(56, 189, 248, 0.9));
       transform: scale(1.03);
     }
     #hand-area.scanning .hand-image {
-      filter: drop-shadow(0 0 30px #00f0ff);
+      filter: drop-shadow(0 0 35px #38bdf8);
     }
 
-    /* Glowing Blue Laser Scan Beam */
+    /* Laser Scan Beam */
     #scan-line {
       position: absolute;
-      left: 10px;
-      right: 10px;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, #00f0ff, #ffffff, #00f0ff, transparent);
-      border-radius: 2px;
+      left: 12px;
+      right: 12px;
+      height: 5px;
+      background: linear-gradient(90deg, transparent, #38bdf8, #ffffff, #38bdf8, transparent);
+      border-radius: 3px;
       top: 10px;
       opacity: 0;
-      box-shadow: 0 0 18px #00f0ff, 0 0 35px #00f0ff;
+      box-shadow: 0 0 20px #38bdf8, 0 0 40px #38bdf8;
       z-index: 10;
     }
     #hand-area.scanning #scan-line {
@@ -473,64 +381,60 @@
 
     @keyframes scanMove {
       0% { top: 10px; }
-      50% { top: calc(100% - 14px); }
+      50% { top: calc(100% - 16px); }
       100% { top: 10px; }
     }
 
-    /* Target Node Pulsing */
-    @keyframes nodePulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; filter: drop-shadow(0 0 8px #00f0ff); }
-    }
-    .node-pulse { animation: nodePulse 2s infinite ease-in-out; }
-
-    /* Scan Status & Progress */
+    /* Scan Status & Progress Bar (Large Readable Text) */
     #scan-status-container {
-      margin-top: 25px;
+      margin-top: clamp(20px, 3vh, 45px);
       display: flex;
       flex-direction: column;
       align-items: center;
       z-index: 2;
-      width: 320px;
+      width: clamp(280px, 32vw, 550px);
     }
     #scan-status {
-      font-size: 0.85rem;
-      letter-spacing: 3px;
+      font-size: clamp(0.9rem, 1.4vw, 1.8rem);
+      letter-spacing: clamp(3px, 0.4vw, 7px);
       text-transform: uppercase;
-      color: #94a3b8;
+      color: #cbd5e1;
       transition: color 0.4s;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      font-weight: 700;
+      text-align: center;
     }
     #scan-status.granted {
-      color: #00f0ff;
-      text-shadow: 0 0 14px rgba(0, 240, 255, 0.9);
+      color: #34d399;
+      text-shadow: 0 0 16px rgba(52, 211, 153, 0.8);
     }
 
     .progress-bar-track {
       width: 100%;
-      height: 6px;
-      background: rgba(0, 240, 255, 0.1);
-      border-radius: 3px;
-      border: 1px solid rgba(0, 240, 255, 0.25);
+      height: clamp(8px, 1vh, 14px);
+      background: rgba(56, 189, 248, 0.12);
+      border-radius: 6px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
       overflow: hidden;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
     #scan-progress {
       width: 0%;
       height: 100%;
-      background: linear-gradient(90deg, #0066ff, #00f0ff);
-      box-shadow: 0 0 12px #00f0ff;
+      background: linear-gradient(90deg, #0284c7, #38bdf8);
+      box-shadow: 0 0 15px #38bdf8;
       transition: width 0.1s linear;
     }
 
     #scan-percent {
       font-family: monospace;
-      font-size: 0.75rem;
+      font-size: clamp(0.85rem, 1.2vw, 1.5rem);
       color: #38bdf8;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
+      font-weight: 700;
     }
 
     /* ====== PHASE 2: Lock Overlay ====== */
@@ -543,8 +447,8 @@
       justify-content: center;
       pointer-events: none;
       opacity: 0;
-      background: rgba(2, 6, 18, 0.75);
-      backdrop-filter: blur(8px);
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
       transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
     #lock-overlay.visible { opacity: 1; }
@@ -560,27 +464,28 @@
     #lock-overlay.visible #lock-wrapper { transform: scale(1); }
 
     .lock-svg {
-      width: 140px;
-      height: 140px;
-      filter: drop-shadow(0 0 25px rgba(0, 240, 255, 0.6));
+      width: clamp(140px, 18vw, 260px);
+      height: clamp(140px, 18vw, 260px);
+      filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.5));
     }
     #lock-shackle {
       transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
       transform-origin: 115px 70px;
     }
     #lock-shackle.unlocked-shackle {
-      transform: translateY(-12px) rotate(-20deg);
-      stroke: #38bdf8;
+      transform: translateY(-14px) rotate(-22deg);
+      stroke: #34d399;
     }
 
     #lock-status-text {
-      margin-top: 18px;
-      font-size: 0.9rem;
-      letter-spacing: 4px;
-      color: #00f0ff;
-      text-shadow: 0 0 10px #00f0ff;
-      font-weight: 600;
+      margin-top: 24px;
+      font-size: clamp(1.1rem, 2vw, 2.4rem);
+      letter-spacing: clamp(4px, 0.6vw, 10px);
+      color: #38bdf8;
+      text-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
+      font-weight: 700;
       text-transform: uppercase;
+      text-align: center;
     }
 
     /* ====== PHASE 3: Curtains ====== */
@@ -623,9 +528,9 @@
 
 <body>
 
-  <!-- PHASE 1: Ultra Futuristic Blue Biometric Scan Screen -->
+  <!-- PHASE 1: Professional Executive Authorization Screen -->
   <div id="scan-screen">
-    <!-- Floating Cyber Particles Canvas & Grid -->
+    <!-- Floating Ambient Particles Canvas & Grid -->
     <canvas id="bg-cyber-canvas"></canvas>
     <div class="cyber-bg-grid"></div>
 
@@ -635,93 +540,54 @@
       <div class="hud-corner bottom-left"></div>
       <div class="hud-corner bottom-right"></div>
 
-      <!-- Header Title -->
+      <!-- Professional Header Title -->
       <div id="scan-title">
-        <span class="symbol-accent">◈</span> SYSTEM ACCESS // BIOMETRIC AUTHORIZATION <span class="symbol-accent">◈</span>
+        <span class="symbol-accent">❖</span> DEPARTMENT OF COMPUTER ENGINEERING // INAUGURATION AUTHORIZATION <span class="symbol-accent">❖</span>
       </div>
 
-      <!-- Left Telemetry Panel (Charts & Hex Stream) -->
+      <!-- Left Telemetry Panel (Official Institution Details) -->
       <div class="side-hud-panel left-panel">
         <div class="hud-box">
-          <div class="hud-box-title">SYSTEM DIAGNOSTICS</div>
-          <div class="stat-row"><span>CPU CORE:</span><span class="stat-val">3.8 GHz</span></div>
-          <div class="stat-row"><span>CYBER HASH:</span><span class="stat-val">0x8F92A</span></div>
-          <div class="stat-row"><span>ENCRYPTION:</span><span class="stat-val">AES-512</span></div>
+          <div class="hud-box-title">INSTITUTION</div>
+          <div class="stat-row"><span>COLLEGE:</span><span class="stat-val">DPCOE PUNE</span></div>
+          <div class="stat-row"><span>DEPARTMENT:</span><span class="stat-val">COMPUTER ENG.</span></div>
+          <div class="stat-row"><span>ACADEMIC YEAR:</span><span class="stat-val">2026-2027</span></div>
         </div>
 
         <div class="hud-box">
-          <div class="hud-box-title">SIGNAL FREQUENCY</div>
-          <div class="eq-bars">
-            <div class="eq-bar" style="--h: 60%"></div>
-            <div class="eq-bar" style="--h: 90%"></div>
-            <div class="eq-bar" style="--h: 40%"></div>
-            <div class="eq-bar" style="--h: 80%"></div>
-            <div class="eq-bar" style="--h: 100%"></div>
-            <div class="eq-bar" style="--h: 70%"></div>
-          </div>
-        </div>
-
-        <div class="hud-box hex-ticker" id="hex-ticker">
-          01001001 01001110<br>
-          01010101 01000111<br>
-          01010010 01000001
+          <div class="hud-box-title">EVENT PROTOCOL</div>
+          <div class="stat-row"><span>CEREMONY:</span><span class="stat-val">OFFICIAL</span></div>
+          <div class="stat-row"><span>STAGE:</span><span class="stat-val">INAUGURATION</span></div>
+          <div class="stat-row"><span>SYSTEM:</span><span class="stat-val">ONLINE</span></div>
         </div>
       </div>
 
-      <!-- Right Telemetry Panel (Radar Scope) -->
+      <!-- Right Telemetry Panel (System Status) -->
       <div class="side-hud-panel right-panel">
-        <div class="hud-box radar-box">
-          <div class="hud-box-title">RADAR SCOPE</div>
-          <div class="radar-scope">
-            <div class="radar-line"></div>
-          </div>
+        <div class="hud-box">
+          <div class="hud-box-title">AUTHORIZATION STATUS</div>
+          <div class="stat-row"><span>SECURITY:</span><span class="stat-val">VERIFIED</span></div>
+          <div class="stat-row"><span>CLEARANCE:</span><span class="stat-val">GUEST AUTHORIZED</span></div>
+          <div class="stat-row"><span>RIBBON STAGE:</span><span class="stat-val">READY</span></div>
         </div>
 
         <div class="hud-box">
-          <div class="hud-box-title">SECURITY STATUS</div>
-          <div class="stat-row"><span>FIREWALL:</span><span class="stat-val">ACTIVE</span></div>
-          <div class="stat-row"><span>CLEARANCE:</span><span class="stat-val">LEVEL 5</span></div>
-          <div class="stat-row"><span>BIOMETRIC:</span><span class="stat-val">READY</span></div>
+          <div class="hud-box-title">LOCATION</div>
+          <div class="stat-row"><span>VENUE:</span><span class="stat-val">MAIN AUDITORIUM</span></div>
+          <div class="stat-row"><span>CITY:</span><span class="stat-val">PUNE, INDIA</span></div>
         </div>
       </div>
 
       <!-- Central Scanner Wrapper -->
       <div id="hand-scanner-wrapper">
-        <!-- Horizontal Circuit Board Traces (Image 2 style) -->
-        <svg class="circuit-traces-left" viewBox="0 0 300 200">
-          <path d="M 300 100 L 200 100 L 150 40 L 0 40 M 200 100 L 150 160 L 0 160 M 300 70 L 220 70 L 180 20 L 0 20 M 300 130 L 220 130 L 180 180 L 0 180" fill="none" stroke="rgba(0, 240, 255, 0.4)" stroke-width="1.5"/>
-          <circle cx="150" cy="40" r="3" fill="#00f0ff"/>
-          <circle cx="150" cy="160" r="3" fill="#00f0ff"/>
-          <circle cx="180" cy="20" r="3" fill="#00f0ff"/>
-          <circle cx="180" cy="180" r="3" fill="#00f0ff"/>
-        </svg>
-
-        <svg class="circuit-traces-right" viewBox="0 0 300 200">
-          <path d="M 0 100 L 100 100 L 150 40 L 300 40 M 100 100 L 150 160 L 300 160 M 0 70 L 80 70 L 120 20 L 300 20 M 0 130 L 80 130 L 120 180 L 300 180" fill="none" stroke="rgba(0, 240, 255, 0.4)" stroke-width="1.5"/>
-          <circle cx="150" cy="40" r="3" fill="#00f0ff"/>
-          <circle cx="150" cy="160" r="3" fill="#00f0ff"/>
-          <circle cx="120" cy="20" r="3" fill="#00f0ff"/>
-          <circle cx="120" cy="180" r="3" fill="#00f0ff"/>
-        </svg>
-
-        <!-- Outer Rotating HUD Rings -->
+        <!-- Outer Accent Rings -->
         <div class="hud-ring-outer"></div>
         <div class="hud-ring-inner"></div>
-
-        <!-- Telemetry Callouts -->
-        <div class="telemetry-badge top-left-badge">
-          <span class="lbl">LAT:</span> 28.1325/002<br>
-          <span class="lbl">ID:</span> CFER0.426289
-        </div>
-        <div class="telemetry-badge bottom-right-badge">
-          <span class="lbl">SEC LEVEL:</span> 05<br>
-          <span class="lbl">HASH:</span> 0.989321 UVT
-        </div>
 
         <!-- Hand Scanner Touch Area with High-Res Image Asset -->
         <div id="hand-area">
           <img src="hand_scan_print.png" alt="Biometric Hand Print Graphic" class="hand-image">
-          <!-- Glowing Blue Laser Scan Beam -->
+          <!-- Laser Scan Beam -->
           <div id="scan-line"></div>
         </div>
       </div>
@@ -729,17 +595,17 @@
       <!-- Scan Status & Progress Bar -->
       <div id="scan-status-container">
         <div id="scan-status">
-          <span class="status-symbol">❖</span> PLACE HAND ON SCANNER TO INITIALIZE
+          <span class="status-symbol">❖</span> PLACE HAND ON SCANNER TO INITIALIZE CEREMONY
         </div>
         <div class="progress-bar-track">
           <div id="scan-progress"></div>
         </div>
-        <div id="scan-percent">DATA MATCH: 0%</div>
+        <div id="scan-percent">AUTHORIZATION MATCH: 0%</div>
       </div>
     </div>
   </div>
 
-  <!-- PHASE 2: Futuristic Sci-Fi Lock Overlay -->
+  <!-- PHASE 2: Lock Overlay -->
   <div id="lock-overlay">
     <div id="lock-wrapper">
       <svg viewBox="0 0 200 200" class="lock-svg">
@@ -754,25 +620,25 @@
         </defs>
 
         <!-- Outer Rotating Ring -->
-        <circle cx="100" cy="100" r="85" fill="none" stroke="#00f0ff" stroke-width="1.5" stroke-dasharray="10 5" class="hud-rotate" />
-        <circle cx="100" cy="100" r="72" fill="none" stroke="rgba(0, 150, 255, 0.4)" stroke-width="1" stroke-dasharray="3 6" class="hud-rotate-reverse" />
+        <circle cx="100" cy="100" r="85" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="10 5" class="hud-rotate" />
+        <circle cx="100" cy="100" r="72" fill="none" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1" stroke-dasharray="3 6" class="hud-rotate-reverse" />
         
         <!-- Shield Base -->
         <path d="M 100 45 L 140 60 V 105 C 140 135 100 155 100 155 C 100 155 60 135 60 105 V 60 Z" 
-              fill="rgba(6, 21, 48, 0.9)" stroke="#00f0ff" stroke-width="2.5" filter="url(#lock-glow-filter)" />
+              fill="rgba(15, 23, 42, 0.9)" stroke="#38bdf8" stroke-width="2.5" filter="url(#lock-glow-filter)" />
 
         <!-- Lock Shackle -->
         <path id="lock-shackle" d="M 85 85 V 70 C 85 60 115 60 115 70 V 85" 
-              fill="none" stroke="#00f0ff" stroke-width="4" stroke-linecap="round" />
+              fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" />
 
         <!-- Lock Body -->
-        <rect x="80" y="85" width="40" height="32" rx="4" fill="#00f0ff" opacity="0.95" />
+        <rect x="80" y="85" width="40" height="32" rx="4" fill="#38bdf8" opacity="0.95" />
 
         <!-- Keyhole Core -->
-        <circle cx="100" cy="98" r="3.5" fill="#061530" />
-        <polygon points="98,98 102,98 103,109 97,109" fill="#061530" />
+        <circle cx="100" cy="98" r="3.5" fill="#0f172a" />
+        <polygon points="98,98 102,98 103,109 97,109" fill="#0f172a" />
       </svg>
-      <div id="lock-status-text">SECURITY CLEARANCE GRANTED</div>
+      <div id="lock-status-text">OFFICIAL CEREMONY LATCH RELEASED</div>
     </div>
   </div>
 
@@ -780,7 +646,7 @@
   <div class="curtain curtain-left"></div>
   <div class="curtain curtain-right"></div>
 
-  <!-- Central Ceremony Content (Original Page Intact) -->
+  <!-- Central Ceremony Content (Original Intact) -->
   <div id="ceremony-container">
     <div id="college-title">Dhole Patil College of Engineering, Pune</div>
     <img id="ceremony-logo" src="logo.svg" alt="DPES Logo">
@@ -793,7 +659,7 @@
   <canvas id="c"></canvas>
 
   <script>
-    // ====== BACKGROUND CYBER PARTICLES ======
+    // ====== BACKGROUND AMBIENT PARTICLES ======
     const bgCanvas = document.getElementById('bg-cyber-canvas');
     const bgCtx = bgCanvas.getContext('2d');
     let bgParticles = [];
@@ -802,13 +668,13 @@
       bgCanvas.width = window.innerWidth;
       bgCanvas.height = window.innerHeight;
       bgParticles = [];
-      for (let i = 0; i < 45; i++) {
+      for (let i = 0; i < 40; i++) {
         bgParticles.push({
           x: Math.random() * bgCanvas.width,
           y: Math.random() * bgCanvas.height,
           radius: Math.random() * 2 + 1,
-          vy: -Math.random() * 0.5 - 0.2,
-          alpha: Math.random() * 0.5 + 0.2
+          vy: -Math.random() * 0.4 - 0.15,
+          alpha: Math.random() * 0.4 + 0.15
         });
       }
     }
@@ -819,7 +685,7 @@
       for (let p of bgParticles) {
         p.y += p.vy;
         if (p.y < 0) p.y = bgCanvas.height;
-        bgCtx.fillStyle = '#00f0ff';
+        bgCtx.fillStyle = '#38bdf8';
         bgCtx.globalAlpha = p.alpha;
         bgCtx.beginPath();
         bgCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -831,15 +697,6 @@
     initBgParticles();
     animateBgParticles();
     window.addEventListener('resize', initBgParticles);
-
-    // Live Hex Ticker Update
-    setInterval(() => {
-      const ticker = document.getElementById('hex-ticker');
-      if (ticker) {
-        const hex = () => Math.floor(Math.random()*255).toString(16).padStart(2,'0').toUpperCase();
-        ticker.innerHTML = `0x${hex()}${hex()} 0x${hex()}${hex()}<br>0x${hex()}${hex()} 0x${hex()}${hex()}<br>0x${hex()}${hex()} 0x${hex()}${hex()}`;
-      }
-    }, 400);
 
     // ====== WEB AUDIO SYNTH SOUND ENGINE ======
     class SoundEngine {
@@ -894,21 +751,21 @@
         const lfoGain = this.ctx.createGain();
         this.scanGain = this.ctx.createGain();
 
-        this.scanOsc.type = 'sawtooth';
-        this.scanOsc.frequency.setValueAtTime(350, this.ctx.currentTime);
+        this.scanOsc.type = 'sine';
+        this.scanOsc.frequency.setValueAtTime(440, this.ctx.currentTime);
 
         lfo.type = 'sine';
-        lfo.frequency.setValueAtTime(8, this.ctx.currentTime);
-        lfoGain.gain.setValueAtTime(150, this.ctx.currentTime);
+        lfo.frequency.setValueAtTime(6, this.ctx.currentTime);
+        lfoGain.gain.setValueAtTime(80, this.ctx.currentTime);
 
         lfo.connect(this.scanOsc.frequency);
         
         const filter = this.ctx.createBiquadFilter();
         filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(900, this.ctx.currentTime);
+        filter.frequency.setValueAtTime(1000, this.ctx.currentTime);
 
         this.scanGain.gain.setValueAtTime(0.01, this.ctx.currentTime);
-        this.scanGain.gain.linearRampToValueAtTime(0.15, this.ctx.currentTime + 0.2);
+        this.scanGain.gain.linearRampToValueAtTime(0.12, this.ctx.currentTime + 0.2);
 
         this.scanOsc.connect(filter);
         filter.connect(this.scanGain);
@@ -1373,10 +1230,10 @@
     function drawSciFiScissors(ctx, x, y) {
       ctx.save();
       ctx.translate(x + 12, y - 12);
-      ctx.scale(0.85, 0.85);
+      ctx.scale(0.9, 0.9);
 
       ctx.shadowColor = '#d4af37';
-      ctx.shadowBlur = 8;
+      ctx.shadowBlur = 10;
 
       ctx.beginPath();
       ctx.moveTo(0, 0);
@@ -1394,20 +1251,20 @@
       ctx.fillStyle = '#cbd5e1';
       ctx.fill();
 
-      ctx.lineWidth = 2.5;
+      ctx.lineWidth = 2.8;
       ctx.strokeStyle = '#d4af37';
 
       ctx.beginPath();
-      ctx.arc(-32, -20, 8, 0, Math.PI * 2);
+      ctx.arc(-32, -20, 9, 0, Math.PI * 2);
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.arc(-32, 20, 8, 0, Math.PI * 2);
+      ctx.arc(-32, 20, 9, 0, Math.PI * 2);
       ctx.stroke();
 
       ctx.fillStyle = '#ffd700';
       ctx.beginPath();
-      ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
+      ctx.arc(0, 0, 4, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.restore();
@@ -1478,7 +1335,7 @@
           ctx.lineTo(trail[i].x, trail[i].y);
         }
         ctx.strokeStyle = '#d4af37';
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 3.5;
         ctx.stroke();
       }
 
@@ -1558,7 +1415,7 @@
       soundEngine.startScan();
       
       handArea.classList.add('scanning');
-      scanStatus.innerHTML = '<span class="status-symbol">❖</span> BIOMETRIC ANALYSIS IN PROGRESS...';
+      scanStatus.innerHTML = '<span class="status-symbol">❖</span> AUTHENTICATING AUTHORIZED GUEST...';
 
       let pct = 0;
       const interval = setInterval(() => {
@@ -1566,7 +1423,7 @@
         if (pct > 100) pct = 100;
         
         scanProgress.style.width = pct + '%';
-        scanPercent.textContent = 'DATA MATCH: ' + pct + '%';
+        scanPercent.textContent = 'AUTHORIZATION MATCH: ' + pct + '%';
 
         if (pct >= 100) {
           clearInterval(interval);
@@ -1575,7 +1432,7 @@
 
           handArea.classList.remove('scanning');
           handArea.classList.add('granted');
-          scanStatus.innerHTML = '<span class="status-symbol">✓</span> IDENTITY VERIFIED // ACCESS GRANTED';
+          scanStatus.innerHTML = '<span class="status-symbol">✓</span> AUTHORIZATION CONFIRMED • WELCOME';
           scanStatus.classList.add('granted');
 
           setTimeout(startLockPhase, 700);
