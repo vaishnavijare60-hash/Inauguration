@@ -680,6 +680,19 @@
   <canvas id="c"></canvas>
 
   <script>
+    // ====== AUTO-FULLSCREEN ON FIRST INTERACTION ======
+    function requestFullscreen() {
+      const el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen();
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      else if (el.msRequestFullscreen) el.msRequestFullscreen();
+      // Remove listeners after first trigger
+      document.removeEventListener('click', requestFullscreen);
+      document.removeEventListener('touchstart', requestFullscreen);
+    }
+    document.addEventListener('click', requestFullscreen, { once: true });
+    document.addEventListener('touchstart', requestFullscreen, { once: true });
+
     // ====== BACKGROUND AMBIENT PARTICLES ======
     const bgCanvas = document.getElementById('bg-cyber-canvas');
     const bgCtx = bgCanvas.getContext('2d');
