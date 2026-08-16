@@ -1,26 +1,27 @@
 :root {
-  /* Executive Theme Palette (Gold & Navy) */
-  --bg-cream: #fbf9f4;
-  --bg-warm-gradient: radial-gradient(circle at center, #ffffff 0%, #f7f3eb 60%, #efe6d8 100%);
+  /* Executive Theme Colors - Pure Gold & Deep Obsidian (No Red) */
+  --bg-cream: #faf6ee;
+  --bg-warm-gradient: radial-gradient(circle at center, #ffffff 0%, #faf6ee 50%, #f4eae0 100%);
   --gold-primary: #b8860b;
   --gold-light: #d4af37;
-  --gold-dim: rgba(184, 134, 11, 0.35);
-  --gold-bg-dim: rgba(184, 134, 11, 0.08);
-  --navy-primary: #0f2b48;
-  --navy-light: #1e3a8a;
-  --navy-dim: rgba(15, 43, 72, 0.2);
-  --crimson-primary: #0f2b48; /* mapped to executive navy */
-  --crimson-light: #1e3a8a;
-  --crimson-dim: rgba(15, 43, 72, 0.2);
+  --gold-dim: rgba(212, 175, 55, 0.35);
+  --gold-bg-dim: rgba(212, 175, 55, 0.08);
+  --executive-gold: #d4af37;
+  --executive-gold-glow: rgba(212, 175, 55, 0.45);
   --success-green: #10b981;
   --ink-dark: #0f172a;
   --ink-subtle: #475569;
   --ink-muted: #334155;
 
+  /* Legacy compatibility maps */
+  --crimson-primary: #b8860b;
+  --crimson-light: #d4af37;
+  --crimson-dim: rgba(212, 175, 55, 0.25);
+
   /* Typography */
   --font-main: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
   --font-mono: monospace;
 
-  /* Responsive Spacing & Scaling for Big Screens */
+  /* Responsive Spacing & Scaling for Big Displays */
   --max-content-width: clamp(800px, 85vw, 1400px);
 }

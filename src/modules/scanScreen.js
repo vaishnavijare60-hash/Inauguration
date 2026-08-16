@@ -1,14 +1,14 @@
 import { soundEngine } from './soundEngine.js';
 
 /**
- * Multi-Phase Ceremony Orchestration Module (Scanner -> Lock Overlay -> Curtains -> Ribbon)
+ * Executive Ceremony Flow: Biometric Scanner Touch -> Silk Curtains Reveal -> Ribbon Cutting Page
+ * (Bypasses lock overlay completely for a clean, direct executive transition)
  * @param {Function} onCeremonyStart Callback triggered when curtains open to start ribbon physics
  */
 export function initScanScreen(onCeremonyStart) {
   const handArea = document.getElementById('hand-area');
   const scanStatus = document.getElementById('scan-status');
   const scanProgress = document.getElementById('scan-progress');
-  const scanPercent = document.getElementById('scan-percent');
 
   if (!handArea) return;
 
@@ -21,9 +21,6 @@ export function initScanScreen(onCeremonyStart) {
     soundEngine.startScan();
 
     handArea.classList.add('scanning');
-    if (scanStatus) {
-      scanStatus.innerHTML = '<span class="pulse-indicator"></span> AUTHENTICATING...';
-    }
 
     let pct = 0;
     const interval = setInterval(() => {
@@ -31,7 +28,6 @@ export function initScanScreen(onCeremonyStart) {
       if (pct > 100) pct = 100;
 
       if (scanProgress) scanProgress.style.width = pct + '%';
-      if (scanPercent) scanPercent.textContent = pct + '%';
 
       if (pct >= 100) {
         clearInterval(interval);
@@ -40,14 +36,10 @@ export function initScanScreen(onCeremonyStart) {
 
         handArea.classList.remove('scanning');
         handArea.classList.add('granted');
-        if (scanStatus) {
-          scanStatus.innerHTML = '✦ INAUGURATION AUTHORIZED ✦';
-          scanStatus.classList.add('granted');
-        }
 
         setTimeout(startCurtainPhase, 600);
       }
-    }, 70);
+    }, 60);
   }
 
   handArea.addEventListener('click', startScan);
@@ -59,21 +51,28 @@ export function initScanScreen(onCeremonyStart) {
   function startCurtainPhase() {
     const scanScreen = document.getElementById('scan-screen');
     if (scanScreen) scanScreen.classList.add('hidden');
-    
+
     soundEngine.playCurtain();
 
     setTimeout(() => {
-      document.querySelector('.curtain-left').classList.add('open');
-      document.querySelector('.curtain-right').classList.add('open');
+      const curtainLeft = document.querySelector('.curtain-left');
+      const curtainRight = document.querySelector('.curtain-right');
+      if (curtainLeft) curtainLeft.classList.add('open');
+      if (curtainRight) curtainRight.classList.add('open');
 
       setTimeout(() => {
-        document.getElementById('college-title').classList.add('animate');
-        document.getElementById('ceremony-logo').classList.add('animate');
-        document.getElementById('ceremony-title').classList.add('animate');
+        const colTitle = document.getElementById('college-title');
+        const cerLogo = document.getElementById('ceremony-logo');
+        const cerTitle = document.getElementById('ceremony-title');
+
+        if (colTitle) colTitle.classList.add('animate');
+        if (cerLogo) cerLogo.classList.add('animate');
+        if (cerTitle) cerTitle.classList.add('animate');
+
         if (typeof onCeremonyStart === 'function') {
           onCeremonyStart();
         }
-      }, 600);
-    }, 200);
+      }, 500);
+    }, 250);
   }
 }

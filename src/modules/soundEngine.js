@@ -1,6 +1,6 @@
 /**
- * Web Audio Synthesizer Executive Sound Engine for ceremony audio feedback.
- * Custom crafted harmonic acoustics for inauguration authorization.
+ * Executive Acoustic Sound Engine for Official Ceremony Audio Feedback.
+ * Clean, warm, high-end acoustic harmonics (No harsh/arcade tones).
  */
 export class SoundEngine {
   constructor() {
@@ -29,6 +29,7 @@ export class SoundEngine {
     }
   }
 
+  /* Soft, warm acoustic hover chime */
   playHover() {
     this.ensureContext();
     if (!this.ctx) return;
@@ -37,52 +38,51 @@ export class SoundEngine {
     const gain = this.ctx.createGain();
     
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(1046.50, now); // High C6 crystal note
-    osc.frequency.exponentialRampToValueAtTime(1318.51, now + 0.1); // E6
-    
-    gain.gain.setValueAtTime(0.08, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-    
+    osc.frequency.setValueAtTime(523.25, now); // C5
+    osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.12); // E5
+
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.08, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+
     osc.connect(gain);
     gain.connect(this.ctx.destination);
     osc.start(now);
-    osc.stop(now + 0.1);
+    osc.stop(now + 0.12);
   }
 
+  /* Warm ambient scan resonance */
   startScan() {
     this.ensureContext();
     if (!this.ctx || this.scanOsc) return;
 
     const now = this.ctx.currentTime;
     this.scanOsc = this.ctx.createOscillator();
-    const lfo = this.ctx.createOscillator();
-    const lfoGain = this.ctx.createGain();
+    const subOsc = this.ctx.createOscillator();
     this.scanGain = this.ctx.createGain();
 
-    // Warm executive resonance hum
     this.scanOsc.type = 'sine';
-    this.scanOsc.frequency.setValueAtTime(523.25, now); // C5
+    this.scanOsc.frequency.setValueAtTime(220, now); // Warm A3 tone
+    this.scanOsc.frequency.linearRampToValueAtTime(329.63, now + 2.0); // Smooth rise to E4
 
-    lfo.type = 'sine';
-    lfo.frequency.setValueAtTime(4, now); // Gentle 4Hz swell
-    lfoGain.gain.setValueAtTime(30, now);
-
-    lfo.connect(this.scanOsc.frequency);
+    subOsc.type = 'sine';
+    subOsc.frequency.setValueAtTime(110, now); // A2 fundamental octave
 
     const filter = this.ctx.createBiquadFilter();
     filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(1200, now);
+    filter.frequency.setValueAtTime(600, now);
 
     this.scanGain.gain.setValueAtTime(0.001, now);
-    this.scanGain.gain.linearRampToValueAtTime(0.12, now + 0.3);
+    this.scanGain.gain.linearRampToValueAtTime(0.08, now + 0.3);
 
     this.scanOsc.connect(filter);
+    subOsc.connect(filter);
     filter.connect(this.scanGain);
     this.scanGain.connect(this.ctx.destination);
 
-    lfo.start();
-    this.scanOsc.start();
-    this.lfo = lfo;
+    this.scanOsc.start(now);
+    subOsc.start(now);
+    this.lfo = subOsc;
   }
 
   stopScan() {
@@ -102,49 +102,38 @@ export class SoundEngine {
     }
   }
 
+  /* Executive Inauguration Harmonic Fanfare Chord */
   playGranted() {
     this.ensureContext();
     if (!this.ctx) return;
     const now = this.ctx.currentTime;
 
-    // Majestic Executive Arpeggio Chime (C-Major Executive Fanfare: C5, E5, G5, C6)
-    const chord = [523.25, 659.25, 783.99, 1046.50, 1318.51];
-    chord.forEach((freq, idx) => {
+    // Warm Major 9th Acoustic Chord (A - C# - E - G# - B)
+    const chordNotes = [220.00, 277.18, 329.63, 415.30, 493.88, 659.25];
+    chordNotes.forEach((freq, idx) => {
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now + idx * 0.07);
-      
-      gain.gain.setValueAtTime(0.001, now + idx * 0.07);
-      gain.gain.linearRampToValueAtTime(0.2, now + idx * 0.07 + 0.03);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.9);
-      
+      osc.frequency.setValueAtTime(freq, now + idx * 0.05);
+
+      gain.gain.setValueAtTime(0.001, now + idx * 0.05);
+      gain.gain.linearRampToValueAtTime(0.12, now + idx * 0.05 + 0.06);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.05 + 1.4);
+
       osc.connect(gain);
       gain.connect(this.ctx.destination);
-      osc.start(now + idx * 0.07);
-      osc.stop(now + idx * 0.07 + 0.9);
+      osc.start(now + idx * 0.05);
+      osc.stop(now + idx * 0.05 + 1.4);
     });
-
-    // Deep luxury gold bass anchor
-    const bassOsc = this.ctx.createOscillator();
-    const bassGain = this.ctx.createGain();
-    bassOsc.type = 'sine';
-    bassOsc.frequency.setValueAtTime(130.81, now); // Low C3
-    bassGain.gain.setValueAtTime(0.25, now);
-    bassGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
-    bassOsc.connect(bassGain);
-    bassGain.connect(this.ctx.destination);
-    bassOsc.start(now);
-    bassOsc.stop(now + 1.2);
   }
 
+  /* Acoustic Silk Curtain Motion Sweep */
   playCurtain() {
     this.ensureContext();
     if (!this.ctx) return;
     const now = this.ctx.currentTime;
 
-    // Soft silk curtain ambient air sweep
-    const bufferSize = Math.floor(this.ctx.sampleRate * 1.4);
+    const bufferSize = Math.floor(this.ctx.sampleRate * 1.0);
     const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
     const output = buffer.getChannelData(0);
     for (let i = 0; i < bufferSize; i++) {
@@ -155,51 +144,51 @@ export class SoundEngine {
     whiteNoise.buffer = buffer;
 
     const filter = this.ctx.createBiquadFilter();
-    filter.type = 'bandpass';
+    filter.type = 'lowpass';
     filter.frequency.setValueAtTime(200, now);
-    filter.frequency.exponentialRampToValueAtTime(800, now + 0.7);
-    filter.frequency.exponentialRampToValueAtTime(150, now + 1.4);
-    filter.Q.setValueAtTime(1.5, now);
+    filter.frequency.exponentialRampToValueAtTime(800, now + 0.5);
+    filter.frequency.exponentialRampToValueAtTime(150, now + 1.0);
 
     const gain = this.ctx.createGain();
     gain.gain.setValueAtTime(0.001, now);
-    gain.gain.linearRampToValueAtTime(0.12, now + 0.6);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.4);
+    gain.gain.linearRampToValueAtTime(0.1, now + 0.4);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.0);
 
     whiteNoise.connect(filter);
     filter.connect(gain);
     gain.connect(this.ctx.destination);
     whiteNoise.start(now);
-    whiteNoise.stop(now + 1.4);
+    whiteNoise.stop(now + 1.0);
   }
 
+  /* Metallic Ribbon Cut Celebration Chime */
   playCut() {
     this.ensureContext();
     if (!this.ctx) return;
     const now = this.ctx.currentTime;
 
-    // Sparkling Executive Ribbon Cutting Celebration Fanfare
+    // Crisp metallic shear accent
     const sliceOsc = this.ctx.createOscillator();
     const sliceGain = this.ctx.createGain();
-    sliceOsc.type = 'sine';
+    sliceOsc.type = 'triangle';
     sliceOsc.frequency.setValueAtTime(1800, now);
-    sliceOsc.frequency.exponentialRampToValueAtTime(400, now + 0.15);
-    sliceGain.gain.setValueAtTime(0.25, now);
-    sliceGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+    sliceOsc.frequency.exponentialRampToValueAtTime(400, now + 0.1);
+    sliceGain.gain.setValueAtTime(0.2, now);
+    sliceGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
     sliceOsc.connect(sliceGain);
     sliceGain.connect(this.ctx.destination);
     sliceOsc.start(now);
-    sliceOsc.stop(now + 0.15);
+    sliceOsc.stop(now + 0.1);
 
-    // Warm golden acoustic chord resonance
-    const chord = [392.00, 493.88, 587.33, 783.99, 987.77, 1174.66];
+    // Warm resonant celebration chord
+    const chord = [293.66, 369.99, 440.00, 587.33, 739.99, 880.00, 1174.66];
     chord.forEach((freq, i) => {
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, now + 0.04 + i * 0.03);
       gain.gain.setValueAtTime(0.001, now + 0.04 + i * 0.03);
-      gain.gain.linearRampToValueAtTime(0.16, now + 0.08 + i * 0.03);
+      gain.gain.linearRampToValueAtTime(0.14, now + 0.06 + i * 0.03);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 2.0);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
