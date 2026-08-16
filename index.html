@@ -26,6 +26,22 @@
       cursor: crosshair;
     }
 
+    /* Blurred college building background for ribbon cutting page */
+    #ceremony-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: url('college_building.jpg') center center / cover no-repeat;
+      filter: blur(4px);
+      transform: scale(1.05); /* prevent blur edge artifacts */
+    }
+    #ceremony-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
     /* Central Ceremony Branding (Proportionately Sized for Big Displays) */
     #ceremony-container {
       position: absolute;
@@ -529,6 +545,9 @@
 </head>
 
 <body>
+
+  <!-- Blurred College Building Background for Ribbon Cutting Page -->
+  <div id="ceremony-bg"></div>
 
   <!-- PHASE 1: Professional Executive Authorization Screen -->
   <div id="scan-screen">
