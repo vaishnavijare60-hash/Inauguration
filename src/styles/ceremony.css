@@ -3,7 +3,7 @@
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: url('/background.jpg') center center / cover no-repeat;
+  background: url('/assets/background.jpg') center center / cover no-repeat;
   filter: blur(1.5px) saturate(1.35) contrast(1.1) brightness(0.98);
   transform: scale(1.04); /* prevent blur edge artifacts */
 }

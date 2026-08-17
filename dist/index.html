@@ -8,148 +8,95 @@
     content="Official Inauguration Ceremony - DPCOE Department of Computer Engineering. Interactive ribbon-cutting ceremony and biometric inauguration authorization.">
   <link rel="icon" type="image/x-icon" href="/assets/favicon-CsLyGMpy.ico">
   <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon-CsLyGMpy.ico">
+  <!-- Traditional Indian & Royal Serif Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cinzel+Decorative:wght@700;900&family=Marcellus&family=Rozha+One&family=Yatra+One&display=swap" rel="stylesheet">
   <title>DPCOE Computer Department - Inauguration Ceremony</title>
-  <script type="module" crossorigin src="/assets/index-DYT59fQa.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-fXtRiv29.css">
+  <script type="module" crossorigin src="/assets/index-DKfRIH1o.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CO-gp42o.css">
 </head>
 
 <body>
 
   <div id="ceremony-bg"></div>
 
-  <!-- PHASE 1: Professional Executive Authorization Screen -->
+  <!-- PHASE 1: Executive Biometric Hand Scan Authorization Screen -->
   <div id="scan-screen">
-    <!-- Floating Ambient Particles Canvas & Grid -->
+    <!-- Soft Ambient Particles Canvas -->
     <canvas id="bg-cyber-canvas"></canvas>
-    <div class="cyber-bg-grid"></div>
 
-    <div class="hud-frame">
-      <div class="hud-corner top-left"></div>
-      <div class="hud-corner top-right"></div>
-      <div class="hud-corner bottom-left"></div>
-      <div class="hud-corner bottom-right"></div>
+    <!-- Traditional Ceremonial Indian Borders -->
+    <div class="trad-border trad-border-top"></div>
+    <div class="trad-border trad-border-bottom"></div>
+    <div class="trad-border trad-border-left"></div>
+    <div class="trad-border trad-border-right"></div>
 
-      <!-- Professional Header Title -->
-      <div id="scan-title">
-        <span class="symbol-accent">❖</span> DEPARTMENT OF COMPUTER ENGINEERING // INAUGURATION AUTHORIZATION <span class="symbol-accent">❖</span>
-      </div>
+    <!-- Traditional Rangoli/Mandala Corner Motifs -->
+    <div class="trad-corner top-left"></div>
+    <div class="trad-corner top-right"></div>
+    <div class="trad-corner bottom-left"></div>
+    <div class="trad-corner bottom-right"></div>
 
-      <!-- Left Telemetry Panel (Official Institution Details) -->
-      <div class="side-hud-panel left-panel">
-        <div class="hud-box">
-          <div class="hud-box-title">INSTITUTION</div>
-          <div class="stat-row"><span>COLLEGE:</span><span class="stat-val">DPCOE PUNE</span></div>
-          <div class="stat-row"><span>DEPARTMENT:</span><span class="stat-val">COMPUTER ENG.</span></div>
-          <div class="stat-row"><span>ACADEMIC YEAR:</span><span class="stat-val">2026-2027</span></div>
-        </div>
+    <!-- Grand Traditional Indian Marigold & Mango Leaf Toran (Top Garland & Long Flower Strings) -->
+    <div class="trad-toran-banner"></div>
+    <div class="trad-toran-string string-far-left"></div>
+    <div class="trad-toran-string string-mid-left"></div>
+    <div class="trad-toran-string string-mid-right"></div>
+    <div class="trad-toran-string string-far-right"></div>
 
-        <div class="hud-box">
-          <div class="hud-box-title">EVENT PROTOCOL</div>
-          <div class="stat-row"><span>CEREMONY:</span><span class="stat-val">OFFICIAL</span></div>
-          <div class="stat-row"><span>STAGE:</span><span class="stat-val">INAUGURATION</span></div>
-          <div class="stat-row"><span>SYSTEM:</span><span class="stat-val">ONLINE</span></div>
-        </div>
-      </div>
+    <!-- Symmetrical Dual Background Traditional Mandalas (Left & Right) -->
+    <div class="trad-bg-mandala trad-bg-mandala-left"></div>
+    <div class="trad-bg-mandala trad-bg-mandala-right"></div>
 
-      <!-- Right Telemetry Panel (System Status) -->
-      <div class="side-hud-panel right-panel">
-        <div class="hud-box">
-          <div class="hud-box-title">AUTHORIZATION STATUS</div>
-          <div class="stat-row"><span>SECURITY:</span><span class="stat-val">VERIFIED</span></div>
-          <div class="stat-row"><span>CLEARANCE:</span><span class="stat-val">GUEST AUTHORIZED</span></div>
-          <div class="stat-row"><span>RIBBON STAGE:</span><span class="stat-val">READY</span></div>
-        </div>
-
-        <div class="hud-box">
-          <div class="hud-box-title">LOCATION</div>
-          <div class="stat-row"><span>VENUE:</span><span class="stat-val">MAIN AUDITORIUM</span></div>
-          <div class="stat-row"><span>CITY:</span><span class="stat-val">PUNE, INDIA</span></div>
-        </div>
-      </div>
-
-      <!-- Central Scanner Wrapper -->
+    <div class="executive-frame">
+      <!-- Central Hand Scanner Wrapper -->
       <div id="hand-scanner-wrapper">
-        <!-- Outer Accent Rings -->
+        <!-- Outer Glowing Accent Rings & Traditional Pattern Ring -->
         <div class="hud-ring-outer"></div>
+        <div class="hud-ring-trad"></div>
         <div class="hud-ring-inner"></div>
 
-        <!-- Hand Scanner Touch Area with High-Res Image Asset -->
+        <!-- Circular Hand Scanner Touch Area -->
         <div id="hand-area">
-          <img src="/assets/hand_scan_print-BMT-bmat.png" alt="Biometric Hand Print Graphic" class="hand-image">
+          <img src="/assets/hand_scan_male.png" alt="Traditional Male Ceremonial Hand Scanner" class="hand-image">
           <!-- Laser Scan Beam -->
           <div id="scan-line"></div>
         </div>
       </div>
-
-      <!-- Scan Status & Progress Bar -->
-      <div id="scan-status-container">
-        <div id="scan-status">
-          <span class="status-symbol">❖</span> PLACE HAND ON SCANNER TO INITIALIZE CEREMONY
-        </div>
-        <div class="progress-bar-track">
-          <div id="scan-progress"></div>
-        </div>
-        <div id="scan-percent">AUTHORIZATION MATCH: 0%</div>
-      </div>
     </div>
   </div>
 
-  <!-- PHASE 2: Lock Overlay -->
-  <div id="lock-overlay">
-    <div id="lock-wrapper">
-      <svg viewBox="0 0 200 200" class="lock-svg">
-        <defs>
-          <filter id="lock-glow-filter">
-            <feGaussianBlur stdDeviation="4" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-
-        <!-- Outer Rotating Ring -->
-        <circle cx="100" cy="100" r="85" fill="none" stroke="#b8860b" stroke-width="1.5" stroke-dasharray="10 5"
-          class="hud-rotate" />
-        <circle cx="100" cy="100" r="72" fill="none" stroke="rgba(184, 134, 11, 0.4)" stroke-width="1"
-          stroke-dasharray="3 6" class="hud-rotate-reverse" />
-
-        <!-- Shield Base -->
-        <path d="M 100 45 L 140 60 V 105 C 140 135 100 155 100 155 C 100 155 60 135 60 105 V 60 Z"
-          fill="rgba(156, 17, 17, 0.85)" stroke="#b8860b" stroke-width="2.5" filter="url(#lock-glow-filter)" />
-
-        <!-- Lock Shackle -->
-        <path id="lock-shackle" d="M 85 85 V 70 C 85 60 115 60 115 70 V 85" fill="none" stroke="#9c1111"
-          stroke-width="4" stroke-linecap="round" />
-
-        <!-- Lock Body -->
-        <rect x="80" y="85" width="40" height="32" rx="4" fill="#9c1111" opacity="0.95" />
-
-        <!-- Keyhole Core -->
-        <circle cx="100" cy="98" r="3.5" fill="#fef6e8" />
-        <polygon points="98,98 102,98 103,109 97,109" fill="#fef6e8" />
-      </svg>
-      <div id="lock-status-text">OFFICIAL CEREMONY LATCH RELEASED</div>
-    </div>
-  </div>
-
-  <!-- PHASE 3: Curtains -->
+  <!-- PHASE 2: Silk Curtains -->
   <div class="curtain curtain-left"></div>
   <div class="curtain curtain-right"></div>
 
-  <!-- Central Ceremony Content -->
+  <!-- Traditional Ceremonial Indian Patterns for Phase 2 Background -->
+  <div class="ceremony-trad-border ceremony-trad-border-top"></div>
+  <div class="ceremony-trad-border ceremony-trad-border-bottom"></div>
+
+  <div class="ceremony-trad-corner ceremony-top-left"></div>
+  <div class="ceremony-trad-corner ceremony-top-right"></div>
+  <div class="ceremony-trad-corner ceremony-bottom-left"></div>
+  <div class="ceremony-trad-corner ceremony-bottom-right"></div>
+
+  <!-- Symmetrical Dual Background Mandalas for Phase 2 -->
+  <div class="ceremony-bg-mandala ceremony-mandala-left"></div>
+  <div class="ceremony-bg-mandala ceremony-mandala-right"></div>
+
+  <!-- Central Ceremony Branding Content -->
   <div id="ceremony-container">
     <div id="college-title">Dhole Patil College of Engineering, Pune</div>
-    <img id="ceremony-logo" src="/assets/logo-C80e9jQT.svg" alt="DPES Logo">
+    <img id="ceremony-logo" src="/assets/logo.svg" alt="DPES Logo">
     <h1 id="ceremony-title">Department of Computer Engineering</h1>
     <div id="ceremony-status">✦ Official Inauguration Completed ✦</div>
     <div id="post-cut-message">Welcome to the Future of Innovation</div>
   </div>
 
-  <!-- Canvas Layer for Physics Ribbon Ribbon -->
+  <!-- Canvas Layer for Physics Ribbon -->
   <canvas id="c"></canvas>
 
-  <!-- Vite Entrypoint Script -->
+  <!-- Entrypoint Script -->
 
 </body>
 

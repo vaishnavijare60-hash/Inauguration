@@ -1,3 +1,5 @@
+import bgMusicUrl from '../assets/background_music.mp3';
+
 /**
  * Traditional Indian Ceremonial Sound Engine & Acoustic Synthesizer.
  * Features synthesized Indian Tanpura Drone, Shehnai Melodic Swells, Temple Ghanti Chimes, 
@@ -41,7 +43,7 @@ export class SoundEngine {
       this.ensureContext();
 
       if (!this.bgAudio) {
-        this.bgAudio = new Audio('/background%20music.mp3');
+        this.bgAudio = new Audio(bgMusicUrl || '/assets/background_music.mp3');
         this.bgAudio.loop = true;
         this.bgAudio.volume = 0.65;
 
