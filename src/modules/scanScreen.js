@@ -2,78 +2,111 @@ import { soundEngine } from './soundEngine.js';
 
 /**
  * Executive Ceremony Flow: Biometric Scanner Touch -> Silk Curtains Reveal -> Ribbon Cutting Page
- * (Includes natural voice announcement for executive inauguration)
  * @param {Function} onCeremonyStart Callback triggered when curtains open to start ribbon physics
  */
 export function initScanScreen(onCeremonyStart) {
   const handArea = document.getElementById('hand-area');
-  const scanStatus = document.getElementById('scan-status');
-  const scanProgress = document.getElementById('scan-progress');
+  const handWrapper = document.getElementById('hand-scanner-wrapper');
 
   if (!handArea) return;
 
-  handArea.addEventListener('mouseenter', () => soundEngine.playHover());
+  // Reset scanner state on initialization
+  handArea.classList.remove('scanning', 'granted');
+
+  try {
+    handArea.addEventListener('mouseenter', () => {
+      try { soundEngine.playHover(); } catch (e) {}
+    });
+  } catch (e) {}
+
+  let isScanningActive = false;
 
   function startScan() {
-    if (handArea.classList.contains('scanning') || handArea.classList.contains('granted')) return;
+    if (isScanningActive || handArea.classList.contains('scanning') || handArea.classList.contains('granted')) return;
 
-    soundEngine.ensureContext();
-    soundEngine.startScan();
+    isScanningActive = true;
+
+    try {
+      soundEngine.ensureContext();
+      soundEngine.startScan();
+    } catch (e) {}
 
     handArea.classList.add('scanning');
 
     let pct = 0;
+    // Exactly 1.0 second scanning duration (25 increments of 4% every 40ms = 1000ms)
     const interval = setInterval(() => {
-      pct += Math.floor(Math.random() * 8) + 4;
+      pct += 4;
       if (pct > 100) pct = 100;
-
-      if (scanProgress) scanProgress.style.width = pct + '%';
 
       if (pct >= 100) {
         clearInterval(interval);
-        soundEngine.stopScan();
-        soundEngine.playGranted();
-        soundEngine.speakVoice("Inauguration Authorized. Welcome to the Department of Computer Engineering.");
+        try { soundEngine.stopScan(); } catch (e) {}
+        try { soundEngine.playGranted(); } catch (e) {}
 
         handArea.classList.remove('scanning');
         handArea.classList.add('granted');
 
-        setTimeout(startCurtainPhase, 600);
+        // Trigger curtain reveal transition after 200ms
+        setTimeout(startCurtainPhase, 200);
       }
-    }, 60);
+    }, 40);
   }
 
-  handArea.addEventListener('click', startScan);
-  handArea.addEventListener('touchstart', (e) => {
-    e.preventDefault();
+  // Handle all interaction pointer events cleanly
+  const handleInteraction = (e) => {
+    if (e && e.cancelable) e.preventDefault();
     startScan();
-  });
+  };
+
+  handArea.addEventListener('click', handleInteraction);
+  handArea.addEventListener('pointerdown', handleInteraction);
+  handArea.addEventListener('touchstart', handleInteraction, { passive: false });
+
+  if (handWrapper) {
+    handWrapper.addEventListener('click', handleInteraction);
+    handWrapper.addEventListener('pointerdown', handleInteraction);
+  }
 
   function startCurtainPhase() {
     const scanScreen = document.getElementById('scan-screen');
-    if (scanScreen) scanScreen.classList.add('hidden');
+    const curtainLeft = document.querySelector('.curtain-left');
+    const curtainRight = document.querySelector('.curtain-right');
 
-    soundEngine.playCurtain();
+    // Stop scan page background music when transitioning to inauguration ceremony page
+    try {
+      soundEngine.stopBackgroundMusic();
+    } catch (e) {}
 
-    setTimeout(() => {
-      const curtainLeft = document.querySelector('.curtain-left');
-      const curtainRight = document.querySelector('.curtain-right');
-      if (curtainLeft) curtainLeft.classList.add('open');
-      if (curtainRight) curtainRight.classList.add('open');
+    try {
+      soundEngine.playCurtain();
+    } catch (e) {}
 
+    // 1. Hide hand scan screen smoothly
+    if (scanScreen) {
+      scanScreen.classList.add('hidden');
       setTimeout(() => {
-        const colTitle = document.getElementById('college-title');
-        const cerLogo = document.getElementById('ceremony-logo');
-        const cerTitle = document.getElementById('ceremony-title');
+        scanScreen.style.display = 'none';
+      }, 600);
+    }
 
-        if (colTitle) colTitle.classList.add('animate');
-        if (cerLogo) cerLogo.classList.add('animate');
-        if (cerTitle) cerTitle.classList.add('animate');
+    // 2. Open silk curtains to left and right
+    if (curtainLeft) curtainLeft.classList.add('open');
+    if (curtainRight) curtainRight.classList.add('open');
 
-        if (typeof onCeremonyStart === 'function') {
-          onCeremonyStart();
-        }
-      }, 500);
-    }, 250);
+    // 3. Reveal ceremony titles and start ribbon cloth physics
+    setTimeout(() => {
+      const colTitle = document.getElementById('college-title');
+      const cerLogo = document.getElementById('ceremony-logo');
+      const cerTitle = document.getElementById('ceremony-title');
+
+      if (colTitle) colTitle.classList.add('animate');
+      if (cerLogo) cerLogo.classList.add('animate');
+      if (cerTitle) cerTitle.classList.add('animate');
+
+      if (typeof onCeremonyStart === 'function') {
+        onCeremonyStart();
+      }
+    }, 400);
   }
 }

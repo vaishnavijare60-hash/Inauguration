@@ -181,17 +181,30 @@ export function initRibbonPhysics() {
       if (msg) msg.classList.add('visible');
     }, 1000);
 
-    const colors = ['#ffd700', '#ba0d0d', '#ffffff', '#e6b800', '#ff4d4d', '#c0c0c0'];
-    for (let i = 0; i < 160; i++) {
+    // ====== Traditional Indian Ceremonial Celebration Particles (Phool Varsha) ======
+    const particleTypes = ['marigold', 'rose', 'gold_star', 'rice'];
+    const marigoldColors = ['#ff8c00', '#ffd700', '#ffa000', '#ff7f00', '#ff9900'];
+    const roseColors = ['#dc2626', '#e11d48', '#b91c1c', '#f43f5e', '#be123c'];
+    const goldColors = ['#ffd700', '#f59e0b', '#ffffff', '#fbbf24'];
+
+    for (let i = 0; i < 220; i++) {
+      let pType = particleTypes[Math.floor(Math.random() * particleTypes.length)];
+      let color;
+      if (pType === 'marigold') color = marigoldColors[Math.floor(Math.random() * marigoldColors.length)];
+      else if (pType === 'rose') color = roseColors[Math.floor(Math.random() * roseColors.length)];
+      else if (pType === 'gold_star') color = goldColors[Math.floor(Math.random() * goldColors.length)];
+      else color = '#fef3c7';
+
       confetti.push({
         x: Math.random() * width,
-        y: Math.random() * (height * 0.4),
-        vx: (Math.random() - 0.5) * 12,
-        vy: Math.random() * -6 - 2,
-        size: Math.random() * 9 + 5,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        y: Math.random() * (height * 0.45),
+        vx: (Math.random() - 0.5) * 14,
+        vy: Math.random() * -8 - 3,
+        size: pType === 'rice' ? Math.random() * 4 + 3 : Math.random() * 8 + 6,
+        color: color,
+        type: pType,
         rotation: Math.random() * Math.PI * 2,
-        vRot: (Math.random() - 0.5) * 0.2,
+        vRot: (Math.random() - 0.5) * 0.18,
         osc: Math.random() * 10
       });
     }
@@ -338,6 +351,81 @@ export function initRibbonPhysics() {
       }
     }
 
+    // ====== Traditional Golden Indian Lace & Rangoli Motifs on Ribbon ======
+    for (let x = 0; x < cols - 1; x++) {
+      if (activeHoriz[x] === 1) {
+        let pTop1 = points[x];
+        let pTop2 = points[x + 1];
+        let pBot1 = points[(rows - 1) * cols + x];
+        let pBot2 = points[(rows - 1) * cols + x + 1];
+
+        // 1. Top Golden Lace Border Trim
+        ctx.beginPath();
+        ctx.moveTo(pTop1.x, pTop1.y);
+        ctx.lineTo(pTop2.x, pTop2.y);
+        ctx.strokeStyle = '#ffd700';
+        ctx.lineWidth = 3.0;
+        ctx.stroke();
+
+        // 2. Bottom Golden Lace Border Trim
+        ctx.beginPath();
+        ctx.moveTo(pBot1.x, pBot1.y);
+        ctx.lineTo(pBot2.x, pBot2.y);
+        ctx.strokeStyle = '#ffd700';
+        ctx.lineWidth = 3.0;
+        ctx.stroke();
+
+        // 3. Inner Gold Stitching Thread
+        let pMid1 = points[cols + x];
+        let pMid2 = points[cols + x + 1];
+        ctx.beginPath();
+        ctx.moveTo(pMid1.x, pMid1.y);
+        ctx.lineTo(pMid2.x, pMid2.y);
+        ctx.strokeStyle = 'rgba(255, 235, 120, 0.5)';
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+
+        // 4. Traditional 8-Point Golden Star & Rangoli Emblem every 3 cols
+        if (x % 3 === 1) {
+          let midX = (pTop1.x + pTop2.x + pBot1.x + pBot2.x) / 4;
+          let midY = (pTop1.y + pTop2.y + pBot1.y + pBot2.y) / 4;
+
+          ctx.save();
+          ctx.translate(midX, midY);
+
+          // Star Petal Vertical
+          ctx.fillStyle = '#ffd700';
+          ctx.beginPath();
+          ctx.moveTo(0, -6);
+          ctx.lineTo(3.5, 0);
+          ctx.lineTo(0, 6);
+          ctx.lineTo(-3.5, 0);
+          ctx.closePath();
+          ctx.fill();
+
+          // Star Petal Horizontal
+          ctx.beginPath();
+          ctx.moveTo(-6, 0);
+          ctx.lineTo(0, 3.5);
+          ctx.lineTo(6, 0);
+          ctx.lineTo(0, -3.5);
+          ctx.closePath();
+          ctx.fill();
+
+          // Center Bead Highlight
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.arc(0, 0, 1.8, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.restore();
+        }
+      }
+    }
+
+    // ====== Ceremonial Traditional Knots / Bows at Ribbon Ends ======
+    drawRibbonKnots();
+
     for (let s of sparks) {
       ctx.fillStyle = s.color;
       ctx.globalAlpha = s.life;
@@ -358,14 +446,150 @@ export function initRibbonPhysics() {
       ctx.stroke();
     }
 
+    // ====== Traditional Indian Phool Varsha (Flower Petal & Gold Rain) ======
     for (let c of confetti) {
       ctx.save();
       ctx.translate(c.x, c.y);
       ctx.rotate(c.rotation);
-      ctx.fillStyle = c.color;
-      ctx.fillRect(-c.size / 2, -c.size / 4, c.size, c.size / 2);
+      ctx.scale(Math.sin(c.osc), 1); // Realistic 3D organic fluttering flip effect
+
+      if (c.type === 'marigold' || c.type === 'rose') {
+        // Organic Petal Shape
+        ctx.fillStyle = c.color;
+        ctx.beginPath();
+        ctx.moveTo(0, -c.size);
+        ctx.bezierCurveTo(c.size * 0.95, -c.size * 0.6, c.size * 0.85, c.size * 0.7, 0, c.size);
+        ctx.bezierCurveTo(-c.size * 0.85, c.size * 0.7, -c.size * 0.95, -c.size * 0.6, 0, -c.size);
+        ctx.fill();
+
+        // Delicate Petal Vein Highlight
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(0, -c.size * 0.7);
+        ctx.lineTo(0, c.size * 0.6);
+        ctx.stroke();
+      } else if (c.type === 'gold_star') {
+        // Sparkling 4-point Golden Rangoli Star
+        ctx.fillStyle = c.color;
+        ctx.beginPath();
+        ctx.moveTo(0, -c.size);
+        ctx.lineTo(c.size * 0.3, -c.size * 0.3);
+        ctx.lineTo(c.size, 0);
+        ctx.lineTo(c.size * 0.3, c.size * 0.3);
+        ctx.lineTo(0, c.size);
+        ctx.lineTo(-c.size * 0.3, c.size * 0.3);
+        ctx.lineTo(-c.size, 0);
+        ctx.lineTo(-c.size * 0.3, -c.size * 0.3);
+        ctx.closePath();
+        ctx.fill();
+      } else {
+        // Slender Akshata Rice Grain
+        ctx.fillStyle = c.color;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, c.size * 0.35, c.size * 0.9, 0.4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
       ctx.restore();
     }
+  }
+
+  function drawRibbonKnots() {
+    if (!points || points.length === 0) return;
+
+    let pLeftTop = points[0];
+    let pLeftBot = points[(rows - 1) * cols];
+    let pRightTop = points[cols - 1];
+    let pRightBot = points[(rows - 1) * cols + cols - 1];
+
+    if (pLeftTop && pLeftBot) {
+      let lx = pLeftTop.x;
+      let ly = (pLeftTop.y + pLeftBot.y) / 2;
+      drawKnotMotif(lx + 22, ly, false);
+    }
+
+    if (pRightTop && pRightBot) {
+      let rx = pRightTop.x;
+      let ry = (pRightTop.y + pRightBot.y) / 2;
+      drawKnotMotif(rx - 22, ry, true);
+    }
+  }
+
+  function drawKnotMotif(cx, cy, isRight) {
+    ctx.save();
+    ctx.translate(cx, cy);
+
+    // Ceremonial Ribbon Tail / Tassels (Dangling downward)
+    ctx.fillStyle = '#991b1b';
+    ctx.strokeStyle = '#ffd700';
+    ctx.lineWidth = 2.0;
+
+    // Tail 1
+    ctx.beginPath();
+    ctx.moveTo(-4, 6);
+    ctx.lineTo(isRight ? -18 : 18, 55);
+    ctx.lineTo(isRight ? -8 : 8, 58);
+    ctx.lineTo(4, 6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Tail 2
+    ctx.beginPath();
+    ctx.moveTo(-6, 4);
+    ctx.lineTo(isRight ? -30 : 30, 48);
+    ctx.lineTo(isRight ? -20 : 20, 52);
+    ctx.lineTo(2, 4);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Golden Tassel Fringe Pearls
+    ctx.fillStyle = '#ffd700';
+    ctx.beginPath();
+    ctx.arc(isRight ? -13 : 13, 56, 3.5, 0, Math.PI * 2);
+    ctx.arc(isRight ? -25 : 25, 50, 3.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Ceremonial Red Bow Loops
+    ctx.fillStyle = '#b91c1c';
+    ctx.lineWidth = 2.5;
+
+    // Top Bow Loop
+    ctx.beginPath();
+    ctx.ellipse(isRight ? 6 : -6, -18, 14, 24, isRight ? 0.3 : -0.3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Bottom Bow Loop
+    ctx.beginPath();
+    ctx.ellipse(isRight ? 6 : -6, 18, 14, 24, isRight ? -0.3 : 0.3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Side Bow Loop
+    ctx.beginPath();
+    ctx.ellipse(isRight ? -18 : 18, 0, 24, 14, isRight ? 0.15 : -0.15, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Center Gold Knot Ring Motif
+    ctx.fillStyle = '#d4af37';
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 2.0;
+    ctx.beginPath();
+    ctx.arc(0, 0, 11, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Center Pearl Gem Highlight
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
   }
 
   function loop() {

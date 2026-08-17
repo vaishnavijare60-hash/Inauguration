@@ -1,9 +1,12 @@
-/* ====== PHASE 1: Executive Biometric Hand Scanner Screen (Fully Blended Hand Scan) ====== */
+/* ====== PHASE 1: Executive Biometric Hand Scanner Screen (Traditional Indian Inauguration Theme) ====== */
 #scan-screen {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: radial-gradient(circle at center, #faf6ee 0%, #f4eae0 50%, #e6d6c4 100%);
+  background-color: #faf6ee;
+  background-image: 
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.95) 0%, rgba(250, 246, 238, 0.92) 50%, rgba(230, 214, 196, 0.95) 100%),
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="1.5" fill="%23d4af37" opacity="0.25"/><path d="M40 0 L80 40 L40 80 L0 40 Z" stroke="%23b8860b" stroke-width="0.6" opacity="0.15" fill="none"/><path d="M40 10 L70 40 L40 70 L10 40 Z" stroke="%23d4af37" stroke-width="0.5" stroke-dasharray="2 2" opacity="0.2" fill="none"/><circle cx="40" cy="40" r="12" stroke="%23d4af37" stroke-width="0.5" opacity="0.15" fill="none"/></svg>');
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,6 +34,144 @@
   pointer-events: none;
 }
 
+/* ====== Traditional Indian Ceremonial Border Motifs ====== */
+.trad-border {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.trad-border-top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="24" viewBox="0 0 60 24"><path d="M0 0 H60 V4 H0 Z" fill="%23d4af37" opacity="0.8"/><path d="M0 4 C15 4 15 16 30 16 C45 16 45 4 60 4" stroke="%23b8860b" stroke-width="1.8" fill="none"/><path d="M5 4 C15 4 15 11 30 11 C45 11 45 4 55 4" stroke="%23d4af37" stroke-width="1" stroke-dasharray="2 2" fill="none"/><circle cx="30" cy="16" r="2.5" fill="%23d4af37"/><circle cx="15" cy="7" r="1.5" fill="%23b8860b"/><circle cx="45" cy="7" r="1.5" fill="%23b8860b"/><rect x="0" y="21" width="60" height="3" fill="%23d4af37" opacity="0.5"/></svg>');
+  background-repeat: repeat-x;
+}
+
+.trad-border-bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="24" viewBox="0 0 60 24"><path d="M0 0 H60 V4 H0 Z" fill="%23d4af37" opacity="0.8"/><path d="M0 4 C15 4 15 16 30 16 C45 16 45 4 60 4" stroke="%23b8860b" stroke-width="1.8" fill="none"/><path d="M5 4 C15 4 15 11 30 11 C45 11 45 4 55 4" stroke="%23d4af37" stroke-width="1" stroke-dasharray="2 2" fill="none"/><circle cx="30" cy="16" r="2.5" fill="%23d4af37"/><circle cx="15" cy="7" r="1.5" fill="%23b8860b"/><circle cx="45" cy="7" r="1.5" fill="%23b8860b"/><rect x="0" y="21" width="60" height="3" fill="%23d4af37" opacity="0.5"/></svg>');
+  background-repeat: repeat-x;
+  transform: rotate(180deg);
+}
+
+.trad-border-left {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 24px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="60" viewBox="0 0 24 60"><path d="M0 0 V60 H4 V0 Z" fill="%23d4af37" opacity="0.8"/><path d="M4 0 C4 15 16 15 16 30 C16 45 4 45 4 60" stroke="%23b8860b" stroke-width="1.8" fill="none"/><path d="M4 5 C4 15 11 15 11 30 C11 45 4 45 4 55" stroke="%23d4af37" stroke-width="1" stroke-dasharray="2 2" fill="none"/><circle cx="16" cy="30" r="2.5" fill="%23d4af37"/><circle cx="7" cy="15" r="1.5" fill="%23b8860b"/><circle cx="7" cy="45" r="1.5" fill="%23b8860b"/><rect x="21" y="0" width="3" height="60" fill="%23d4af37" opacity="0.5"/></svg>');
+  background-repeat: repeat-y;
+}
+
+.trad-border-right {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 24px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="60" viewBox="0 0 24 60"><path d="M0 0 V60 H4 V0 Z" fill="%23d4af37" opacity="0.8"/><path d="M4 0 C4 15 16 15 16 30 C16 45 4 45 4 60" stroke="%23b8860b" stroke-width="1.8" fill="none"/><path d="M4 5 C4 15 11 15 11 30 C11 45 4 45 4 55" stroke="%23d4af37" stroke-width="1" stroke-dasharray="2 2" fill="none"/><circle cx="16" cy="30" r="2.5" fill="%23d4af37"/><circle cx="7" cy="15" r="1.5" fill="%23b8860b"/><circle cx="7" cy="45" r="1.5" fill="%23b8860b"/><rect x="21" y="0" width="3" height="60" fill="%23d4af37" opacity="0.5"/></svg>');
+  background-repeat: repeat-y;
+  transform: rotate(180deg);
+}
+
+/* 4 Corner Traditional Rangoli Motifs */
+.trad-corner {
+  position: absolute;
+  width: clamp(90px, 14vw, 170px);
+  height: clamp(90px, 14vw, 170px);
+  pointer-events: none;
+  z-index: 6;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none"><path d="M0 0 L120 0 L120 8 L8 8 L8 120 L0 120 Z" fill="%23d4af37" opacity="0.85"/><path d="M12 12 L120 12 L120 15 L15 15 L15 120 L12 120 Z" fill="%23b8860b" opacity="0.7"/><circle cx="30" cy="4" r="2" fill="%23ffffff"/><circle cx="60" cy="4" r="2" fill="%23ffffff"/><circle cx="90" cy="4" r="2" fill="%23ffffff"/><circle cx="4" cy="30" r="2" fill="%23ffffff"/><circle cx="4" cy="60" r="2" fill="%23ffffff"/><circle cx="4" cy="90" r="2" fill="%23ffffff"/><path d="M0 95 A95 95 0 0 0 95 0" stroke="%23b8860b" stroke-width="2.5" fill="none"/><path d="M0 80 A80 80 0 0 0 80 0" stroke="%23d4af37" stroke-width="1.8" stroke-dasharray="3 3" fill="none"/><path d="M0 65 A65 65 0 0 0 65 0" stroke="%23d4af37" stroke-width="2" fill="none"/><path d="M0 50 A50 50 0 0 0 50 0" stroke="%23b8860b" stroke-width="1.5" fill="none"/><path d="M0 65 C18 55 35 55 46 46 C55 35 55 18 65 0" stroke="%23d4af37" stroke-width="2" fill="none"/><circle cx="46" cy="46" r="4.5" fill="%23d4af37"/><circle cx="26" cy="60" r="3" fill="%23b8860b"/><circle cx="60" cy="26" r="3" fill="%23b8860b"/><path d="M24 24 C36 12 36 12 24 0 C12 12 12 12 24 24 Z" fill="%23d4af37"/><path d="M24 24 C12 36 12 36 0 24 C12 12 12 12 24 24 Z" fill="%23d4af37"/><circle cx="24" cy="24" r="5" fill="%23ffffff"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 4px 10px rgba(184, 134, 11, 0.35));
+}
+
+.trad-corner.top-left { top: 0; left: 0; }
+.trad-corner.top-right { top: 0; right: 0; transform: scaleX(-1); }
+.trad-corner.bottom-left { bottom: 0; left: 0; transform: scaleY(-1); }
+.trad-corner.bottom-right { bottom: 0; right: 0; transform: scale(-1); }
+
+/* ====== Grand Traditional Indian Marigold Toran (Top Garland & Long Flower Strings) ====== */
+.trad-toran-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 82px;
+  z-index: 20;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="82" viewBox="0 0 160 82" fill="none"><path d="M0 6 Q40 60 80 6 Q120 60 160 6" stroke="%2315803d" stroke-width="4" fill="none"/><path d="M20 22 C12 34 4 44 10 52 C15 56 28 44 32 30 Z" fill="%2316a34a"/><path d="M60 22 C52 34 44 44 50 52 C55 56 68 44 72 30 Z" fill="%2316a34a"/><path d="M100 22 C92 34 84 44 90 52 C95 56 108 44 112 30 Z" fill="%2316a34a"/><path d="M140 22 C132 34 124 44 130 52 C135 56 148 44 152 30 Z" fill="%2316a34a"/><circle cx="0" cy="6" r="16" fill="%23ea580c"/><circle cx="0" cy="6" r="11" fill="%23ff8c00"/><circle cx="0" cy="6" r="6" fill="%23ffd700"/><circle cx="40" cy="35" r="17" fill="%23ff8c00"/><circle cx="40" cy="35" r="11" fill="%23f59e0b"/><circle cx="40" cy="35" r="6" fill="%23ffd700"/><circle cx="80" cy="6" r="16" fill="%23ea580c"/><circle cx="80" cy="6" r="11" fill="%23ff8c00"/><circle cx="80" cy="6" r="6" fill="%23ffd700"/><circle cx="120" cy="35" r="17" fill="%23ff8c00"/><circle cx="120" cy="35" r="11" fill="%23f59e0b"/><circle cx="120" cy="35" r="6" fill="%23ffd700"/><circle cx="160" cy="6" r="16" fill="%23ea580c"/><circle cx="160" cy="6" r="11" fill="%23ff8c00"/><circle cx="160" cy="6" r="6" fill="%23ffd700"/><circle cx="20" cy="24" r="8.5" fill="%23dc2626"/><circle cx="60" cy="28" r="8.5" fill="%23f59e0b"/><circle cx="100" cy="28" r="8.5" fill="%23dc2626"/><circle cx="140" cy="24" r="8.5" fill="%23f59e0b"/><circle cx="40" cy="58" r="6" fill="%23ffd700"/><circle cx="120" cy="58" r="6" fill="%23ffd700"/><path d="M40 64 L44 74 L36 74 Z" fill="%23b8860b"/><path d="M120 64 L124 74 L116 74 Z" fill="%23b8860b"/></svg>');
+  background-repeat: repeat-x;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.22));
+}
+
+/* Vertical Long Hanging Flower Strings / Rings */
+.trad-toran-string {
+  position: absolute;
+  top: 6px;
+  width: 36px;
+  z-index: 18;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="280" viewBox="0 0 36 280" fill="none"><line x1="18" y1="0" x2="18" y2="260" stroke="%23d4af37" stroke-width="2" stroke-dasharray="3 3"/><circle cx="18" cy="18" r="14" fill="%23ea580c"/><circle cx="18" cy="18" r="9" fill="%23ff8c00"/><circle cx="18" cy="18" r="5" fill="%23ffd700"/><path d="M18 30 C26 40 32 44 28 48 C24 50 14 42 18 30 Z" fill="%2315803d"/><circle cx="18" cy="62" r="14" fill="%23ff8c00"/><circle cx="18" cy="62" r="9" fill="%23f59e0b"/><circle cx="18" cy="62" r="5" fill="%23ffd700"/><path d="M18 74 C10 84 4 88 8 92 C12 94 22 86 18 74 Z" fill="%2315803d"/><circle cx="18" cy="106" r="13" fill="%23dc2626"/><circle cx="18" cy="106" r="8" fill="%23ea580c"/><circle cx="18" cy="106" r="4" fill="%23ffd700"/><path d="M18 118 C26 128 32 132 28 136 C24 138 14 130 18 118 Z" fill="%2315803d"/><circle cx="18" cy="150" r="14" fill="%23ea580c"/><circle cx="18" cy="150" r="9" fill="%23ff8c00"/><circle cx="18" cy="150" r="5" fill="%23ffd700"/><path d="M18 162 C10 172 4 176 8 180 C12 182 22 174 18 162 Z" fill="%2315803d"/><circle cx="18" cy="194" r="14" fill="%23ff8c00"/><circle cx="18" cy="194" r="9" fill="%23f59e0b"/><circle cx="18" cy="194" r="5" fill="%23ffd700"/><circle cx="18" cy="230" r="11" fill="%23ea580c"/><circle cx="18" cy="230" r="7" fill="%23ffd700"/><circle cx="18" cy="254" r="6" fill="%23ffd700"/><path d="M18 260 L24 272 L12 272 Z" fill="%23b8860b"/><circle cx="18" cy="275" r="2.5" fill="%23ffd700"/></svg>');
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
+}
+
+.trad-toran-string.string-far-left {
+  left: clamp(24px, 4vw, 60px);
+  height: clamp(240px, 32vw, 360px);
+}
+
+.trad-toran-string.string-mid-left {
+  left: clamp(120px, 18vw, 260px);
+  height: clamp(160px, 22vw, 240px);
+}
+
+.trad-toran-string.string-mid-right {
+  right: clamp(120px, 18vw, 260px);
+  height: clamp(160px, 22vw, 240px);
+}
+
+.trad-toran-string.string-far-right {
+  right: clamp(24px, 4vw, 60px);
+  height: clamp(240px, 32vw, 360px);
+}
+
+/* Symmetrical Dual Rotating Traditional Indian Mandalas (Left & Right) */
+.trad-bg-mandala {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" fill="none" stroke="%23d4af37"><circle cx="250" cy="250" r="235" stroke-width="2" opacity="0.45"/><circle cx="250" cy="250" r="218" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.5"/><circle cx="250" cy="250" r="195" stroke-width="1.8" opacity="0.4"/><circle cx="250" cy="250" r="160" stroke-width="2" opacity="0.5"/><circle cx="250" cy="250" r="120" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.45"/><circle cx="250" cy="250" r="80" stroke-width="2" opacity="0.5"/><g opacity="0.55" stroke-width="1.6"><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(22.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(45 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(67.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(90 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(112.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(135 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(157.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(180 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(202.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(225 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(247.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(270 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(292.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(315 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(337.5 250 250)"/></g><g fill="%23d4af37" opacity="0.7"><circle cx="250" cy="32" r="3.5"/><circle cx="250" cy="32" r="3.5" transform="rotate(30 250 250)"/><circle cx="250" cy="32" r="3.5" transform="rotate(60 250 250)"/><circle cx="250" cy="32" r="3.5" transform="rotate(90 250 250)"/><circle cx="250" cy="32" r="3.5" transform="rotate(120 250 250)"/><circle cx="250" cy="32" r="3.5" transform="rotate(150 250 250)"/><circle cx="250" cy="32" r="3.5" transform="rotate(180 250 250)"/><circle cx="250" cy="32" r="3.5" transform="rotate(210 250 250)"/><circle cx="250" cy="32" r="3.5" transform="rotate(240 250 250)"/><circle cx="250" cy="32" r="3.5" transform="rotate(270 250 250)"/><circle cx="250" cy="32" r="3.5" transform="rotate(300 250 250)"/><circle cx="250" cy="32" r="3.5" transform="rotate(330 250 250)"/></g></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.55;
+  filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.65));
+}
+
+.trad-bg-mandala-left {
+  bottom: -15%;
+  left: -10%;
+  width: clamp(480px, 58vw, 850px);
+  height: clamp(480px, 58vw, 850px);
+  animation: rotateMandala 140s linear infinite;
+}
+
+.trad-bg-mandala-right {
+  top: -15%;
+  right: -10%;
+  width: clamp(480px, 58vw, 850px);
+  height: clamp(480px, 58vw, 850px);
+  animation: rotateMandalaRev 140s linear infinite;
+}
+
 /* Centered Container Layout */
 .executive-frame {
   position: relative;
@@ -41,41 +182,56 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  z-index: 2;
+  z-index: 4;
 }
 
-/* Central Scanner Wrapper */
+/* Central Scanner Wrapper - 1:1 Perfect Circular Container */
 #hand-scanner-wrapper {
   position: relative;
-  width: clamp(280px, 34vw, 540px);
-  height: clamp(340px, 38vw, 620px);
+  width: clamp(280px, 35vw, 480px);
+  height: clamp(280px, 35vw, 480px);
+  aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
+  z-index: 4;
 }
 
 /* Outer Concentric Metallic Gold Accent Rings */
 .hud-ring-outer {
   position: absolute;
-  width: clamp(280px, 34vw, 520px);
-  height: clamp(280px, 34vw, 520px);
-  border: 2px dashed rgba(212, 175, 55, 0.55);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 2.5px dashed rgba(212, 175, 55, 0.7);
   border-radius: 50%;
-  animation: rotateClockwise 30s linear infinite;
+  animation: rotateClockwise 35s linear infinite;
   pointer-events: none;
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.25);
+}
+
+.hud-ring-trad {
+  position: absolute;
+  inset: 5%;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none"><circle cx="100" cy="100" r="95" stroke="%23d4af37" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.75"/><g fill="%23d4af37" opacity="0.85"><circle cx="100" cy="5" r="2.5"/><circle cx="100" cy="5" r="2.5" transform="rotate(15 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(30 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(45 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(60 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(75 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(90 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(105 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(120 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(135 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(150 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(165 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(180 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(195 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(210 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(225 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(240 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(255 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(270 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(285 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(300 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(315 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(330 100 100)"/><circle cx="100" cy="5" r="2.5" transform="rotate(345 100 100)"/></g></svg>');
+  background-size: contain;
+  animation: rotateCounterClockwise 45s linear infinite;
+  pointer-events: none;
 }
 
 .hud-ring-inner {
   position: absolute;
-  width: clamp(240px, 29vw, 450px);
-  height: clamp(240px, 29vw, 450px);
-  border: 2.5px solid rgba(212, 175, 55, 0.4);
+  inset: 10%;
+  width: 80%;
+  height: 80%;
+  border: 3px solid rgba(212, 175, 55, 0.5);
   border-top-color: #d4af37;
   border-bottom-color: #d4af37;
   border-radius: 50%;
-  animation: rotateCounterClockwise 20s linear infinite;
+  animation: rotateCounterClockwise 25s linear infinite;
   pointer-events: none;
 }
 
@@ -89,39 +245,41 @@
   100% { transform: rotate(-360deg); }
 }
 
-/* Seamless Hand Scanner Touch Area (No Box/Card Background) */
+/* 100% Circular Hand Scanner Touch Area */
 #hand-area {
-  width: clamp(200px, 24vw, 380px);
-  height: clamp(260px, 30vw, 480px);
+  width: 72%;
+  height: 72%;
+  aspect-ratio: 1 / 1;
   position: relative;
   cursor: pointer;
-  background: transparent;
-  border: none;
+  background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+  border: 3.5px solid #d4af37;
   border-radius: 50%;
+  overflow: hidden;
+  clip-path: circle(50% at 50% 50%);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: none;
-  backdrop-filter: none;
+  box-shadow: 0 0 35px rgba(212, 175, 55, 0.55), inset 0 0 30px rgba(0, 0, 0, 0.7);
   padding: 0;
-  overflow: visible;
   touch-action: none;
 }
 
 #hand-area:hover,
 #hand-area:active {
   transform: scale(1.04);
+  box-shadow: 0 0 50px rgba(212, 175, 55, 0.85), inset 0 0 35px rgba(0, 0, 0, 0.6);
+  border-color: #ffffff;
 }
 
-/* Hand Graphic Asset - Blended 100% Seamlessly with Radial Mask & Blend Mode */
+/* Hand Graphic Asset - Circular Clipped & Seamless */
 .hand-image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  mix-blend-mode: multiply;
-  -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 88%);
-  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 88%);
+  object-fit: cover;
+  border-radius: 50%;
+  clip-path: circle(50% at 50% 50%);
   filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.85));
   transition: filter 0.4s ease, transform 0.4s ease;
 }
@@ -171,75 +329,51 @@
   100% { top: 10%; }
 }
 
-/* Minimalist Progress Indicator */
-#scan-status-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 2;
-  margin-top: 24px;
-  width: clamp(220px, 28vw, 420px);
-}
-
-.scan-status-clean {
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.pulse-indicator {
-  width: 14px;
-  height: 14px;
-  background-color: #d4af37;
-  border-radius: 50%;
-  display: inline-block;
-  box-shadow: 0 0 14px #d4af37;
-  animation: pulseDot 1.6s ease-in-out infinite;
-}
-
-@keyframes pulseDot {
-  0% { transform: scale(0.85); opacity: 0.6; }
-  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 22px #d4af37; }
-  100% { transform: scale(0.85); opacity: 0.6; }
-}
-
-.progress-bar-track {
-  width: 100%;
-  height: 6px;
-  background: rgba(212, 175, 55, 0.2);
-  border-radius: 10px;
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  overflow: hidden;
-}
-
-#scan-progress {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, #b8860b, #d4af37, #ffffff);
-  box-shadow: 0 0 14px rgba(212, 175, 55, 0.8);
-  transition: width 0.1s linear;
-}
+/* Progress indicator removed per user request */
 
 /* Responsive Overrides */
 @media (max-width: 600px) {
   #hand-scanner-wrapper {
-    width: clamp(220px, 80vw, 320px);
-    height: clamp(260px, 40vh, 360px);
+    width: clamp(220px, 78vw, 320px);
+    height: clamp(220px, 78vw, 320px);
   }
 
   .hud-ring-outer {
-    width: clamp(220px, 78vw, 310px);
-    height: clamp(220px, 78vw, 310px);
+    width: 100%;
+    height: 100%;
   }
 
   .hud-ring-inner {
-    width: clamp(190px, 66vw, 270px);
-    height: clamp(190px, 66vw, 270px);
+    width: 80%;
+    height: 80%;
   }
 
   #hand-area {
-    width: clamp(160px, 55vw, 240px);
-    height: clamp(210px, 32vh, 300px);
+    width: 72%;
+    height: 72%;
+  }
+
+  .trad-border-top, .trad-border-bottom {
+    height: 18px;
+  }
+
+  .trad-border-left, .trad-border-right {
+    width: 18px;
+  }
+
+  .trad-corner {
+    width: 80px;
+    height: 80px;
   }
 }
+
+@keyframes rotateMandala {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateMandalaRev {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+

@@ -8,6 +8,10 @@
     content="Official Inauguration Ceremony - DPCOE Department of Computer Engineering. Interactive ribbon-cutting ceremony and biometric inauguration authorization.">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  <!-- Traditional Indian & Royal Serif Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cinzel+Decorative:wght@700;900&family=Marcellus&family=Rozha+One&family=Yatra+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/src/styles/variables.css">
   <link rel="stylesheet" href="/src/styles/base.css">
   <link rel="stylesheet" href="/src/styles/scan-screen.css">
@@ -25,28 +29,42 @@
     <!-- Soft Ambient Particles Canvas -->
     <canvas id="bg-cyber-canvas"></canvas>
 
+    <!-- Traditional Ceremonial Indian Borders -->
+    <div class="trad-border trad-border-top"></div>
+    <div class="trad-border trad-border-bottom"></div>
+    <div class="trad-border trad-border-left"></div>
+    <div class="trad-border trad-border-right"></div>
+
+    <!-- Traditional Rangoli/Mandala Corner Motifs -->
+    <div class="trad-corner top-left"></div>
+    <div class="trad-corner top-right"></div>
+    <div class="trad-corner bottom-left"></div>
+    <div class="trad-corner bottom-right"></div>
+
+    <!-- Grand Traditional Indian Marigold & Mango Leaf Toran (Top Garland & Long Flower Strings) -->
+    <div class="trad-toran-banner"></div>
+    <div class="trad-toran-string string-far-left"></div>
+    <div class="trad-toran-string string-mid-left"></div>
+    <div class="trad-toran-string string-mid-right"></div>
+    <div class="trad-toran-string string-far-right"></div>
+
+    <!-- Symmetrical Dual Background Traditional Mandalas (Left & Right) -->
+    <div class="trad-bg-mandala trad-bg-mandala-left"></div>
+    <div class="trad-bg-mandala trad-bg-mandala-right"></div>
+
     <div class="executive-frame">
       <!-- Central Hand Scanner Wrapper -->
       <div id="hand-scanner-wrapper">
-        <!-- Outer Glowing Accent Rings -->
+        <!-- Outer Glowing Accent Rings & Traditional Pattern Ring -->
         <div class="hud-ring-outer"></div>
+        <div class="hud-ring-trad"></div>
         <div class="hud-ring-inner"></div>
 
-        <!-- Hand Scanner Touch Area -->
+        <!-- Circular Hand Scanner Touch Area -->
         <div id="hand-area">
-          <img src="hand_scan_gold.png" alt="Executive Biometric Hand Sensor" class="hand-image">
+          <img src="hand_scan_male.png" alt="Traditional Male Ceremonial Hand Scanner" class="hand-image">
           <!-- Laser Scan Beam -->
           <div id="scan-line"></div>
-        </div>
-      </div>
-
-      <!-- Minimalist Progress Indicator -->
-      <div id="scan-status-container">
-        <div id="scan-status" class="scan-status-clean">
-          <span class="pulse-indicator"></span>
-        </div>
-        <div class="progress-bar-track">
-          <div id="scan-progress"></div>
         </div>
       </div>
     </div>
@@ -55,6 +73,19 @@
   <!-- PHASE 2: Silk Curtains -->
   <div class="curtain curtain-left"></div>
   <div class="curtain curtain-right"></div>
+
+  <!-- Traditional Ceremonial Indian Patterns for Phase 2 Background -->
+  <div class="ceremony-trad-border ceremony-trad-border-top"></div>
+  <div class="ceremony-trad-border ceremony-trad-border-bottom"></div>
+
+  <div class="ceremony-trad-corner ceremony-top-left"></div>
+  <div class="ceremony-trad-corner ceremony-top-right"></div>
+  <div class="ceremony-trad-corner ceremony-bottom-left"></div>
+  <div class="ceremony-trad-corner ceremony-bottom-right"></div>
+
+  <!-- Symmetrical Dual Background Mandalas for Phase 2 -->
+  <div class="ceremony-bg-mandala ceremony-mandala-left"></div>
+  <div class="ceremony-bg-mandala ceremony-mandala-right"></div>
 
   <!-- Central Ceremony Branding Content -->
   <div id="ceremony-container">

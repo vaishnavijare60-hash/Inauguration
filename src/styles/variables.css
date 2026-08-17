@@ -13,10 +13,10 @@
   --ink-subtle: #475569;
   --ink-muted: #334155;
 
-  /* Legacy compatibility maps */
-  --crimson-primary: #b8860b;
-  --crimson-light: #d4af37;
-  --crimson-dim: rgba(212, 175, 55, 0.25);
+  /* Traditional Indian Ceremonial Colors */
+  --crimson-primary: #800000;
+  --crimson-light: #ba0d0d;
+  --crimson-dim: rgba(128, 0, 0, 0.25);
 
   /* Typography */
   --font-main: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;

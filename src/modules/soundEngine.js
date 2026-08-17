@@ -1,6 +1,7 @@
 /**
- * Executive Acoustic Sound Engine & Voice Synthesizer for Official Ceremony Feedback.
- * Clean, warm, high-end acoustic harmonics + Natural Voice Announcements.
+ * Traditional Indian Ceremonial Sound Engine & Acoustic Synthesizer.
+ * Features synthesized Indian Tanpura Drone, Shehnai Melodic Swells, Temple Ghanti Chimes, 
+ * Shankhnad (Conch Shell) resonance, Dhol/Nagada celebration beats, Silk Curtain Swells, and Looping Background Music.
  */
 export class SoundEngine {
   constructor() {
@@ -9,6 +10,11 @@ export class SoundEngine {
     this.scanGain = null;
     this.lfo = null;
     this.initialized = false;
+    this.bgGain = null;
+    this.isPlayingMusic = false;
+    this.isMuted = false;
+    this.bgTimer = null;
+    this.tanpuraNodes = [];
   }
 
   init() {
@@ -25,206 +31,332 @@ export class SoundEngine {
   ensureContext() {
     this.init();
     if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume();
+      try { this.ctx.resume(); } catch (e) { }
     }
   }
 
-  /* Professional Executive Speech Voice Announcement */
-  speakVoice(text) {
-    if (!('speechSynthesis' in window)) return;
+  /* ====== Traditional Indian Ceremonial Looping Background Music ====== */
+  startBackgroundMusic() {
     try {
-      window.speechSynthesis.cancel();
-      const msg = new SpeechSynthesisUtterance(text);
-      msg.rate = 0.92; // Warm, executive pacing
-      msg.pitch = 1.0;
-      msg.volume = 1.0;
+      this.ensureContext();
 
-      const voices = window.speechSynthesis.getVoices();
-      const chosenVoice = voices.find(v => v.lang.startsWith('en') && (
-        v.name.includes('Google') || 
-        v.name.includes('Natural') || 
-        v.name.includes('Samantha') || 
-        v.name.includes('Daniel') || 
-        v.name.includes('Karen') || 
-        v.name.includes('Serena') || 
-        v.name.includes('Oliver')
-      )) || voices.find(v => v.lang.startsWith('en'));
+      if (!this.bgAudio) {
+        this.bgAudio = new Audio('/background%20music.mp3');
+        this.bgAudio.loop = true;
+        this.bgAudio.volume = 0.65;
 
-      if (chosenVoice) {
-        msg.voice = chosenVoice;
+        // Gapless seamless loop listener
+        this.bgAudio.addEventListener('timeupdate', () => {
+          if (this.bgAudio.duration && this.bgAudio.currentTime >= this.bgAudio.duration - 0.25) {
+            this.bgAudio.currentTime = 0;
+          }
+        });
       }
-      window.speechSynthesis.speak(msg);
+
+      if (this.bgAudio.paused) {
+        const playPromise = this.bgAudio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            this.isPlayingMusic = true;
+          }).catch(err => {
+            console.warn("Background music waiting for user gesture", err);
+          });
+        }
+      }
     } catch (e) {
-      console.warn("Voice Synthesis warning:", e);
+      console.warn("Background music error", e);
     }
   }
 
-  /* Soft, warm acoustic hover chime */
-  playHover() {
-    this.ensureContext();
-    if (!this.ctx) return;
-    const now = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-    
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(523.25, now); // C5
-    osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.12); // E5
-
-    gain.gain.setValueAtTime(0.001, now);
-    gain.gain.linearRampToValueAtTime(0.08, now + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-    osc.start(now);
-    osc.stop(now + 0.12);
+  stopBackgroundMusic() {
+    this.isPlayingMusic = false;
+    if (this.bgAudio) {
+      try {
+        let vol = this.bgAudio.volume;
+        const fadeInterval = setInterval(() => {
+          vol -= 0.1;
+          if (vol <= 0) {
+            clearInterval(fadeInterval);
+            this.bgAudio.pause();
+            this.bgAudio.currentTime = 0;
+            this.bgAudio.volume = 0.65;
+          } else {
+            this.bgAudio.volume = Math.max(0, vol);
+          }
+        }, 40);
+      } catch (e) {
+        try {
+          this.bgAudio.pause();
+          this.bgAudio.currentTime = 0;
+        } catch (err) {}
+      }
+    }
   }
 
-  /* Warm ambient scan resonance */
+  toggleMute() {
+    this.isMuted = !this.isMuted;
+    if (this.bgAudio) {
+      this.bgAudio.muted = this.isMuted;
+    }
+    return this.isMuted;
+  }
+
+  /* Dholak / Bayan Warm Bass Stroke */
+  playDholakBass() {
+    try {
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(120, now);
+      osc.frequency.exponentialRampToValueAtTime(50, now + 0.3);
+
+      gain.gain.setValueAtTime(0.45, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
+
+      osc.connect(gain);
+      gain.connect(this.bgGain || this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.35);
+    } catch (e) {}
+  }
+
+  /* Temple Ghanti / Jalra Metallic Chime */
+  playTempleChime() {
+    try {
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      const freqs = [1046.50, 1318.51, 1567.98, 2093.00];
+
+      freqs.forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.04);
+
+        gain.gain.setValueAtTime(0.25, now + idx * 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.04 + 1.2);
+
+        osc.connect(gain);
+        gain.connect(this.bgGain || this.ctx.destination);
+        osc.start(now + idx * 0.04);
+        osc.stop(now + idx * 0.04 + 1.2);
+      });
+    } catch (e) {}
+  }
+
+  /* Shehnai Melodic Phrase Swell */
+  playShehnaiMelody() {
+    try {
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      const notes = [277.18, 311.13, 349.23, 415.30, 466.16, 554.37];
+      
+      notes.slice(0, 5).forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.28);
+        osc.frequency.linearRampToValueAtTime(freq * 1.05, now + idx * 0.28 + 0.22);
+
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(900, now + idx * 0.28);
+        filter.Q.setValueAtTime(2.5, now + idx * 0.28);
+
+        gain.gain.setValueAtTime(0.001, now + idx * 0.28);
+        gain.gain.linearRampToValueAtTime(0.35, now + idx * 0.28 + 0.06);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.28 + 0.4);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.bgGain || this.ctx.destination);
+        osc.start(now + idx * 0.3);
+        osc.stop(now + idx * 0.3 + 0.4);
+      });
+    } catch (e) {}
+  }
+
+  /* Royal Silk Curtain Opening Sound Effect */
+  playCurtain() {
+    try {
+      this.ensureContext();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+
+      // Soft sweeping noise for silk fabric movement
+      const bufferSize = Math.floor(this.ctx.sampleRate * 1.0);
+      const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const output = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      const whiteNoise = this.ctx.createBufferSource();
+      whiteNoise.buffer = buffer;
+
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(300, now);
+      filter.frequency.exponentialRampToValueAtTime(1000, now + 0.5);
+      filter.frequency.exponentialRampToValueAtTime(200, now + 1.0);
+      filter.Q.setValueAtTime(1.5, now);
+
+      const gain = this.ctx.createGain();
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.08, now + 0.3);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 1.0);
+
+      whiteNoise.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      whiteNoise.start(now);
+      whiteNoise.stop(now + 1.05);
+
+      this.playTempleChime();
+    } catch (e) {
+      console.warn("Curtain sound error", e);
+    }
+  }
+
+  /* Traditional Ghungroo / Jalra Hover Chime */
+  playHover() {
+    try {
+      this.ensureContext();
+      if (!this.ctx) return;
+      this.playTempleChime();
+    } catch (e) {}
+  }
+
+  /* Temple Bell & Tanpura Scan Resonance */
   startScan() {
-    this.ensureContext();
-    if (!this.ctx || this.scanOsc) return;
+    try {
+      this.ensureContext();
+      if (!this.ctx || this.scanOsc) return;
 
-    const now = this.ctx.currentTime;
-    this.scanOsc = this.ctx.createOscillator();
-    const subOsc = this.ctx.createOscillator();
-    this.scanGain = this.ctx.createGain();
+      const now = this.ctx.currentTime;
+      this.scanOsc = this.ctx.createOscillator();
+      const subOsc = this.ctx.createOscillator();
+      this.scanGain = this.ctx.createGain();
 
-    this.scanOsc.type = 'sine';
-    this.scanOsc.frequency.setValueAtTime(220, now); // Warm A3 tone
-    this.scanOsc.frequency.linearRampToValueAtTime(329.63, now + 2.0); // Smooth rise to E4
+      this.scanOsc.type = 'sine';
+      this.scanOsc.frequency.setValueAtTime(277.18, now);
+      this.scanOsc.frequency.linearRampToValueAtTime(415.30, now + 1.0);
 
-    subOsc.type = 'sine';
-    subOsc.frequency.setValueAtTime(110, now); // A2 fundamental octave
+      subOsc.type = 'sawtooth';
+      subOsc.frequency.setValueAtTime(138.59, now);
 
-    const filter = this.ctx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(600, now);
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(600, now);
 
-    this.scanGain.gain.setValueAtTime(0.001, now);
-    this.scanGain.gain.linearRampToValueAtTime(0.08, now + 0.3);
+      this.scanGain.gain.setValueAtTime(0.001, now);
+      this.scanGain.gain.linearRampToValueAtTime(0.07, now + 0.2);
 
-    this.scanOsc.connect(filter);
-    subOsc.connect(filter);
-    filter.connect(this.scanGain);
-    this.scanGain.connect(this.ctx.destination);
+      this.scanOsc.connect(filter);
+      subOsc.connect(filter);
+      filter.connect(this.scanGain);
+      this.scanGain.connect(this.ctx.destination);
 
-    this.scanOsc.start(now);
-    subOsc.start(now);
-    this.lfo = subOsc;
+      this.scanOsc.start(now);
+      subOsc.start(now);
+      this.lfo = subOsc;
+    } catch (e) {}
   }
 
   stopScan() {
-    if (this.scanGain && this.ctx) {
-      const now = this.ctx.currentTime;
-      this.scanGain.gain.linearRampToValueAtTime(0.001, now + 0.15);
-      setTimeout(() => {
-        if (this.scanOsc) {
-          try { this.scanOsc.stop(); this.scanOsc.disconnect(); } catch (e) { }
-          this.scanOsc = null;
-        }
-        if (this.lfo) {
-          try { this.lfo.stop(); this.lfo.disconnect(); } catch (e) { }
-          this.lfo = null;
-        }
-      }, 150);
-    }
+    try {
+      if (this.scanGain && this.ctx) {
+        const now = this.ctx.currentTime;
+        this.scanGain.gain.linearRampToValueAtTime(0.001, now + 0.15);
+        setTimeout(() => {
+          if (this.scanOsc) {
+            try { this.scanOsc.stop(); this.scanOsc.disconnect(); } catch (e) { }
+            this.scanOsc = null;
+          }
+          if (this.lfo) {
+            try { this.lfo.stop(); this.lfo.disconnect(); } catch (e) { }
+            this.lfo = null;
+          }
+        }, 150);
+      }
+    } catch (e) {}
   }
 
-  /* Executive Inauguration Harmonic Fanfare Chord */
+  /* Traditional Shankhnad (Conch Shell) & Temple Bell Celebration Flourish */
   playGranted() {
-    this.ensureContext();
-    if (!this.ctx) return;
-    const now = this.ctx.currentTime;
+    try {
+      this.ensureContext();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
 
-    // Warm Major 9th Acoustic Chord (A - C# - E - G# - B)
-    const chordNotes = [220.00, 277.18, 329.63, 415.30, 493.88, 659.25];
-    chordNotes.forEach((freq, idx) => {
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now + idx * 0.05);
+      const shankhOsc = this.ctx.createOscillator();
+      const shankhGain = this.ctx.createGain();
+      const shankhFilter = this.ctx.createBiquadFilter();
 
-      gain.gain.setValueAtTime(0.001, now + idx * 0.05);
-      gain.gain.linearRampToValueAtTime(0.12, now + idx * 0.05 + 0.06);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.05 + 1.4);
+      shankhOsc.type = 'sawtooth';
+      shankhOsc.frequency.setValueAtTime(220, now);
+      shankhOsc.frequency.linearRampToValueAtTime(293.66, now + 0.4);
+      shankhOsc.frequency.linearRampToValueAtTime(277.18, now + 1.2);
 
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-      osc.start(now + idx * 0.05);
-      osc.stop(now + idx * 0.05 + 1.4);
-    });
+      shankhFilter.type = 'bandpass';
+      shankhFilter.frequency.setValueAtTime(550, now);
+      shankhFilter.Q.setValueAtTime(4.0, now);
+
+      shankhGain.gain.setValueAtTime(0.001, now);
+      shankhGain.gain.linearRampToValueAtTime(0.18, now + 0.3);
+      shankhGain.gain.exponentialRampToValueAtTime(0.001, now + 1.4);
+
+      shankhOsc.connect(shankhFilter);
+      shankhFilter.connect(shankhGain);
+      shankhGain.connect(this.ctx.destination);
+      shankhOsc.start(now);
+      shankhOsc.stop(now + 1.4);
+
+      this.playTempleChime();
+    } catch (e) {}
   }
 
-  /* Acoustic Silk Curtain Motion Sweep */
-  playCurtain() {
-    this.ensureContext();
-    if (!this.ctx) return;
-    const now = this.ctx.currentTime;
-
-    const bufferSize = Math.floor(this.ctx.sampleRate * 1.0);
-    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-    const output = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      output[i] = Math.random() * 2 - 1;
-    }
-
-    const whiteNoise = this.ctx.createBufferSource();
-    whiteNoise.buffer = buffer;
-
-    const filter = this.ctx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(200, now);
-    filter.frequency.exponentialRampToValueAtTime(800, now + 0.5);
-    filter.frequency.exponentialRampToValueAtTime(150, now + 1.0);
-
-    const gain = this.ctx.createGain();
-    gain.gain.setValueAtTime(0.001, now);
-    gain.gain.linearRampToValueAtTime(0.1, now + 0.4);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.0);
-
-    whiteNoise.connect(filter);
-    filter.connect(gain);
-    gain.connect(this.ctx.destination);
-    whiteNoise.start(now);
-    whiteNoise.stop(now + 1.0);
-  }
-
-  /* Metallic Ribbon Cut Celebration Chime */
+  /* Shehnai Fanfare & Dhol Celebration Beat for Ribbon Cutting */
   playCut() {
-    this.ensureContext();
-    if (!this.ctx) return;
-    const now = this.ctx.currentTime;
+    try {
+      this.ensureContext();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
 
-    // Crisp metallic shear accent
-    const sliceOsc = this.ctx.createOscillator();
-    const sliceGain = this.ctx.createGain();
-    sliceOsc.type = 'triangle';
-    sliceOsc.frequency.setValueAtTime(1800, now);
-    sliceOsc.frequency.exponentialRampToValueAtTime(400, now + 0.1);
-    sliceGain.gain.setValueAtTime(0.2, now);
-    sliceGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-    sliceOsc.connect(sliceGain);
-    sliceGain.connect(this.ctx.destination);
-    sliceOsc.start(now);
-    sliceOsc.stop(now + 0.1);
+      for (let i = 0; i < 6; i++) {
+        setTimeout(() => {
+          this.playDholakBass();
+        }, i * 120);
+      }
 
-    // Warm resonant celebration chord
-    const chord = [293.66, 369.99, 440.00, 587.33, 739.99, 880.00, 1174.66];
-    chord.forEach((freq, i) => {
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now + 0.04 + i * 0.03);
-      gain.gain.setValueAtTime(0.001, now + 0.04 + i * 0.03);
-      gain.gain.linearRampToValueAtTime(0.14, now + 0.06 + i * 0.03);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 2.0);
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-      osc.start(now + 0.04 + i * 0.03);
-      osc.stop(now + 2.0);
-    });
+      const chord = [277.18, 349.23, 415.30, 554.37, 698.46, 830.61];
+      chord.forEach((freq, i) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(freq, now + 0.05 + i * 0.04);
+        osc.frequency.linearRampToValueAtTime(freq * 1.03, now + 0.05 + i * 0.04 + 0.2);
+
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(1200, now);
+
+        gain.gain.setValueAtTime(0.001, now + 0.05 + i * 0.04);
+        gain.gain.linearRampToValueAtTime(0.12, now + 0.08 + i * 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 2.5);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now + 0.05 + i * 0.04);
+        osc.stop(now + 2.5);
+      });
+    } catch (e) {}
   }
 }
 

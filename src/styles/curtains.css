@@ -1,38 +1,47 @@
-/* ====== PHASE 3: Curtains ====== */
+/* ====== Ceremonial Silk Velvet Curtains ====== */
 .curtain {
   position: fixed;
   top: 0;
-  width: 50%;
-  height: 100%;
+  width: 50vw;
+  height: 100vh;
+  height: 100dvh;
   z-index: 400;
-  background: linear-gradient(180deg, #1a0000 0%, #3d0000 30%, #2a0000 70%, #0d0000 100%);
-  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background: linear-gradient(180deg, #660000 0%, #990000 25%, #660000 65%, #400000 100%);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
 }
 
 .curtain-left {
   left: 0;
   transform: translateX(0);
+  border-right: 4px solid #d4af37;
 }
 
 .curtain-right {
   right: 0;
   transform: translateX(0);
+  border-left: 4px solid #d4af37;
 }
 
 .curtain-left.open {
-  transform: translateX(-105%);
+  transform: translateX(-102%);
 }
 
 .curtain-right.open {
-  transform: translateX(105%);
+  transform: translateX(102%);
 }
 
-/* Curtain fabric folds */
+/* Luxurious Velvet Silk Folds & Gold Trim Details */
 .curtain::before {
   content: '';
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(90deg,
-    transparent 0px, rgba(255,255,255,0.03) 15px,
-    transparent 30px, rgba(0,0,0,0.15) 45px);
+    rgba(255, 255, 255, 0.08) 0px,
+    transparent 20px,
+    rgba(0, 0, 0, 0.35) 45px,
+    transparent 65px
+  );
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.6);
 }

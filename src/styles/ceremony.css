@@ -1,10 +1,10 @@
-/* College building background for ribbon cutting page */
+/* College building background for ribbon cutting page - Rich Saturate & Contrast Pop */
 #ceremony-bg {
   position: fixed;
   inset: 0;
   z-index: 0;
   background: url('/background.jpg') center center / cover no-repeat;
-  filter: blur(2px);
+  filter: blur(1.5px) saturate(1.35) contrast(1.1) brightness(0.98);
   transform: scale(1.04); /* prevent blur edge artifacts */
 }
 
@@ -12,7 +12,75 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.35);
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.18) 100%);
+}
+
+/* ====== Traditional Indian Motifs for Ceremony Background ====== */
+.ceremony-trad-border {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 30px;
+  pointer-events: none;
+  z-index: 1;
+  filter: drop-shadow(0 3px 10px rgba(186, 13, 13, 0.35));
+}
+
+.ceremony-trad-border-top {
+  top: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="30" viewBox="0 0 60 30"><path d="M0 0 H60 V5 H0 Z" fill="%23d4af37" opacity="0.95"/><path d="M0 5 C15 5 15 20 30 20 C45 20 45 5 60 5" stroke="%23ba0d0d" stroke-width="2.2" fill="none"/><path d="M5 5 C15 5 15 14 30 14 C45 14 45 5 55 5" stroke="%23ffd700" stroke-width="1.2" stroke-dasharray="2 2" fill="none"/><circle cx="30" cy="20" r="3.2" fill="%23ffd700"/><circle cx="15" cy="8" r="2" fill="%23ba0d0d"/><circle cx="45" cy="8" r="2" fill="%23ba0d0d"/><rect x="0" y="27" width="60" height="3" fill="%23ffd700" opacity="0.85"/></svg>');
+  background-repeat: repeat-x;
+}
+
+.ceremony-trad-border-bottom {
+  bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="30" viewBox="0 0 60 30"><path d="M0 0 H60 V5 H0 Z" fill="%23d4af37" opacity="0.95"/><path d="M0 5 C15 5 15 20 30 20 C45 20 45 5 60 5" stroke="%23ba0d0d" stroke-width="2.2" fill="none"/><path d="M5 5 C15 5 15 14 30 14 C45 14 45 5 55 5" stroke="%23ffd700" stroke-width="1.2" stroke-dasharray="2 2" fill="none"/><circle cx="30" cy="20" r="3.2" fill="%23ffd700"/><circle cx="15" cy="8" r="2" fill="%23ba0d0d"/><circle cx="45" cy="8" r="2" fill="%23ba0d0d"/><rect x="0" y="27" width="60" height="3" fill="%23ffd700" opacity="0.85"/></svg>');
+  background-repeat: repeat-x;
+  transform: rotate(180deg);
+}
+
+.ceremony-trad-corner {
+  position: fixed;
+  width: clamp(100px, 15vw, 180px);
+  height: clamp(100px, 15vw, 180px);
+  pointer-events: none;
+  z-index: 1;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none"><path d="M0 0 L120 0 L120 10 L10 10 L10 120 L0 120 Z" fill="%23d4af37" opacity="0.95"/><path d="M12 12 L120 12 L120 16 L16 16 L16 120 L12 120 Z" fill="%23ba0d0d" opacity="0.9"/><circle cx="30" cy="5" r="2.5" fill="%23ffffff"/><circle cx="60" cy="5" r="2.5" fill="%23ffffff"/><circle cx="90" cy="5" r="2.5" fill="%23ffffff"/><circle cx="5" cy="30" r="2.5" fill="%23ffffff"/><circle cx="5" cy="60" r="2.5" fill="%23ffffff"/><circle cx="5" cy="90" r="2.5" fill="%23ffffff"/><path d="M0 95 A95 95 0 0 0 95 0" stroke="%23ba0d0d" stroke-width="3" fill="none"/><path d="M0 80 A80 80 0 0 0 80 0" stroke="%23ffd700" stroke-width="2" stroke-dasharray="3 3" fill="none"/><path d="M0 65 A65 65 0 0 0 65 0" stroke="%23ffd700" stroke-width="2.2" fill="none"/><path d="M0 50 A50 50 0 0 0 50 0" stroke="%23ba0d0d" stroke-width="1.8" fill="none"/><path d="M0 65 C18 55 35 55 46 46 C55 35 55 18 65 0" stroke="%23ffd700" stroke-width="2.5" fill="none"/><circle cx="46" cy="46" r="5" fill="%23ffd700"/><circle cx="26" cy="60" r="3.5" fill="%23ba0d0d"/><circle cx="60" cy="26" r="3.5" fill="%23ba0d0d"/><path d="M24 24 C36 12 36 12 24 0 C12 12 12 12 24 24 Z" fill="%23ffd700"/><path d="M24 24 C12 36 12 36 0 24 C12 12 12 12 24 24 Z" fill="%23ffd700"/><circle cx="24" cy="24" r="5.5" fill="%23ffffff"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 6px 16px rgba(186, 13, 13, 0.4));
+}
+
+.ceremony-top-left { top: 0; left: 0; }
+.ceremony-top-right { top: 0; right: 0; transform: scaleX(-1); }
+.ceremony-bottom-left { bottom: 0; left: 0; transform: scaleY(-1); }
+.ceremony-bottom-right { bottom: 0; right: 0; transform: scale(-1); }
+
+.ceremony-bg-mandala {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" fill="none" stroke="%23d4af37"><circle cx="250" cy="250" r="235" stroke-width="2.5" opacity="0.6"/><circle cx="250" cy="250" r="218" stroke-width="1.5" stroke-dasharray="5 5" opacity="0.65"/><circle cx="250" cy="250" r="195" stroke-width="2.2" opacity="0.55"/><circle cx="250" cy="250" r="160" stroke-width="2.5" opacity="0.65"/><circle cx="250" cy="250" r="120" stroke-width="1.8" stroke-dasharray="4 4" opacity="0.6"/><circle cx="250" cy="250" r="80" stroke-width="2.5" opacity="0.65"/><g opacity="0.65" stroke-width="2" stroke="%23d4af37" fill="%23ffd700" fill-opacity="0.08"><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(22.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(45 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(67.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(90 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(112.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(135 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(157.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(180 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(202.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(225 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(247.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(270 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(292.5 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(315 250 250)"/><path d="M250 15 C272 55 272 75 250 85 C228 75 228 55 250 15 Z" transform="rotate(337.5 250 250)"/></g><g fill="%23ba0d0d" opacity="0.8"><circle cx="250" cy="32" r="4"/><circle cx="250" cy="32" r="4" transform="rotate(30 250 250)"/><circle cx="250" cy="32" r="4" transform="rotate(60 250 250)"/><circle cx="250" cy="32" r="4" transform="rotate(90 250 250)"/><circle cx="250" cy="32" r="4" transform="rotate(120 250 250)"/><circle cx="250" cy="32" r="4" transform="rotate(150 250 250)"/><circle cx="250" cy="32" r="4" transform="rotate(180 250 250)"/><circle cx="250" cy="32" r="4" transform="rotate(210 250 250)"/><circle cx="250" cy="32" r="4" transform="rotate(240 250 250)"/><circle cx="250" cy="32" r="4" transform="rotate(270 250 250)"/><circle cx="250" cy="32" r="4" transform="rotate(300 250 250)"/><circle cx="250" cy="32" r="4" transform="rotate(330 250 250)"/></g></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.42;
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
+}
+
+.ceremony-mandala-left {
+  bottom: -15%;
+  left: -10%;
+  width: clamp(480px, 58vw, 850px);
+  height: clamp(480px, 58vw, 850px);
+  animation: rotateClockwise 120s linear infinite;
+}
+
+.ceremony-mandala-right {
+  top: -15%;
+  right: -10%;
+  width: clamp(480px, 58vw, 850px);
+  height: clamp(480px, 58vw, 850px);
+  animation: rotateCounterClockwise 120s linear infinite;
 }
 
 /* Central Ceremony Branding (Proportionately Sized for Mobile & Big Displays) */
@@ -34,15 +102,28 @@
 /* --- Balanced Typography for All Displays --- */
 
 #college-title {
-  color: var(--crimson-primary);
-  font-size: clamp(0.9rem, 2vw, 2.4rem);
-  font-weight: 700;
-  letter-spacing: clamp(1.5px, 0.5vw, 7px);
+  font-family: 'Cinzel', 'Marcellus', serif;
+  color: #ff2a2a;
+  font-size: clamp(0.95rem, 2.1vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: clamp(2px, 0.5vw, 8px);
   text-transform: uppercase;
-  margin-bottom: clamp(8px, 1.5vh, 16px);
+  margin-bottom: clamp(10px, 1.8vh, 18px);
   opacity: 0;
   transform: translateY(-18px);
   line-height: 1.3;
+  background: none;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  text-shadow: 
+    -1.5px -1.5px 0 #ffffff,
+     1.5px -1.5px 0 #ffffff,
+    -1.5px  1.5px 0 #ffffff,
+     1.5px  1.5px 0 #ffffff,
+     0 0 15px #ffffff,
+     0 0 25px rgba(212, 175, 55, 0.9),
+     0 3px 8px rgba(0, 0, 0, 0.4);
 }
 
 #college-title.animate {
@@ -54,7 +135,9 @@
   width: 65vw;
   height: auto;
   scale: 0.85;
-  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.95))
+          drop-shadow(0 0 50px rgba(212, 175, 55, 0.85))
+          drop-shadow(0 12px 30px rgba(0, 0, 0, 0.35));
   opacity: 0;
   transform: scale(0.7);
   transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -67,19 +150,27 @@
 
 #ceremony-logo.revealed {
   transform: scale(1.05);
-  filter: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.18));
+  filter: drop-shadow(0 0 35px rgba(255, 255, 255, 1))
+          drop-shadow(0 0 70px rgba(255, 215, 0, 0.95))
+          drop-shadow(0 16px 45px rgba(0, 0, 0, 0.4));
 }
 
 #ceremony-title {
-  color: #111827;
-  font-weight: 700;
-  letter-spacing: clamp(2px, 0.6vw, 10px);
+  font-family: 'Cinzel Decorative', 'Cinzel', 'Yatra One', serif;
+  color: #ffffff;
+  font-weight: 900;
+  letter-spacing: clamp(2px, 0.6vw, 8px);
   text-transform: uppercase;
-  margin-top: clamp(12px, 2vh, 24px);
+  margin-top: clamp(14px, 2.2vh, 26px);
   font-size: clamp(1.2rem, 3.2vw, 3.8rem);
   line-height: 1.25;
   opacity: 0;
   transform: translateY(22px);
+  background: none;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.95), 0 0 25px rgba(0, 0, 0, 0.9), 0 0 12px rgba(212, 175, 55, 0.6);
 }
 
 #ceremony-title.animate {
@@ -87,17 +178,22 @@
 }
 
 #ceremony-status {
-  margin-top: clamp(10px, 1.5vh, 18px);
-  font-size: clamp(0.85rem, 1.8vw, 2.2rem);
-  letter-spacing: clamp(1.5px, 0.5vw, 6px);
-  color: var(--crimson-primary);
+  font-family: 'Cinzel', 'Rozha One', serif;
+  margin-top: clamp(12px, 1.8vh, 20px);
+  font-size: clamp(0.9rem, 1.8vw, 2.2rem);
+  letter-spacing: clamp(1.8px, 0.5vw, 6px);
+  color: #ffd700;
+  background: none;
+  border: none;
+  padding: 0;
+  box-shadow: none;
   text-transform: uppercase;
   opacity: 0;
   transform: translateY(16px) scale(0.92);
   transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
   font-weight: 800;
-  text-shadow: 0 3px 12px rgba(156, 17, 17, 0.2);
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.95), 0 0 20px rgba(212, 175, 55, 0.7);
 }
 
 #ceremony-status.visible {
@@ -107,16 +203,22 @@
 
 /* Post-cut reveal text */
 #post-cut-message {
-  margin-top: clamp(12px, 1.8vh, 24px);
+  font-family: 'Marcellus', 'Cinzel', serif;
+  margin-top: clamp(12px, 1.8vh, 22px);
   font-size: clamp(0.85rem, 1.8vw, 2.2rem);
   letter-spacing: clamp(1px, 0.4vw, 5px);
-  color: var(--ink-muted);
-  font-weight: 500;
+  color: #fff8dc;
+  background: none;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  font-weight: 700;
   font-style: italic;
   opacity: 0;
   transform: translateY(20px) scale(0.95);
   transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.95);
 }
 
 #post-cut-message.visible {
